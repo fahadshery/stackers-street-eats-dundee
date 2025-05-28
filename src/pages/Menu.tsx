@@ -1,4 +1,3 @@
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -62,7 +61,7 @@ const Menu = () => {
     },
     {
       id: 'fries',
-      name: 'Loaded Fries',
+      name: 'Loaded Stackers\' Fries',
       icon: '🍟',
       items: [
         { name: 'Loaded Stacker Fries', description: 'Crispy fries, cheese sauce, bacon bits, spring onions', price: '£6.00', badge: 'SHARING' },
