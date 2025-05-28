@@ -9,10 +9,13 @@ const Menu = () => {
       name: 'Starters',
       icon: '🥨',
       items: [
-        { name: 'Loaded Nachos', description: 'Crispy tortilla chips, melted cheese, jalapeños, sour cream, guacamole', price: '£6.50', badge: 'SHARING' },
-        { name: 'Mozzarella Sticks', description: 'Golden fried mozzarella with marinara dipping sauce', price: '£5.50', badge: 'CRISPY' },
-        { name: 'Chicken Wings (6)', description: 'Buffalo, BBQ, or Korean glazed wings with ranch dip', price: '£7.00', badge: 'SPICY' },
-        { name: 'Jalapeño Poppers', description: 'Cream cheese stuffed jalapeños, breaded and fried', price: '£5.00', badge: 'HOT' }
+        { name: 'Mozzarella Sticks (6)', description: 'Golden fried mozzarella with marinara dipping sauce', price: '£4.25', badge: 'CRISPY' },
+        { name: 'Onion Rings (10)', description: 'Golden battered onion rings, crispy and delicious', price: '£4.25', badge: 'CRISPY' },
+        { name: 'Jalapeños Poppers (6)', description: 'Cream cheese stuffed jalapeños, breaded and fried', price: '£4.25', badge: 'HOT' },
+        { name: 'Garlic Bread (4)', description: 'Toasted garlic bread slices, warm and aromatic', price: '£3.25', badge: 'WARM' },
+        { name: 'Garlic Bread and Cheese (4)', description: 'Toasted garlic bread with melted cheese', price: '£3.75', badge: 'CHEESY' },
+        { name: 'Chargrilled Halloumi (2)', description: 'Grilled halloumi cheese, golden and squeaky', price: '£4.25', badge: 'GRILLED' },
+        { name: 'Peri-Peri Chicken Strips (4)', description: 'Spicy peri-peri marinated chicken strips', price: '£4.25', badge: 'SPICY' }
       ]
     },
     {
