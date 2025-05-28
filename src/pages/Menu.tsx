@@ -6,6 +6,28 @@ import { Button } from '@/components/ui/button';
 const Menu = () => {
   const menuCategories = [
     {
+      id: 'starters',
+      name: 'Starters',
+      icon: '🥨',
+      items: [
+        { name: 'Loaded Nachos', description: 'Crispy tortilla chips, melted cheese, jalapeños, sour cream, guacamole', price: '£6.50', badge: 'SHARING' },
+        { name: 'Mozzarella Sticks', description: 'Golden fried mozzarella with marinara dipping sauce', price: '£5.50', badge: 'CRISPY' },
+        { name: 'Chicken Wings (6)', description: 'Buffalo, BBQ, or Korean glazed wings with ranch dip', price: '£7.00', badge: 'SPICY' },
+        { name: 'Jalapeño Poppers', description: 'Cream cheese stuffed jalapeños, breaded and fried', price: '£5.00', badge: 'HOT' }
+      ]
+    },
+    {
+      id: 'fried-gold',
+      name: 'Fried Gold',
+      icon: '🏆',
+      items: [
+        { name: 'Golden Chicken Burger', description: 'Crispy fried chicken breast, lettuce, mayo, brioche bun', price: '£8.00', badge: 'SIGNATURE' },
+        { name: 'Nashville Hot Chicken', description: 'Spicy Nashville-style fried chicken, pickle, slaw', price: '£8.50', badge: 'FIERY' },
+        { name: 'Chicken Tenders (4)', description: 'Hand-breaded chicken strips with choice of sauce', price: '£7.50', badge: 'CLASSIC' },
+        { name: 'Popcorn Chicken', description: 'Bite-sized crispy chicken pieces, perfect for sharing', price: '£6.00', badge: 'SNACK' }
+      ]
+    },
+    {
       id: 'burgers',
       name: 'Smash Burgers',
       icon: '🍔',
@@ -17,14 +39,25 @@ const Menu = () => {
       ]
     },
     {
-      id: 'chicken',
-      name: 'Fried Chicken',
-      icon: '🍗',
+      id: 'wraps',
+      name: 'Wraps',
+      icon: '🌯',
       items: [
-        { name: 'Crispy Stack Chicken', description: 'Buttermilk fried chicken, slaw, spicy mayo', price: '£7.50', badge: 'SPICY' },
-        { name: 'Buffalo Stack', description: 'Fried chicken, buffalo sauce, blue cheese, celery slaw', price: '£8.00', badge: 'HOT' },
-        { name: 'Korean Style Stack', description: 'Fried chicken, korean glaze, kimchi slaw', price: '£8.50', badge: 'FUSION' },
-        { name: 'Chicken & Waffle', description: 'Fried chicken, maple waffle, syrup drizzle', price: '£9.00', badge: 'SWEET' }
+        { name: 'Crispy Chicken Wrap', description: 'Fried chicken, lettuce, tomato, ranch dressing in flour tortilla', price: '£7.00', badge: 'FRESH' },
+        { name: 'Buffalo Chicken Wrap', description: 'Spicy buffalo chicken, blue cheese, celery, lettuce', price: '£7.50', badge: 'SPICY' },
+        { name: 'Veggie Delight Wrap', description: 'Grilled vegetables, hummus, avocado, mixed greens', price: '£6.50', badge: 'HEALTHY' },
+        { name: 'BBQ Pulled Pork Wrap', description: 'Slow-cooked pulled pork, BBQ sauce, coleslaw', price: '£8.00', badge: 'SMOKY' }
+      ]
+    },
+    {
+      id: 'boxes',
+      name: 'Boxes',
+      icon: '📦',
+      items: [
+        { name: 'Chicken & Chips Box', description: 'Fried chicken pieces, seasoned fries, coleslaw, drink', price: '£9.50', badge: 'MEAL DEAL' },
+        { name: 'Wings Box', description: '8 chicken wings, loaded fries, garlic bread, drink', price: '£10.00', badge: 'SHARING' },
+        { name: 'Tender Box', description: '6 chicken tenders, regular fries, beans, drink', price: '£8.50', badge: 'FILLING' },
+        { name: 'Family Feast Box', description: '12 pieces chicken, 2 large fries, 2 sides, 4 drinks', price: '£25.00', badge: 'FAMILY' }
       ]
     },
     {
@@ -36,6 +69,39 @@ const Menu = () => {
         { name: 'Chili Cheese Fries', description: 'Fries, chili con carne, melted cheese, sour cream', price: '£6.50', badge: 'HEARTY' },
         { name: 'Truffle Parmesan Fries', description: 'Fries, truffle oil, parmesan, herbs', price: '£7.00', badge: 'PREMIUM' },
         { name: 'Pulled Pork Fries', description: 'Fries, pulled pork, BBQ sauce, coleslaw', price: '£7.50', badge: 'SMOKY' }
+      ]
+    },
+    {
+      id: 'sauces',
+      name: 'Sauces & Dips',
+      icon: '🥄',
+      items: [
+        { name: 'Garlic Mayo', description: 'Creamy garlic mayonnaise', price: '£1.00', badge: 'CLASSIC' },
+        { name: 'BBQ Sauce', description: 'Sweet and smoky barbecue sauce', price: '£1.00', badge: 'SMOKY' },
+        { name: 'Buffalo Sauce', description: 'Spicy buffalo wing sauce', price: '£1.00', badge: 'HOT' },
+        { name: 'Ranch Dip', description: 'Cool and creamy ranch dressing', price: '£1.00', badge: 'COOL' }
+      ]
+    },
+    {
+      id: 'kids',
+      name: 'Kids',
+      icon: '👶',
+      items: [
+        { name: 'Kids Chicken Nuggets', description: '4 chicken nuggets, small fries, juice box', price: '£4.50', badge: 'KIDS' },
+        { name: 'Mini Burger Meal', description: 'Small beef burger, small fries, juice box', price: '£5.00', badge: 'MINI' },
+        { name: 'Chicken Strips Meal', description: '2 chicken strips, small fries, juice box', price: '£4.50', badge: 'STRIPS' },
+        { name: 'Grilled Cheese Meal', description: 'Grilled cheese sandwich, small fries, juice box', price: '£4.00', badge: 'CHEESE' }
+      ]
+    },
+    {
+      id: 'sides',
+      name: 'Sides',
+      icon: '🥗',
+      items: [
+        { name: 'Regular Fries', description: 'Crispy seasoned fries', price: '£3.00', badge: 'CLASSIC' },
+        { name: 'Onion Rings', description: 'Golden battered onion rings', price: '£3.50', badge: 'CRISPY' },
+        { name: 'Coleslaw', description: 'Fresh creamy coleslaw', price: '£2.50', badge: 'FRESH' },
+        { name: 'Garlic Bread', description: 'Toasted garlic bread slices', price: '£3.00', badge: 'WARM' }
       ]
     },
     {
