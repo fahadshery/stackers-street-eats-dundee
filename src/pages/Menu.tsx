@@ -34,10 +34,12 @@ const Menu = () => {
       name: 'Chicken Burgers',
       icon: '🐔',
       items: [
-        { name: 'Classic Chicken Burger', description: 'Grilled chicken breast, lettuce, tomato, mayo, sesame bun', price: '£7.50', badge: 'CLASSIC' },
-        { name: 'Spicy Chicken Deluxe', description: 'Spicy chicken breast, jalapeños, pepper jack cheese, chipotle mayo', price: '£8.50', badge: 'HOT' },
-        { name: 'BBQ Chicken Stack', description: 'BBQ chicken breast, bacon, onion rings, BBQ sauce', price: '£9.00', badge: 'SMOKY' },
-        { name: 'Buffalo Chicken Burger', description: 'Buffalo chicken breast, blue cheese, celery, lettuce', price: '£8.00', badge: 'BUFFALO' }
+        { name: 'Chicken Stack Classic', description: 'Succulent chicken coated in a seasoned breading, stacked in a soft seeded bun, layered with melted cheese, fresh lettuce, onions, creamy mayo. A true Stackers favourite.', price: '£6.45', badge: 'CLASSIC' },
+        { name: 'Zing Stack', description: 'Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn\'t your thing!', price: '£7.45', badge: 'SPICY' },
+        { name: 'Peri-Peri Chicken Stack', description: 'Tender grilled peri-peri chicken, melted cheese, peri mayo, crisp lettuce, and fresh onions all stacked in a soft bun for the perfect bite. Grilled to perfection, stacked for satisfaction.', price: '£7.45', badge: 'GRILLED' },
+        { name: 'Stack Veg Titan', description: 'Grilled halloumi, cheese, golden hash brown, fresh veggie patty, onion rings, mayo, red onions, and fresh lettuce. Crunchy. Cheesy. Legendary.', price: '£8.00', badge: 'VEGGIE' },
+        { name: 'Firebird Stack', description: 'Crispy fried chicken meets melted cheese, our signature fire-cracker hot sauce, creamy mayo, topped with fresh lettuce, onions and fiery jalapeños for a kick. All nestled in a toasted bun. Packed with spice and crunch.', price: '£8.45', badge: 'FIERY' },
+        { name: 'Halloumi Chicken Stack', description: 'Golden crispy fried chicken layered with melted cheese, flame grilled halloumi, tangy Algerian sauce, creamy mayo, fresh lettuce, zesty onions, fiery jalapeños, then crowned with crunchy nachos for the ultimate texture explosion. Engineered for serious taste seekers.', price: '£8.99', badge: 'PREMIUM' }
       ]
     },
     {
@@ -45,10 +47,12 @@ const Menu = () => {
       name: 'Smash Burgers',
       icon: '🍔',
       items: [
-        { name: 'The Stacker Supreme', description: 'Double smash patties, cheese, lettuce, tomato, special sauce', price: '£8.50', badge: 'BESTSELLER' },
-        { name: 'Crispy Bacon Stack', description: 'Smash patty, crispy bacon, cheese, onion rings, BBQ sauce', price: '£9.00', badge: 'POPULAR' },
-        { name: 'Veggie Stacker', description: 'Plant-based patty, avocado, tomato, lettuce, vegan mayo', price: '£7.50', badge: 'VEGAN' },
-        { name: 'Double Trouble', description: 'Double smash patties, double cheese, pickles, mustard', price: '£10.00', badge: 'HUGE' }
+        { name: 'Stack Classic', description: 'Premium quality Angus beef, melted cheese, our secret sauce, mayo, onions, gherkins, and fresh lettuce on a soft bun. Simple. Juicy. Iconic.', price: '£6.45', badge: 'CLASSIC' },
+        { name: 'BBQ Stack', description: 'Tender Angus beef, melted cheese, BBQ sauce, onions, and fresh lettuce on a soft bun. Smoky, juicy, and irresistible!', price: '£7.45', badge: 'SMOKY' },
+        { name: 'Double Stack', description: 'Signature Angus beef stacked with cheese, secret sauce, mayo, onions, gherkins, and lettuce in a toasted bun. Twice the beef, double the flavour.', price: '£8.45', badge: 'DOUBLE' },
+        { name: 'Stackzilla', description: 'A towering Angus beef with melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Massive. Meaty. Unstoppable.', price: '£10.45', badge: 'MASSIVE' },
+        { name: 'Fire Stack', description: 'Juicy Angus beef stacked with turkey rashers, crispy hash brown, fiery jalapeños, melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Crunchy. Spicy. Loaded.', price: '£10.45', badge: 'SPICY' },
+        { name: 'Stack Titan', description: 'Premium Angus beef, secret seasoning, cheddar, mozzarella, hash brown, two crispy onion rings, turkey rashers, jalapeños, mayo, red onions, gherkins, lettuce, and our secret sauce in a toasted bun. The ultimate flavour stack.', price: '£10.99', badge: 'ULTIMATE' }
       ]
     },
     {
@@ -232,9 +236,16 @@ const Menu = () => {
                       <span className="text-2xl font-bold text-stackers-yellow">
                         {item.price}
                       </span>
-                      <Button className="bg-stackers-charcoal hover:bg-gray-800 text-white">
-                        Add to Order
-                      </Button>
+                      <div className="flex flex-col gap-2">
+                        <Button className="bg-stackers-charcoal hover:bg-gray-800 text-white">
+                          Add to Order
+                        </Button>
+                        {(category.id === 'burgers' || category.id === 'chicken-burgers') && (
+                          <Button variant="outline" className="text-sm border-stackers-yellow text-stackers-charcoal hover:bg-stackers-yellow">
+                            Make it a meal +£2.50
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))}
