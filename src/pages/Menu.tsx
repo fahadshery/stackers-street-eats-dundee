@@ -27,6 +27,17 @@ const Menu = () => {
       ]
     },
     {
+      id: 'chicken-burgers',
+      name: 'Chicken Burgers',
+      icon: '🐔',
+      items: [
+        { name: 'Classic Chicken Burger', description: 'Grilled chicken breast, lettuce, tomato, mayo, sesame bun', price: '£7.50', badge: 'CLASSIC' },
+        { name: 'Spicy Chicken Deluxe', description: 'Spicy chicken breast, jalapeños, pepper jack cheese, chipotle mayo', price: '£8.50', badge: 'HOT' },
+        { name: 'BBQ Chicken Stack', description: 'BBQ chicken breast, bacon, onion rings, BBQ sauce', price: '£9.00', badge: 'SMOKY' },
+        { name: 'Buffalo Chicken Burger', description: 'Buffalo chicken breast, blue cheese, celery, lettuce', price: '£8.00', badge: 'BUFFALO' }
+      ]
+    },
+    {
       id: 'burgers',
       name: 'Smash Burgers',
       icon: '🍔',
@@ -35,6 +46,19 @@ const Menu = () => {
         { name: 'Crispy Bacon Stack', description: 'Smash patty, crispy bacon, cheese, onion rings, BBQ sauce', price: '£9.00', badge: 'POPULAR' },
         { name: 'Veggie Stacker', description: 'Plant-based patty, avocado, tomato, lettuce, vegan mayo', price: '£7.50', badge: 'VEGAN' },
         { name: 'Double Trouble', description: 'Double smash patties, double cheese, pickles, mustard', price: '£10.00', badge: 'HUGE' }
+      ]
+    },
+    {
+      id: 'pizzas',
+      name: 'Pizzas',
+      icon: '🍕',
+      items: [
+        { name: 'Margherita 10"', description: 'Tomato base, mozzarella, fresh basil, olive oil', price: '£8.00', badge: '10"' },
+        { name: 'Pepperoni 10"', description: 'Tomato base, mozzarella, pepperoni', price: '£9.00', badge: '10"' },
+        { name: 'BBQ Chicken 10"', description: 'BBQ base, mozzarella, chicken, red onions, peppers', price: '£10.00', badge: '10"' },
+        { name: 'Margherita 12"', description: 'Tomato base, mozzarella, fresh basil, olive oil', price: '£10.00', badge: '12"' },
+        { name: 'Pepperoni 12"', description: 'Tomato base, mozzarella, pepperoni', price: '£11.50', badge: '12"' },
+        { name: 'BBQ Chicken 12"', description: 'BBQ base, mozzarella, chicken, red onions, peppers', price: '£12.50', badge: '12"' }
       ]
     },
     {
@@ -71,6 +95,17 @@ const Menu = () => {
       ]
     },
     {
+      id: 'meal-deals',
+      name: 'Stackers\' Meal Deals',
+      icon: '💰',
+      items: [
+        { name: 'Student Special', description: 'Any burger, regular fries, drink - valid with student ID', price: '£7.99', badge: 'STUDENT' },
+        { name: 'Lunch Deal', description: 'Any wrap, small fries, drink - available 12-3pm weekdays', price: '£6.99', badge: 'LUNCH' },
+        { name: 'Date Night', description: '2 burgers, 2 sides, 2 drinks, dessert to share', price: '£19.99', badge: 'SHARING' },
+        { name: 'Family Bundle', description: '4 burgers, 4 sides, 4 drinks, 2 desserts', price: '£29.99', badge: 'FAMILY' }
+      ]
+    },
+    {
       id: 'sauces',
       name: 'Sauces & Dips',
       icon: '🥄',
@@ -101,6 +136,17 @@ const Menu = () => {
         { name: 'Onion Rings', description: 'Golden battered onion rings', price: '£3.50', badge: 'CRISPY' },
         { name: 'Coleslaw', description: 'Fresh creamy coleslaw', price: '£2.50', badge: 'FRESH' },
         { name: 'Garlic Bread', description: 'Toasted garlic bread slices', price: '£3.00', badge: 'WARM' }
+      ]
+    },
+    {
+      id: 'drinks',
+      name: 'Drinks',
+      icon: '🥤',
+      items: [
+        { name: 'Soft Drinks', description: 'Coke, Pepsi, Fanta, Sprite, Diet options available', price: '£2.50', badge: 'REFILL' },
+        { name: 'Fresh Juices', description: 'Orange, Apple, Cranberry - freshly squeezed', price: '£3.00', badge: 'FRESH' },
+        { name: 'Milkshakes', description: 'Vanilla, Chocolate, Strawberry, Oreo - thick & creamy', price: '£4.50', badge: 'THICK' },
+        { name: 'Hot Beverages', description: 'Coffee, Tea, Hot Chocolate - premium blends', price: '£2.00', badge: 'HOT' }
       ]
     },
     {
