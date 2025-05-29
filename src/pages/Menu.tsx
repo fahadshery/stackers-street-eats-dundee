@@ -3,11 +3,11 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
 
 const Menu = () => {
-  const [customizations, setCustomizations] = useState<{[key: string]: any}>({});
+  const [customizations, setCustomizations] = useState<{[key: string]: string}>({});
+  const [sideSizes, setSideSizes] = useState<{[key: string]: 'regular' | 'large'}>({});
 
   const customizationOptions = [
     'Creamy mayo',
@@ -19,14 +19,23 @@ const Menu = () => {
     'Gherkins'
   ];
 
-  const handleCustomizationChange = (itemIndex: string, option: string, checked: boolean) => {
+  const handleCustomizationChange = (itemIndex: string, option: string) => {
     setCustomizations(prev => ({
       ...prev,
-      [itemIndex]: {
-        ...prev[itemIndex],
-        [option]: checked
-      }
+      [itemIndex]: option
     }));
+  };
+
+  const handleSideSizeChange = (itemIndex: string, size: 'regular' | 'large') => {
+    setSideSizes(prev => ({
+      ...prev,
+      [itemIndex]: size
+    }));
+  };
+
+  const getSidePrice = (regularPrice: string, size: 'regular' | 'large') => {
+    const price = parseFloat(regularPrice.replace('£', ''));
+    return size === 'large' ? `£${(price + 1).toFixed(2)}` : regularPrice;
   };
 
   const menuCategories = [
@@ -48,6 +57,8 @@ const Menu = () => {
       id: 'fried-gold',
       name: 'Fried Gold',
       icon: '🏆',
+      hasCustomization: false,
+      hasMealOption: true,
       items: [
         { name: 'Chicken (1pc)', description: 'Crispy fried chicken piece, golden and juicy', price: '£2.25', badge: 'CLASSIC', image: 'photo-1535268647677-300dbf3d78d1' },
         { name: 'Chicken (2pc)', description: 'Two crispy fried chicken pieces, golden and juicy', price: '£4.25', badge: 'CLASSIC', image: 'photo-1493962853295-0fd70327578a' },
@@ -65,6 +76,7 @@ const Menu = () => {
       name: 'Chicken Burgers',
       icon: '🐔',
       hasCustomization: true,
+      hasMealOption: true,
       items: [
         { name: 'Chicken Stack Classic', description: 'Succulent chicken coated in a seasoned breading, stacked in a soft seeded bun, layered with melted cheese, fresh lettuce, onions, creamy mayo. A true Stackers favourite.', price: '£6.45', badge: 'CLASSIC', image: 'photo-1582562124811-c09040d0a901' },
         { name: 'Zing Stack', description: 'Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn\'t your thing!', price: '£7.45', badge: 'SPICY', image: 'photo-1535268647677-300dbf3d78d1' },
@@ -79,6 +91,7 @@ const Menu = () => {
       name: 'Smash Burgers',
       icon: '🍔',
       hasCustomization: true,
+      hasMealOption: true,
       items: [
         { name: 'Stack Classic', description: 'Premium quality Angus beef, melted cheese, our secret sauce, mayo, onions, gherkins, and fresh lettuce on a soft bun. Simple. Juicy. Iconic.', price: '£6.45', badge: 'CLASSIC', image: 'photo-1535268647677-300dbf3d78d1' },
         { name: 'BBQ Stack', description: 'Tender Angus beef, melted cheese, BBQ sauce, onions, and fresh lettuce on a soft bun. Smoky, juicy, and irresistible!', price: '£7.45', badge: 'SMOKY', image: 'photo-1493962853295-0fd70327578a' },
@@ -107,6 +120,7 @@ const Menu = () => {
       name: 'Wraps',
       icon: '🌯',
       hasCustomization: true,
+      hasMealOption: true,
       items: [
         { name: 'Chicken Stack Wrap', description: 'Crispy fried chicken with your choice of fresh lettuce, onions, creamy mayo, and our signature secret sauce.', price: '£6.45', badge: 'SIGNATURE', image: 'photo-1500673922987-e212871fec22' },
         { name: 'BBQ Blaze Wrap', description: 'Bold BBQ flavour meets crispy fried chicken, layered with your choice of jalapeños, lettuce, onions, and creamy mayo.', price: '£6.45', badge: 'SMOKY', image: 'photo-1618160702438-9b02ab6515c9' },
@@ -135,9 +149,7 @@ const Menu = () => {
       icon: '🍟',
       items: [
         { name: 'Loaded Stackers\' Fries', description: 'Chunks of peri-peri chicken, crispy chicken bites, cheesy sauce and jalapeños.', price: '£7.50', badge: 'SIGNATURE', image: 'photo-1500673922987-e212871fec22' },
-        { name: 'Chili Cheese Fries', description: 'Fries, chili con carne, melted cheese, sour cream', price: '£6.50', badge: 'HEARTY', image: 'photo-1618160702438-9b02ab6515c9' },
-        { name: 'Truffle Parmesan Fries', description: 'Fries, truffle oil, parmesan, herbs', price: '£7.00', badge: 'PREMIUM', image: 'photo-1582562124811-c09040d0a901' },
-        { name: 'Pulled Pork Fries', description: 'Fries, pulled pork, BBQ sauce, coleslaw', price: '£7.50', badge: 'SMOKY', image: 'photo-1535268647677-300dbf3d78d1' }
+        { name: 'Chili Cheese Fries', description: 'Fries, chili con carne, melted cheese, sour cream', price: '£6.50', badge: 'HEARTY', image: 'photo-1618160702438-9b02ab6515c9' }
       ]
     },
     {
@@ -148,7 +160,11 @@ const Menu = () => {
         { name: 'Student Special', description: 'Any burger, regular fries, drink - valid with student ID', price: '£7.99', badge: 'STUDENT', image: 'photo-1493962853295-0fd70327578a' },
         { name: 'Lunch Deal', description: 'Any wrap, small fries, drink - available 12-3pm weekdays', price: '£6.99', badge: 'LUNCH', image: 'photo-1500673922987-e212871fec22' },
         { name: 'Date Night', description: '2 burgers, 2 sides, 2 drinks, dessert to share', price: '£19.99', badge: 'SHARING', image: 'photo-1618160702438-9b02ab6515c9' },
-        { name: 'Family Bundle', description: '4 burgers, 4 sides, 4 drinks, 2 desserts', price: '£29.99', badge: 'FAMILY', image: 'photo-1582562124811-c09040d0a901' }
+        { name: 'Family Bundle', description: '4 burgers, 4 sides, 4 drinks, 2 desserts', price: '£29.99', badge: 'FAMILY', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Solo Supreme', description: '4pc chicken, 4pc strips, fries and a can of juice', price: '£10.99', badge: 'VALUE', image: 'photo-1535268647677-300dbf3d78d1' },
+        { name: 'Family Feast Bucket', description: '4pc chicken, 2 Chicken Stack Classic burgers, 2 fries, 2 cans of juice', price: '£15.45', badge: 'FEAST', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Party Platter', description: 'Any 12" pizza, Zing Stack burger, Chicken Stack wrap OR Fire-Cracker wrap, 4pc chicken, 4 spicy wings, 2 fries, 1.5L drink', price: '£24.99', badge: 'PARTY', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Mighty Tower', description: 'Margherita 12" pizza, 6pc chicken, 6pc hot wings, 6 chicken strips, Zing Stack burger, Peri-Peri Chicken Stack burger, 1 Peri-Peri Chicken wrap, 1 Chicken Stack wrap, 2 fries, 1.5L drink', price: '£34.99', badge: 'EPIC', image: 'photo-1618160702438-9b02ab6515c9' }
       ]
     },
     {
@@ -178,13 +194,13 @@ const Menu = () => {
       name: 'Sides',
       icon: '🥗',
       items: [
-        { name: 'Coleslaw', description: 'Fresh creamy coleslaw', regularPrice: '£1.50', largePrice: '£2.50', badge: 'FRESH', image: 'photo-1618160702438-9b02ab6515c9' },
-        { name: 'Chips / Fries', description: 'Crispy seasoned fries', regularPrice: '£2.25', largePrice: '£3.25', badge: 'CLASSIC', image: 'photo-1582562124811-c09040d0a901' },
-        { name: 'Peri-Peri Chips', description: 'Seasoned fries with peri-peri spice', regularPrice: '£2.75', largePrice: '£3.75', badge: 'SPICY', image: 'photo-1535268647677-300dbf3d78d1' },
-        { name: 'Curly Fries', description: 'Seasoned curly cut fries', regularPrice: '£3.00', largePrice: '£4.00', badge: 'CRISPY', image: 'photo-1493962853295-0fd70327578a' },
-        { name: 'Cheesy Chips', description: 'Chips topped with melted cheese', regularPrice: '£3.95', largePrice: '£4.95', badge: 'CHEESY', image: 'photo-1500673922987-e212871fec22' },
-        { name: 'Peri-Peri Curly Fries', description: 'Curly fries with peri-peri seasoning', regularPrice: '£4.00', largePrice: '£5.00', badge: 'SPICY', image: 'photo-1618160702438-9b02ab6515c9' },
-        { name: 'Peri-Peri Cheesy Chips', description: 'Cheesy chips with peri-peri spice', regularPrice: '£4.45', largePrice: '£5.45', badge: 'LOADED', image: 'photo-1582562124811-c09040d0a901' }
+        { name: 'Coleslaw', description: 'Fresh creamy coleslaw', regularPrice: '£1.50', badge: 'FRESH', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Chips / Fries', description: 'Crispy seasoned fries', regularPrice: '£2.25', badge: 'CLASSIC', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Peri-Peri Chips', description: 'Seasoned fries with peri-peri spice', regularPrice: '£2.75', badge: 'SPICY', image: 'photo-1535268647677-300dbf3d78d1' },
+        { name: 'Curly Fries', description: 'Seasoned curly cut fries', regularPrice: '£3.00', badge: 'CRISPY', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Cheesy Chips', description: 'Chips topped with melted cheese', regularPrice: '£3.95', badge: 'CHEESY', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Peri-Peri Curly Fries', description: 'Curly fries with peri-peri seasoning', regularPrice: '£4.00', badge: 'SPICY', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Peri-Peri Cheesy Chips', description: 'Cheesy chips with peri-peri spice', regularPrice: '£4.45', badge: 'LOADED', image: 'photo-1582562124811-c09040d0a901' }
       ]
     },
     {
@@ -260,7 +276,7 @@ const Menu = () => {
                     key={index}
                     className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200"
                   >
-                    {/* Image placeholder */}
+                    {/* Image */}
                     <div className="h-48 bg-gray-200 relative">
                       <img 
                         src={`https://images.unsplash.com/${item.image}?w=400&h=200&fit=crop`}
@@ -283,19 +299,22 @@ const Menu = () => {
                         {item.description}
                       </p>
                       
-                      {/* Customization Options for specific categories */}
+                      {/* Customization Options with Radio Buttons */}
                       {category.hasCustomization && (
                         <div className="mb-4 p-4 bg-gray-50 rounded-lg">
                           <h4 className="text-sm font-semibold text-stackers-charcoal mb-3">Customize Your Order:</h4>
-                          <div className="grid grid-cols-2 gap-2">
+                          <RadioGroup 
+                            value={customizations[`${category.id}-${index}`] || ''}
+                            onValueChange={(value) => 
+                              handleCustomizationChange(`${category.id}-${index}`, value)
+                            }
+                            className="grid grid-cols-2 gap-2"
+                          >
                             {customizationOptions.map((option) => (
                               <div key={option} className="flex items-center space-x-2">
-                                <Checkbox 
+                                <RadioGroupItem 
+                                  value={option}
                                   id={`${category.id}-${index}-${option}`}
-                                  checked={customizations[`${category.id}-${index}`]?.[option] || false}
-                                  onCheckedChange={(checked) => 
-                                    handleCustomizationChange(`${category.id}-${index}`, option, checked as boolean)
-                                  }
                                 />
                                 <label 
                                   htmlFor={`${category.id}-${index}-${option}`}
@@ -305,14 +324,20 @@ const Menu = () => {
                                 </label>
                               </div>
                             ))}
-                          </div>
+                          </RadioGroup>
                         </div>
                       )}
 
-                      {/* Size options for Sides */}
+                      {/* Size options for Sides with dynamic pricing */}
                       {category.id === 'sides' && item.regularPrice && (
                         <div className="mb-4">
-                          <RadioGroup defaultValue="regular" className="flex gap-4">
+                          <RadioGroup 
+                            value={sideSizes[`sides-${index}`] || 'regular'}
+                            onValueChange={(value: 'regular' | 'large') => 
+                              handleSideSizeChange(`sides-${index}`, value)
+                            }
+                            className="flex gap-4"
+                          >
                             <div className="flex items-center space-x-2">
                               <RadioGroupItem value="regular" id={`regular-${index}`} />
                               <label htmlFor={`regular-${index}`} className="text-sm font-medium">
@@ -322,7 +347,7 @@ const Menu = () => {
                             <div className="flex items-center space-x-2">
                               <RadioGroupItem value="large" id={`large-${index}`} />
                               <label htmlFor={`large-${index}`} className="text-sm font-medium">
-                                Large {item.largePrice}
+                                Large {getSidePrice(item.regularPrice, 'large')}
                               </label>
                             </div>
                           </RadioGroup>
@@ -331,13 +356,16 @@ const Menu = () => {
                       
                       <div className="flex items-center justify-between">
                         <span className="text-2xl font-bold text-stackers-yellow">
-                          {item.price || item.regularPrice}
+                          {category.id === 'sides' && item.regularPrice 
+                            ? getSidePrice(item.regularPrice, sideSizes[`sides-${index}`] || 'regular')
+                            : (item.price || item.regularPrice)
+                          }
                         </span>
                         <div className="flex flex-col gap-2">
                           <Button variant="outline" className="border-stackers-charcoal text-stackers-charcoal hover:bg-stackers-charcoal hover:text-white">
                             Add to Order
                           </Button>
-                          {(category.id === 'burgers' || category.id === 'chicken-burgers' || category.id === 'fried-gold' || category.id === 'wraps') && (
+                          {category.hasMealOption && (
                             <Button variant="outline" className="text-sm border-stackers-yellow text-stackers-charcoal hover:bg-stackers-yellow">
                               Make it a meal +£2.50
                             </Button>
