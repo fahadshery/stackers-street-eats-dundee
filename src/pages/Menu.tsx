@@ -3,11 +3,20 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Textarea } from '@/components/ui/textarea';
+import { ShoppingCart } from 'lucide-react';
+import Basket, { BasketItem } from '@/components/Basket';
 import { useState } from 'react';
 
 const Menu = () => {
   const [customizations, setCustomizations] = useState<{[key: string]: string[]}>({});
   const [sideSizes, setSideSizes] = useState<{[key: string]: 'regular' | 'large'}>({});
+  const [comments, setComments] = useState<{[key: string]: string}>({});
+  const [milkshakeSizes, setMilkshakeSizes] = useState<{[key: string]: 'regular' | 'large'}>({});
+  const [milkshakeFlavors, setMilkshakeFlavors] = useState<{[key: string]: string}>({});
+  const [iceCreamFlavors, setIceCreamFlavors] = useState<{[key: string]: string[]}>({});
+  const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
+  const [isBasketOpen, setIsBasketOpen] = useState(false);
 
   const customizationOptions = [
     'Creamy mayo',
@@ -17,6 +26,18 @@ const Menu = () => {
     'Our signature secret sauce',
     'Turkey rashers',
     'Gherkins'
+  ];
+
+  const iceCreamFlavorOptions = [
+    'Vanilla', 'Strawberry', 'Scottish Tablet', 'Blue Bubblegum', 'Belgian Chocolate',
+    'White Bueno', 'Cookies & Cream', 'Raspberry Ripple', 'Chocolate Fudge Brownie',
+    'Honeycomb', 'Mint'
+  ];
+
+  const milkshakeFlavorOptions = [
+    'Oreo', 'Biscoff', 'Strawberry', 'Kinder Bueno / White Kinder Bueno',
+    'Malteaser', 'Galaxy Caramel / Galaxy', 'Milky bar', 'Banana', 'Ferrero Rocher',
+    'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'
   ];
 
   const handleCustomizationChange = (itemIndex: string, option: string, checked: boolean) => {
@@ -43,9 +64,92 @@ const Menu = () => {
     }));
   };
 
+  const handleCommentChange = (itemIndex: string, comment: string) => {
+    setComments(prev => ({
+      ...prev,
+      [itemIndex]: comment
+    }));
+  };
+
+  const handleMilkshakeSizeChange = (size: 'regular' | 'large') => {
+    setMilkshakeSizes(prev => ({
+      ...prev,
+      'milkshakes': size
+    }));
+  };
+
+  const handleMilkshakeFlavorChange = (flavor: string) => {
+    setMilkshakeFlavors(prev => ({
+      ...prev,
+      'milkshakes': flavor
+    }));
+  };
+
+  const handleIceCreamFlavorChange = (itemIndex: string, flavor: string, checked: boolean, maxScoops: number) => {
+    setIceCreamFlavors(prev => {
+      const current = prev[itemIndex] || [];
+      if (checked) {
+        if (current.length < maxScoops) {
+          return {
+            ...prev,
+            [itemIndex]: [...current, flavor]
+          };
+        }
+        return prev;
+      } else {
+        return {
+          ...prev,
+          [itemIndex]: current.filter(item => item !== flavor)
+        };
+      }
+    });
+  };
+
+  const getMilkshakePrice = (size: 'regular' | 'large') => {
+    return size === 'large' ? '£5.50' : '£4.50';
+  };
+
   const getSidePrice = (regularPrice: string, size: 'regular' | 'large') => {
     const price = parseFloat(regularPrice.replace('£', ''));
     return size === 'large' ? `£${(price + 1).toFixed(2)}` : regularPrice;
+  };
+
+  const addToBasket = (item: any, category: any, itemIndex: string) => {
+    const basketItem: BasketItem = {
+      id: `${category.id}-${itemIndex}-${Date.now()}`,
+      name: item.name,
+      price: category.id === 'sides' && item.regularPrice 
+        ? getSidePrice(item.regularPrice, sideSizes[`sides-${itemIndex}`] || 'regular')
+        : category.id === 'drinks' && item.name === 'Milkshakes'
+        ? getMilkshakePrice(milkshakeSizes['milkshakes'] || 'regular')
+        : (item.price || item.regularPrice),
+      category: category.name,
+      customizations: customizations[`${category.id}-${itemIndex}`] || [],
+      sideSize: category.id === 'sides' ? sideSizes[`sides-${itemIndex}`] || 'regular' : undefined,
+      comment: comments[`${category.id}-${itemIndex}`] || '',
+      milkshakeSize: item.name === 'Milkshakes' ? milkshakeSizes['milkshakes'] : undefined,
+      milkshakeFlavor: item.name === 'Milkshakes' ? milkshakeFlavors['milkshakes'] : undefined,
+      iceCreamFlavors: item.name?.includes('Ice Cream') ? iceCreamFlavors[`desserts-${itemIndex}`] || [] : undefined,
+      quantity: 1
+    };
+
+    setBasketItems(prev => [...prev, basketItem]);
+  };
+
+  const removeFromBasket = (id: string) => {
+    setBasketItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const updateQuantity = (id: string, quantity: number) => {
+    setBasketItems(prev => 
+      prev.map(item => 
+        item.id === id ? { ...item, quantity } : item
+      )
+    );
+  };
+
+  const getBasketCount = () => {
+    return basketItems.reduce((total, item) => total + item.quantity, 0);
   };
 
   const menuCategories = [
@@ -87,6 +191,7 @@ const Menu = () => {
       icon: '🐔',
       hasCustomization: true,
       hasMealOption: true,
+      hasCommentBox: true,
       items: [
         { name: 'Chicken Stack Classic', description: 'Succulent chicken coated in a seasoned breading, stacked in a soft seeded bun, layered with melted cheese, fresh lettuce, onions, creamy mayo. A true Stackers favourite.', price: '£6.45', badge: 'CLASSIC', image: 'photo-1582562124811-c09040d0a901' },
         { name: 'Zing Stack', description: 'Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn\'t your thing!', price: '£7.45', badge: 'SPICY', image: 'photo-1535268647677-300dbf3d78d1' },
@@ -102,6 +207,7 @@ const Menu = () => {
       icon: '🍔',
       hasCustomization: true,
       hasMealOption: true,
+      hasCommentBox: true,
       items: [
         { name: 'Stack Classic', description: 'Premium quality Angus beef, melted cheese, our secret sauce, mayo, onions, gherkins, and fresh lettuce on a soft bun. Simple. Juicy. Iconic.', price: '£6.45', badge: 'CLASSIC', image: 'photo-1535268647677-300dbf3d78d1' },
         { name: 'BBQ Stack', description: 'Tender Angus beef, melted cheese, BBQ sauce, onions, and fresh lettuce on a soft bun. Smoky, juicy, and irresistible!', price: '£7.45', badge: 'SMOKY', image: 'photo-1493962853295-0fd70327578a' },
@@ -116,6 +222,7 @@ const Menu = () => {
       name: 'Pizzas',
       icon: '🍕',
       hasCustomization: true,
+      hasCommentBox: true,
       items: [
         { name: 'Margherita 10"', description: 'Tomato base, mozzarella, fresh basil, olive oil', price: '£8.00', badge: '10"', image: 'photo-1493962853295-0fd70327578a' },
         { name: 'Pepperoni 10"', description: 'Tomato base, mozzarella, pepperoni', price: '£9.00', badge: '10"', image: 'photo-1500673922987-e212871fec22' },
@@ -131,6 +238,7 @@ const Menu = () => {
       icon: '🌯',
       hasCustomization: true,
       hasMealOption: true,
+      hasCommentBox: true,
       items: [
         { name: 'Chicken Stack Wrap', description: 'Crispy fried chicken with your choice of fresh lettuce, onions, creamy mayo, and our signature secret sauce.', price: '£6.45', badge: 'SIGNATURE', image: 'photo-1500673922987-e212871fec22' },
         { name: 'BBQ Blaze Wrap', description: 'Bold BBQ flavour meets crispy fried chicken, layered with your choice of jalapeños, lettuce, onions, and creamy mayo.', price: '£6.45', badge: 'SMOKY', image: 'photo-1618160702438-9b02ab6515c9' },
@@ -220,7 +328,7 @@ const Menu = () => {
       items: [
         { name: 'Fizzy Drinks (Can)', description: 'Coke, Pepsi, Fanta, Sprite, Diet options available', price: '£1.25', badge: 'CAN', image: 'photo-1500673922987-e212871fec22' },
         { name: 'Fizzy Drinks (1.5L)', description: 'Coke, Pepsi, Fanta, Sprite, Diet options available', price: '£2.99', badge: '1.5L', image: 'photo-1618160702438-9b02ab6515c9' },
-        { name: 'Milkshakes', description: 'Vanilla, Chocolate, Strawberry, Oreo - thick & creamy', price: '£4.50', badge: 'THICK', image: 'photo-1582562124811-c09040d0a901' }
+        { name: 'Milkshakes', description: 'Choose your size and flavor', price: '£4.50', badge: 'THICK', image: 'photo-1582562124811-c09040d0a901', hasCustomization: true }
       ]
     },
     {
@@ -289,9 +397,9 @@ const Menu = () => {
         { name: 'Nuts', description: 'Mixed nuts for extra crunch', price: '£0.50', badge: 'TOPPING', image: 'photo-1535268647677-300dbf3d78d1' },
         
         // Premium Ice Creams
-        { name: 'Premium Ice Cream (1 Scoop)', description: 'Vanilla, Strawberry, Scottish Tablet, Blue Bubblegum, Belgian Chocolate, White Bueno, Cookies & Cream, Raspberry Ripple, Chocolate Fudge Brownie, Honeycomb, Mint, and others.', price: '£2.50', badge: 'ICE CREAM', image: 'photo-1493962853295-0fd70327578a' },
-        { name: 'Premium Ice Cream (2 Scoops)', description: 'Vanilla, Strawberry, Scottish Tablet, Blue Bubblegum, Belgian Chocolate, White Bueno, Cookies & Cream, Raspberry Ripple, Chocolate Fudge Brownie, Honeycomb, Mint, and others.', price: '£3.75', badge: 'ICE CREAM', image: 'photo-1500673922987-e212871fec22' },
-        { name: 'Premium Ice Cream (3 Scoops)', description: 'Vanilla, Strawberry, Scottish Tablet, Blue Bubblegum, Belgian Chocolate, White Bueno, Cookies & Cream, Raspberry Ripple, Chocolate Fudge Brownie, Honeycomb, Mint, and others.', price: '£4.20', badge: 'ICE CREAM', image: 'photo-1618160702438-9b02ab6515c9' }
+        { name: 'Premium Ice Cream (1 Scoop)', description: 'Choose 1 flavor from our premium selection', price: '£2.50', badge: 'ICE CREAM', image: 'photo-1493962853295-0fd70327578a', maxScoops: 1 },
+        { name: 'Premium Ice Cream (2 Scoops)', description: 'Choose 2 flavors from our premium selection', price: '£3.75', badge: 'ICE CREAM', image: 'photo-1500673922987-e212871fec22', maxScoops: 2 },
+        { name: 'Premium Ice Cream (3 Scoops)', description: 'Choose 3 flavors from our premium selection', price: '£4.20', badge: 'ICE CREAM', image: 'photo-1618160702438-9b02ab6515c9', maxScoops: 3 }
       ]
     }
   ];
@@ -300,6 +408,21 @@ const Menu = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
+      {/* Basket Icon */}
+      <div className="fixed top-24 right-6 z-50">
+        <Button
+          onClick={() => setIsBasketOpen(true)}
+          className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold relative"
+        >
+          <ShoppingCart size={20} />
+          {getBasketCount() > 0 && (
+            <span className="absolute -top-2 -right-2 bg-stackers-red text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+              {getBasketCount()}
+            </span>
+          )}
+        </Button>
+      </div>
+
       {/* Hero Section */}
       <section className="bg-stackers-charcoal text-white py-16">
         <div className="container mx-auto px-4 text-center">
@@ -368,7 +491,7 @@ const Menu = () => {
                       </p>
                       
                       {/* Customization Options with Checkboxes */}
-                      {category.hasCustomization && (
+                      {category.hasCustomization && !item.hasCustomization && (
                         <div className="mb-4 p-4 bg-gray-50 rounded-lg">
                           <h4 className="text-sm font-semibold text-stackers-charcoal mb-3">Customize Your Order:</h4>
                           <div className="grid grid-cols-2 gap-2">
@@ -390,6 +513,98 @@ const Menu = () => {
                               </div>
                             ))}
                           </div>
+                        </div>
+                      )}
+
+                      {/* Milkshake Size and Flavor Selection */}
+                      {item.name === 'Milkshakes' && (
+                        <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+                          <h4 className="text-sm font-semibold text-stackers-charcoal mb-3">Choose Size:</h4>
+                          <RadioGroup 
+                            value={milkshakeSizes['milkshakes'] || 'regular'}
+                            onValueChange={handleMilkshakeSizeChange}
+                            className="flex gap-4 mb-4"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="regular" id="milkshake-regular" />
+                              <label htmlFor="milkshake-regular" className="text-sm font-medium">
+                                Regular £4.50
+                              </label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="large" id="milkshake-large" />
+                              <label htmlFor="milkshake-large" className="text-sm font-medium">
+                                Large £5.50
+                              </label>
+                            </div>
+                          </RadioGroup>
+                          
+                          <h4 className="text-sm font-semibold text-stackers-charcoal mb-3">Choose Flavor:</h4>
+                          <RadioGroup 
+                            value={milkshakeFlavors['milkshakes'] || ''}
+                            onValueChange={handleMilkshakeFlavorChange}
+                            className="grid grid-cols-2 gap-2"
+                          >
+                            {milkshakeFlavorOptions.map((flavor) => (
+                              <div key={flavor} className="flex items-center space-x-2">
+                                <RadioGroupItem value={flavor} id={`milkshake-${flavor}`} />
+                                <label htmlFor={`milkshake-${flavor}`} className="text-xs text-gray-700 cursor-pointer">
+                                  {flavor}
+                                </label>
+                              </div>
+                            ))}
+                          </RadioGroup>
+                        </div>
+                      )}
+
+                      {/* Ice Cream Flavor Selection */}
+                      {item.name?.includes('Ice Cream') && item.maxScoops && (
+                        <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+                          <h4 className="text-sm font-semibold text-stackers-charcoal mb-3">
+                            Choose {item.maxScoops} flavor{item.maxScoops > 1 ? 's' : ''}:
+                          </h4>
+                          <div className="grid grid-cols-2 gap-2">
+                            {iceCreamFlavorOptions.map((flavor) => {
+                              const currentFlavors = iceCreamFlavors[`desserts-${index}`] || [];
+                              const isChecked = currentFlavors.includes(flavor);
+                              const isDisabled = !isChecked && currentFlavors.length >= item.maxScoops;
+                              
+                              return (
+                                <div key={flavor} className="flex items-center space-x-2">
+                                  <Checkbox 
+                                    id={`ice-cream-${index}-${flavor}`}
+                                    checked={isChecked}
+                                    disabled={isDisabled}
+                                    onCheckedChange={(checked) => 
+                                      handleIceCreamFlavorChange(`desserts-${index}`, flavor, !!checked, item.maxScoops)
+                                    }
+                                  />
+                                  <label 
+                                    htmlFor={`ice-cream-${index}-${flavor}`}
+                                    className={`text-xs cursor-pointer ${isDisabled ? 'text-gray-400' : 'text-gray-700'}`}
+                                  >
+                                    {flavor}
+                                  </label>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Comment Box for Burgers, Wraps, and Pizzas */}
+                      {category.hasCommentBox && (
+                        <div className="mb-4">
+                          <label className="text-sm font-semibold text-stackers-charcoal mb-2 block">
+                            Special requests or comments:
+                          </label>
+                          <Textarea
+                            placeholder="Any special instructions for this item..."
+                            value={comments[`${category.id}-${index}`] || ''}
+                            onChange={(e) => handleCommentChange(`${category.id}-${index}`, e.target.value)}
+                            className="text-sm"
+                            rows={2}
+                          />
                         </div>
                       )}
 
@@ -423,11 +638,17 @@ const Menu = () => {
                         <span className="text-2xl font-bold text-stackers-yellow">
                           {category.id === 'sides' && item.regularPrice 
                             ? getSidePrice(item.regularPrice, sideSizes[`sides-${index}`] || 'regular')
+                            : item.name === 'Milkshakes'
+                            ? getMilkshakePrice(milkshakeSizes['milkshakes'] || 'regular')
                             : (item.price || item.regularPrice)
                           }
                         </span>
                         <div className="flex flex-col gap-2">
-                          <Button variant="outline" className="border-stackers-charcoal text-stackers-charcoal hover:bg-stackers-charcoal hover:text-white transition-colors">
+                          <Button 
+                            variant="outline" 
+                            className="border-stackers-charcoal text-stackers-charcoal hover:bg-stackers-charcoal hover:text-white transition-colors"
+                            onClick={() => addToBasket(item, category, index.toString())}
+                          >
                             Add to Order
                           </Button>
                           {category.hasMealOption && (
@@ -455,13 +676,25 @@ const Menu = () => {
           <p className="text-xl text-stackers-charcoal mb-8">
             Get your favourites delivered fresh and hot
           </p>
-          <Button className="bg-stackers-charcoal text-white hover:bg-gray-800 font-bold px-8 py-4 text-lg">
-            ORDER NOW
+          <Button 
+            className="bg-stackers-charcoal text-white hover:bg-gray-800 font-bold px-8 py-4 text-lg"
+            onClick={() => setIsBasketOpen(true)}
+          >
+            VIEW BASKET ({getBasketCount()})
           </Button>
         </div>
       </section>
 
       <Footer />
+      
+      {/* Basket Component */}
+      <Basket 
+        items={basketItems}
+        onRemoveItem={removeFromBasket}
+        onUpdateQuantity={updateQuantity}
+        isOpen={isBasketOpen}
+        onClose={() => setIsBasketOpen(false)}
+      />
     </div>
   );
 };
