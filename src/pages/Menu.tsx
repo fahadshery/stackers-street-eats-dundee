@@ -2,8 +2,33 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useState } from 'react';
 
 const Menu = () => {
+  const [customizations, setCustomizations] = useState<{[key: string]: any}>({});
+
+  const customizationOptions = [
+    'Creamy mayo',
+    'Fresh lettuce', 
+    'Onions',
+    'Fiery jalapeños',
+    'Our signature secret sauce',
+    'Turkey rashers',
+    'Gherkins'
+  ];
+
+  const handleCustomizationChange = (itemIndex: string, option: string, checked: boolean) => {
+    setCustomizations(prev => ({
+      ...prev,
+      [itemIndex]: {
+        ...prev[itemIndex],
+        [option]: checked
+      }
+    }));
+  };
+
   const menuCategories = [
     {
       id: 'starters',
@@ -39,6 +64,7 @@ const Menu = () => {
       id: 'chicken-burgers',
       name: 'Chicken Burgers',
       icon: '🐔',
+      hasCustomization: true,
       items: [
         { name: 'Chicken Stack Classic', description: 'Succulent chicken coated in a seasoned breading, stacked in a soft seeded bun, layered with melted cheese, fresh lettuce, onions, creamy mayo. A true Stackers favourite.', price: '£6.45', badge: 'CLASSIC', image: 'photo-1582562124811-c09040d0a901' },
         { name: 'Zing Stack', description: 'Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn\'t your thing!', price: '£7.45', badge: 'SPICY', image: 'photo-1535268647677-300dbf3d78d1' },
@@ -52,6 +78,7 @@ const Menu = () => {
       id: 'burgers',
       name: 'Smash Burgers',
       icon: '🍔',
+      hasCustomization: true,
       items: [
         { name: 'Stack Classic', description: 'Premium quality Angus beef, melted cheese, our secret sauce, mayo, onions, gherkins, and fresh lettuce on a soft bun. Simple. Juicy. Iconic.', price: '£6.45', badge: 'CLASSIC', image: 'photo-1535268647677-300dbf3d78d1' },
         { name: 'BBQ Stack', description: 'Tender Angus beef, melted cheese, BBQ sauce, onions, and fresh lettuce on a soft bun. Smoky, juicy, and irresistible!', price: '£7.45', badge: 'SMOKY', image: 'photo-1493962853295-0fd70327578a' },
@@ -65,6 +92,7 @@ const Menu = () => {
       id: 'pizzas',
       name: 'Pizzas',
       icon: '🍕',
+      hasCustomization: true,
       items: [
         { name: 'Margherita 10"', description: 'Tomato base, mozzarella, fresh basil, olive oil', price: '£8.00', badge: '10"', image: 'photo-1493962853295-0fd70327578a' },
         { name: 'Pepperoni 10"', description: 'Tomato base, mozzarella, pepperoni', price: '£9.00', badge: '10"', image: 'photo-1500673922987-e212871fec22' },
@@ -78,6 +106,7 @@ const Menu = () => {
       id: 'wraps',
       name: 'Wraps',
       icon: '🌯',
+      hasCustomization: true,
       items: [
         { name: 'Chicken Stack Wrap', description: 'Crispy fried chicken with your choice of fresh lettuce, onions, creamy mayo, and our signature secret sauce.', price: '£6.45', badge: 'SIGNATURE', image: 'photo-1500673922987-e212871fec22' },
         { name: 'BBQ Blaze Wrap', description: 'Bold BBQ flavour meets crispy fried chicken, layered with your choice of jalapeños, lettuce, onions, and creamy mayo.', price: '£6.45', badge: 'SMOKY', image: 'photo-1618160702438-9b02ab6515c9' },
@@ -95,7 +124,9 @@ const Menu = () => {
         { name: 'Chicken & Chips Box', description: 'Fried chicken pieces, seasoned fries, coleslaw, drink', price: '£9.50', badge: 'MEAL DEAL', image: 'photo-1618160702438-9b02ab6515c9' },
         { name: 'Wings Box', description: '8 chicken wings, loaded fries, garlic bread, drink', price: '£10.00', badge: 'SHARING', image: 'photo-1582562124811-c09040d0a901' },
         { name: 'Tender Box', description: '6 chicken tenders, regular fries, beans, drink', price: '£8.50', badge: 'FILLING', image: 'photo-1535268647677-300dbf3d78d1' },
-        { name: 'Family Feast Box', description: '12 pieces chicken, 2 large fries, 2 sides, 4 drinks', price: '£25.00', badge: 'FAMILY', image: 'photo-1493962853295-0fd70327578a' }
+        { name: 'Family Feast Box', description: '12 pieces chicken, 2 large fries, 2 sides, 4 drinks', price: '£25.00', badge: 'FAMILY', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Burger Bash', description: 'Stack Classic smash burger, Zing Stack burger, Peri-Peri Chicken Stack burger, curly fries, and a can of juice.', price: '£15.00', badge: 'COMBO', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Gold Box', description: 'Zing Stack burger, 5 gold strips, 5 gold wings, 5 mozzarella sticks, 5 jalapeño poppers, curly fries, 2 garlic dips and 2 cans of juice.', price: '£18.00', badge: 'ULTIMATE', image: 'photo-1618160702438-9b02ab6515c9' }
       ]
     },
     {
@@ -147,10 +178,13 @@ const Menu = () => {
       name: 'Sides',
       icon: '🥗',
       items: [
-        { name: 'Regular Fries', description: 'Crispy seasoned fries', price: '£3.00', badge: 'CLASSIC', image: 'photo-1618160702438-9b02ab6515c9' },
-        { name: 'Onion Rings', description: 'Golden battered onion rings', price: '£3.50', badge: 'CRISPY', image: 'photo-1582562124811-c09040d0a901' },
-        { name: 'Coleslaw', description: 'Fresh creamy coleslaw', price: '£2.50', badge: 'FRESH', image: 'photo-1535268647677-300dbf3d78d1' },
-        { name: 'Garlic Bread', description: 'Toasted garlic bread slices', price: '£3.00', badge: 'WARM', image: 'photo-1493962853295-0fd70327578a' }
+        { name: 'Coleslaw', description: 'Fresh creamy coleslaw', regularPrice: '£1.50', largePrice: '£2.50', badge: 'FRESH', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Chips / Fries', description: 'Crispy seasoned fries', regularPrice: '£2.25', largePrice: '£3.25', badge: 'CLASSIC', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Peri-Peri Chips', description: 'Seasoned fries with peri-peri spice', regularPrice: '£2.75', largePrice: '£3.75', badge: 'SPICY', image: 'photo-1535268647677-300dbf3d78d1' },
+        { name: 'Curly Fries', description: 'Seasoned curly cut fries', regularPrice: '£3.00', largePrice: '£4.00', badge: 'CRISPY', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Cheesy Chips', description: 'Chips topped with melted cheese', regularPrice: '£3.95', largePrice: '£4.95', badge: 'CHEESY', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Peri-Peri Curly Fries', description: 'Curly fries with peri-peri seasoning', regularPrice: '£4.00', largePrice: '£5.00', badge: 'SPICY', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Peri-Peri Cheesy Chips', description: 'Cheesy chips with peri-peri spice', regularPrice: '£4.45', largePrice: '£5.45', badge: 'LOADED', image: 'photo-1582562124811-c09040d0a901' }
       ]
     },
     {
@@ -168,6 +202,7 @@ const Menu = () => {
       id: 'desserts',
       name: 'Sweet Stacks',
       icon: '🧁',
+      hasCustomization: true,
       items: [
         { name: 'Stack Waffles', description: 'Warm waffles, ice cream, berry compote, maple syrup', price: '£5.50', badge: 'CLASSIC', image: 'photo-1493962853295-0fd70327578a' },
         { name: 'Chocolate Brownie Stack', description: 'Triple chocolate brownie, vanilla ice cream, hot fudge', price: '£6.00', badge: 'INDULGENT', image: 'photo-1500673922987-e212871fec22' },
@@ -248,9 +283,55 @@ const Menu = () => {
                         {item.description}
                       </p>
                       
+                      {/* Customization Options for specific categories */}
+                      {category.hasCustomization && (
+                        <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+                          <h4 className="text-sm font-semibold text-stackers-charcoal mb-3">Customize Your Order:</h4>
+                          <div className="grid grid-cols-2 gap-2">
+                            {customizationOptions.map((option) => (
+                              <div key={option} className="flex items-center space-x-2">
+                                <Checkbox 
+                                  id={`${category.id}-${index}-${option}`}
+                                  checked={customizations[`${category.id}-${index}`]?.[option] || false}
+                                  onCheckedChange={(checked) => 
+                                    handleCustomizationChange(`${category.id}-${index}`, option, checked as boolean)
+                                  }
+                                />
+                                <label 
+                                  htmlFor={`${category.id}-${index}-${option}`}
+                                  className="text-xs text-gray-700 cursor-pointer"
+                                >
+                                  {option}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Size options for Sides */}
+                      {category.id === 'sides' && item.regularPrice && (
+                        <div className="mb-4">
+                          <RadioGroup defaultValue="regular" className="flex gap-4">
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="regular" id={`regular-${index}`} />
+                              <label htmlFor={`regular-${index}`} className="text-sm font-medium">
+                                Regular {item.regularPrice}
+                              </label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="large" id={`large-${index}`} />
+                              <label htmlFor={`large-${index}`} className="text-sm font-medium">
+                                Large {item.largePrice}
+                              </label>
+                            </div>
+                          </RadioGroup>
+                        </div>
+                      )}
+                      
                       <div className="flex items-center justify-between">
                         <span className="text-2xl font-bold text-stackers-yellow">
-                          {item.price}
+                          {item.price || item.regularPrice}
                         </span>
                         <div className="flex flex-col gap-2">
                           <Button variant="outline" className="border-stackers-charcoal text-stackers-charcoal hover:bg-stackers-charcoal hover:text-white">
