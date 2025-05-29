@@ -1,12 +1,12 @@
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useState } from 'react';
 
 const Menu = () => {
-  const [customizations, setCustomizations] = useState<{[key: string]: string}>({});
+  const [customizations, setCustomizations] = useState<{[key: string]: string[]}>({});
   const [sideSizes, setSideSizes] = useState<{[key: string]: 'regular' | 'large'}>({});
 
   const customizationOptions = [
@@ -19,11 +19,21 @@ const Menu = () => {
     'Gherkins'
   ];
 
-  const handleCustomizationChange = (itemIndex: string, option: string) => {
-    setCustomizations(prev => ({
-      ...prev,
-      [itemIndex]: option
-    }));
+  const handleCustomizationChange = (itemIndex: string, option: string, checked: boolean) => {
+    setCustomizations(prev => {
+      const current = prev[itemIndex] || [];
+      if (checked) {
+        return {
+          ...prev,
+          [itemIndex]: [...current, option]
+        };
+      } else {
+        return {
+          ...prev,
+          [itemIndex]: current.filter(item => item !== option)
+        };
+      }
+    });
   };
 
   const handleSideSizeChange = (itemIndex: string, size: 'regular' | 'large') => {
@@ -208,10 +218,9 @@ const Menu = () => {
       name: 'Drinks',
       icon: '🥤',
       items: [
-        { name: 'Soft Drinks', description: 'Coke, Pepsi, Fanta, Sprite, Diet options available', price: '£2.50', badge: 'REFILL', image: 'photo-1500673922987-e212871fec22' },
-        { name: 'Fresh Juices', description: 'Orange, Apple, Cranberry - freshly squeezed', price: '£3.00', badge: 'FRESH', image: 'photo-1618160702438-9b02ab6515c9' },
-        { name: 'Milkshakes', description: 'Vanilla, Chocolate, Strawberry, Oreo - thick & creamy', price: '£4.50', badge: 'THICK', image: 'photo-1582562124811-c09040d0a901' },
-        { name: 'Hot Beverages', description: 'Coffee, Tea, Hot Chocolate - premium blends', price: '£2.00', badge: 'HOT', image: 'photo-1535268647677-300dbf3d78d1' }
+        { name: 'Fizzy Drinks (Can)', description: 'Coke, Pepsi, Fanta, Sprite, Diet options available', price: '£1.25', badge: 'CAN', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Fizzy Drinks (1.5L)', description: 'Coke, Pepsi, Fanta, Sprite, Diet options available', price: '£2.99', badge: '1.5L', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Milkshakes', description: 'Vanilla, Chocolate, Strawberry, Oreo - thick & creamy', price: '£4.50', badge: 'THICK', image: 'photo-1582562124811-c09040d0a901' }
       ]
     },
     {
@@ -220,10 +229,69 @@ const Menu = () => {
       icon: '🧁',
       hasCustomization: true,
       items: [
-        { name: 'Stack Waffles', description: 'Warm waffles, ice cream, berry compote, maple syrup', price: '£5.50', badge: 'CLASSIC', image: 'photo-1493962853295-0fd70327578a' },
-        { name: 'Chocolate Brownie Stack', description: 'Triple chocolate brownie, vanilla ice cream, hot fudge', price: '£6.00', badge: 'INDULGENT', image: 'photo-1500673922987-e212871fec22' },
-        { name: 'Salted Caramel Stack', description: 'Caramel cake, salted caramel sauce, whipped cream', price: '£5.50', badge: 'SALTY-SWEET', image: 'photo-1618160702438-9b02ab6515c9' },
-        { name: 'Cookie Dough Bites', description: 'Warm cookie dough pieces, ice cream, chocolate chips', price: '£5.00', badge: 'WARM', image: 'photo-1582562124811-c09040d0a901' }
+        // Waffles
+        { name: 'Waffles - Banoffee Bliss', description: 'Fresh banana slices, drizzled in warm Nutella and rich toffee sauce, finished with a sprinkle of crunchy chopped nuts.', price: '£6.50', badge: 'WAFFLES', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Waffles - Biscoff Dream', description: 'Loaded with Biscoff pieces, drizzled in luscious Biscoff and Belgian chocolate sauce, then topped with a dusting of Biscoff crumbs and delicate white chocolate curls.', price: '£6.50', badge: 'WAFFLES', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Waffles - Bueno Bash', description: 'Indulgent Kinder Bueno pieces, drizzled with creamy white and milk chocolate sauces, and finished with rich chocolate shavings.', price: '£6.50', badge: 'WAFFLES', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Waffles - Cookies & Cream Craze', description: 'Chunky Oreo pieces, drizzled in smooth milk chocolate sauce.', price: '£6.50', badge: 'WAFFLES', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Waffles - Stackers\' Royal Delight', description: 'Juicy strawberries topped with Ferrero Rocher OR Raffaello, generously drizzled with warm Belgian chocolate OR silky Nutella.', price: '£6.50', badge: 'WAFFLES', image: 'photo-1535268647677-300dbf3d78d1' },
+        
+        // Crepes
+        { name: 'Crepes - Banoffee Bliss', description: 'Fresh banana slices, drizzled in warm Nutella and rich toffee sauce, finished with a sprinkle of crunchy chopped nuts.', price: '£6.50', badge: 'CREPES', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Crepes - Biscoff Dream', description: 'Loaded with Biscoff pieces, drizzled in luscious Biscoff and Belgian chocolate sauce, then topped with a dusting of Biscoff crumbs and delicate white chocolate curls.', price: '£6.50', badge: 'CREPES', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Crepes - Bueno Bash', description: 'Indulgent Kinder Bueno pieces, drizzled with creamy white and milk chocolate sauces, and finished with rich chocolate shavings.', price: '£6.50', badge: 'CREPES', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Crepes - Cookies & Cream Craze', description: 'Chunky Oreo pieces, drizzled in smooth milk chocolate sauce.', price: '£6.50', badge: 'CREPES', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Crepes - Stackers\' Royal Delight', description: 'Juicy strawberries topped with Ferrero Rocher OR Raffaello, generously drizzled with warm Belgian chocolate OR silky Nutella.', price: '£6.50', badge: 'CREPES', image: 'photo-1535268647677-300dbf3d78d1' },
+        
+        // Cookie Dough
+        { name: 'Cookie Dough - Banoffee Bliss', description: 'Fresh banana slices, drizzled in warm Nutella and rich toffee sauce, finished with a sprinkle of crunchy chopped nuts.', price: '£6.50', badge: 'COOKIE DOUGH', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Cookie Dough - Biscoff Dream', description: 'Loaded with Biscoff pieces, drizzled in luscious Biscoff and Belgian chocolate sauce, then topped with a dusting of Biscoff crumbs and delicate white chocolate curls.', price: '£6.50', badge: 'COOKIE DOUGH', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Cookie Dough - Bueno Bash', description: 'Indulgent Kinder Bueno pieces, drizzled with creamy white and milk chocolate sauces, and finished with rich chocolate shavings.', price: '£6.50', badge: 'COOKIE DOUGH', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Cookie Dough - Cookies & Cream Craze', description: 'Chunky Oreo pieces, drizzled in smooth milk chocolate sauce.', price: '£6.50', badge: 'COOKIE DOUGH', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Cookie Dough - Stackers\' Royal Delight', description: 'Juicy strawberries topped with Ferrero Rocher OR Raffaello, generously drizzled with warm Belgian chocolate OR silky Nutella.', price: '£6.50', badge: 'COOKIE DOUGH', image: 'photo-1535268647677-300dbf3d78d1' },
+        
+        // Cheesecake Slices
+        { name: 'Strawberry Cheesecake Slice', description: 'Rich and creamy strawberry cheesecake slice', price: '£3.99', badge: 'CHEESECAKE', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Biscoff Cheesecake Slice', description: 'Rich and creamy Biscoff cheesecake slice', price: '£3.99', badge: 'CHEESECAKE', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Oreo Cheesecake Slice', description: 'Rich and creamy Oreo cheesecake slice', price: '£3.99', badge: 'CHEESECAKE', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Kinder Cheesecake Slice', description: 'Rich and creamy Kinder cheesecake slice', price: '£3.99', badge: 'CHEESECAKE', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Chocolate Cheesecake Slice', description: 'Rich and creamy chocolate cheesecake slice', price: '£3.99', badge: 'CHEESECAKE', image: 'photo-1535268647677-300dbf3d78d1' },
+        { name: 'Banoffee Pie Cheesecake Slice', description: 'Rich and creamy banoffee pie cheesecake slice', price: '£3.99', badge: 'CHEESECAKE', image: 'photo-1493962853295-0fd70327578a' },
+        
+        // Stackers' Specials
+        { name: 'Waffle on a Stick', description: 'Crispy waffle on a stick, perfect for on-the-go indulgence', price: '£4.99', badge: 'SPECIAL', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Dubai Kunafa', description: 'Traditional Middle Eastern dessert with crispy pastry and sweet cheese', price: '£6.50', badge: 'SPECIAL', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Churros (5)', description: 'Five crispy churros dusted with cinnamon sugar', price: '£5.50', badge: 'SPECIAL', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Mini Pancakes (10)', description: 'Ten fluffy mini pancakes, perfect for sharing', price: '£6.50', badge: 'SPECIAL', image: 'photo-1535268647677-300dbf3d78d1' },
+        
+        // Dessert Dips
+        { name: 'Belgian Chocolate Dip', description: 'Rich Belgian chocolate dip', price: '£0.25', badge: 'DIP', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Nutella Dip', description: 'Creamy Nutella dip', price: '£0.25', badge: 'DIP', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Biscoff Dip', description: 'Smooth Biscoff dip', price: '£0.25', badge: 'DIP', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Pistachio Dip', description: 'Creamy pistachio dip', price: '£0.25', badge: 'DIP', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'White Chocolate Dip', description: 'Smooth white chocolate dip', price: '£0.25', badge: 'DIP', image: 'photo-1535268647677-300dbf3d78d1' },
+        { name: 'Milk Chocolate Dip', description: 'Rich milk chocolate dip', price: '£0.25', badge: 'DIP', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Mango Dip', description: 'Fresh mango dip', price: '£0.25', badge: 'DIP', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Strawberry Dip', description: 'Sweet strawberry dip', price: '£0.25', badge: 'DIP', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Raspberry Dip', description: 'Tangy raspberry dip', price: '£0.25', badge: 'DIP', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Toffee Dip', description: 'Rich toffee dip', price: '£0.25', badge: 'DIP', image: 'photo-1535268647677-300dbf3d78d1' },
+        { name: 'Caramel Dip', description: 'Smooth caramel dip', price: '£0.25', badge: 'DIP', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Mint Dip', description: 'Cool mint dip', price: '£0.25', badge: 'DIP', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Bubblegum Dip', description: 'Sweet bubblegum dip', price: '£0.25', badge: 'DIP', image: 'photo-1618160702438-9b02ab6515c9' },
+        
+        // Toppings
+        { name: 'Mini Marshmallows', description: 'Fluffy mini marshmallows', price: '£0.50', badge: 'TOPPING', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Fudge Cube', description: 'Rich fudge cubes', price: '£0.50', badge: 'TOPPING', image: 'photo-1535268647677-300dbf3d78d1' },
+        { name: 'White Chocolate Flakes', description: 'Delicate white chocolate flakes', price: '£0.50', badge: 'TOPPING', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Crushed Oreo', description: 'Crunchy crushed Oreo pieces', price: '£0.50', badge: 'TOPPING', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Malteaser', description: 'Crunchy Malteaser pieces', price: '£0.50', badge: 'TOPPING', image: 'photo-1618160702438-9b02ab6515c9' },
+        { name: 'Crispy M&M\'s', description: 'Colorful crispy M&M\'s', price: '£0.50', badge: 'TOPPING', image: 'photo-1582562124811-c09040d0a901' },
+        { name: 'Nuts', description: 'Mixed nuts for extra crunch', price: '£0.50', badge: 'TOPPING', image: 'photo-1535268647677-300dbf3d78d1' },
+        
+        // Premium Ice Creams
+        { name: 'Premium Ice Cream (1 Scoop)', description: 'Vanilla, Strawberry, Scottish Tablet, Blue Bubblegum, Belgian Chocolate, White Bueno, Cookies & Cream, Raspberry Ripple, Chocolate Fudge Brownie, Honeycomb, Mint, and others.', price: '£2.50', badge: 'ICE CREAM', image: 'photo-1493962853295-0fd70327578a' },
+        { name: 'Premium Ice Cream (2 Scoops)', description: 'Vanilla, Strawberry, Scottish Tablet, Blue Bubblegum, Belgian Chocolate, White Bueno, Cookies & Cream, Raspberry Ripple, Chocolate Fudge Brownie, Honeycomb, Mint, and others.', price: '£3.75', badge: 'ICE CREAM', image: 'photo-1500673922987-e212871fec22' },
+        { name: 'Premium Ice Cream (3 Scoops)', description: 'Vanilla, Strawberry, Scottish Tablet, Blue Bubblegum, Belgian Chocolate, White Bueno, Cookies & Cream, Raspberry Ripple, Chocolate Fudge Brownie, Honeycomb, Mint, and others.', price: '£4.20', badge: 'ICE CREAM', image: 'photo-1618160702438-9b02ab6515c9' }
       ]
     }
   ];
@@ -299,22 +367,19 @@ const Menu = () => {
                         {item.description}
                       </p>
                       
-                      {/* Customization Options with Radio Buttons */}
+                      {/* Customization Options with Checkboxes */}
                       {category.hasCustomization && (
                         <div className="mb-4 p-4 bg-gray-50 rounded-lg">
                           <h4 className="text-sm font-semibold text-stackers-charcoal mb-3">Customize Your Order:</h4>
-                          <RadioGroup 
-                            value={customizations[`${category.id}-${index}`] || ''}
-                            onValueChange={(value) => 
-                              handleCustomizationChange(`${category.id}-${index}`, value)
-                            }
-                            className="grid grid-cols-2 gap-2"
-                          >
+                          <div className="grid grid-cols-2 gap-2">
                             {customizationOptions.map((option) => (
                               <div key={option} className="flex items-center space-x-2">
-                                <RadioGroupItem 
-                                  value={option}
+                                <Checkbox 
                                   id={`${category.id}-${index}-${option}`}
+                                  checked={customizations[`${category.id}-${index}`]?.includes(option) || false}
+                                  onCheckedChange={(checked) => 
+                                    handleCustomizationChange(`${category.id}-${index}`, option, !!checked)
+                                  }
                                 />
                                 <label 
                                   htmlFor={`${category.id}-${index}-${option}`}
@@ -324,7 +389,7 @@ const Menu = () => {
                                 </label>
                               </div>
                             ))}
-                          </RadioGroup>
+                          </div>
                         </div>
                       )}
 
@@ -362,11 +427,11 @@ const Menu = () => {
                           }
                         </span>
                         <div className="flex flex-col gap-2">
-                          <Button variant="outline" className="border-stackers-charcoal text-stackers-charcoal hover:bg-stackers-charcoal hover:text-white">
+                          <Button variant="outline" className="border-stackers-charcoal text-stackers-charcoal hover:bg-stackers-charcoal hover:text-white transition-colors">
                             Add to Order
                           </Button>
                           {category.hasMealOption && (
-                            <Button variant="outline" className="text-sm border-stackers-yellow text-stackers-charcoal hover:bg-stackers-yellow">
+                            <Button variant="outline" className="text-sm border-stackers-yellow text-stackers-charcoal hover:bg-stackers-yellow transition-colors">
                               Make it a meal +£2.50
                             </Button>
                           )}
