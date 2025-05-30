@@ -6,6 +6,7 @@ import Basket, { BasketItem } from '@/components/Basket';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { ShoppingBasket } from 'lucide-react';
 
 interface MenuSectionProps {
@@ -41,7 +42,9 @@ interface MenuItemCardProps {
   showMealOption?: boolean;
   showCustomizations?: boolean;
   customizations?: string[];
-  onAddToBasket: (item: any, isMeal: boolean, customizations?: string[], comment?: string) => void;
+  showSizeOptions?: boolean;
+  showSpecialInstructions?: boolean;
+  onAddToBasket: (item: any, isMeal: boolean, customizations?: string[], comment?: string, sideSize?: string, milkshakeSize?: string, milkshakeFlavor?: string) => void;
 }
 
 const MenuItemCard: React.FC<MenuItemCardProps> = ({
@@ -50,11 +53,16 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   showMealOption = false,
   showCustomizations = false,
   customizations = [],
+  showSizeOptions = false,
+  showSpecialInstructions = true,
   onAddToBasket
 }) => {
   const [selectedCustomizations, setSelectedCustomizations] = useState<string[]>([]);
   const [isMeal, setIsMeal] = useState(false);
   const [comment, setComment] = useState('');
+  const [sideSize, setSideSize] = useState('regular');
+  const [milkshakeSize, setMilkshakeSize] = useState('regular');
+  const [milkshakeFlavor, setMilkshakeFlavor] = useState('Oreo');
 
   const handleCustomizationChange = (customization: string, checked: boolean) => {
     if (checked) {
@@ -66,18 +74,47 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
   const handleAddToBasket = () => {
     const itemWithCategory = { ...item, category };
-    onAddToBasket(itemWithCategory, isMeal, selectedCustomizations.length > 0 ? selectedCustomizations : undefined, comment || undefined);
+    onAddToBasket(
+      itemWithCategory, 
+      isMeal, 
+      selectedCustomizations.length > 0 ? selectedCustomizations : undefined, 
+      comment || undefined,
+      showSizeOptions ? sideSize : undefined,
+      category === 'Milkshakes' ? milkshakeSize : undefined,
+      category === 'Milkshakes' ? milkshakeFlavor : undefined
+    );
     // Reset form
     setSelectedCustomizations([]);
     setIsMeal(false);
     setComment('');
+    setSideSize('regular');
+    setMilkshakeSize('regular');
+    setMilkshakeFlavor('Oreo');
   };
 
   const displayPrice = () => {
-    const basePrice = parseFloat(item.price.replace('£', ''));
-    const finalPrice = isMeal ? basePrice + 2.50 : basePrice;
-    return `£${finalPrice.toFixed(2)}`;
+    let basePrice = parseFloat(item.price.replace('£', ''));
+    
+    if (isMeal) {
+      basePrice += 2.50;
+    }
+    
+    if (showSizeOptions && sideSize === 'large') {
+      basePrice += 1.00;
+    }
+    
+    if (category === 'Milkshakes') {
+      basePrice = milkshakeSize === 'regular' ? 4.20 : 5.00;
+    }
+    
+    return `£${basePrice.toFixed(2)}`;
   };
+
+  const milkshakeFlavors = [
+    'Oreo', 'Biscoff', 'Strawberry', 'Kinder Bueno', 'White Kinder Bueno', 
+    'Malteaser', 'Galaxy Caramel', 'Galaxy', 'Milky bar', 'Banana', 
+    'Ferrero Rocher', 'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'
+  ];
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -113,6 +150,53 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         )}
 
+        {showSizeOptions && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
+            <RadioGroup value={sideSize} onValueChange={setSideSize}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="regular" id={`${item.name}-regular`} />
+                <Label htmlFor={`${item.name}-regular`} className="text-sm">Regular</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="large" id={`${item.name}-large`} />
+                <Label htmlFor={`${item.name}-large`} className="text-sm">Large (+£1.00)</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        )}
+
+        {category === 'Milkshakes' && (
+          <>
+            <div className="mb-4">
+              <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
+              <RadioGroup value={milkshakeSize} onValueChange={setMilkshakeSize}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="regular" id={`${item.name}-regular-shake`} />
+                  <Label htmlFor={`${item.name}-regular-shake`} className="text-sm">Regular (£4.20)</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="large" id={`${item.name}-large-shake`} />
+                  <Label htmlFor={`${item.name}-large-shake`} className="text-sm">Large (£5.00)</Label>
+                </div>
+              </RadioGroup>
+            </div>
+            <div className="mb-4">
+              <p className="font-medium mb-2 text-stackers-charcoal">Flavor:</p>
+              <RadioGroup value={milkshakeFlavor} onValueChange={setMilkshakeFlavor}>
+                <div className="grid grid-cols-2 gap-2">
+                  {milkshakeFlavors.map((flavor) => (
+                    <div key={flavor} className="flex items-center space-x-2">
+                      <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
+                      <Label htmlFor={`${item.name}-${flavor}`} className="text-xs">{flavor}</Label>
+                    </div>
+                  ))}
+                </div>
+              </RadioGroup>
+            </div>
+          </>
+        )}
+
         {showMealOption && (
           <div className="mb-4">
             <div className="flex items-center space-x-2">
@@ -128,16 +212,18 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         )}
 
-        <div className="mb-4">
-          <Label className="text-sm font-medium mb-2 block">Special instructions:</Label>
-          <textarea
-            placeholder="Any special requests..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={2}
-            className="w-full border border-gray-300 rounded-md p-2 resize-none text-sm"
-          />
-        </div>
+        {showSpecialInstructions && (
+          <div className="mb-4">
+            <Label className="text-sm font-medium mb-2 block">Special instructions:</Label>
+            <textarea
+              placeholder="Any special requests..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              rows={2}
+              className="w-full border border-gray-300 rounded-md p-2 resize-none text-sm"
+            />
+          </div>
+        )}
 
         <Button
           onClick={handleAddToBasket}
@@ -244,24 +330,45 @@ const Menu = () => {
     }
   };
 
-  const addToBasket = (item: any, isMeal: boolean, customizations?: string[], comment?: string) => {
-    const basePrice = parseFloat(item.price.replace('£', ''));
-    const finalPrice = isMeal ? basePrice + 2.50 : basePrice;
-    const itemName = isMeal ? `${item.name} (Meal)` : item.name;
+  const addToBasket = (item: any, isMeal: boolean, customizations?: string[], comment?: string, sideSize?: string, milkshakeSize?: string, milkshakeFlavor?: string) => {
+    let basePrice = parseFloat(item.price.replace('£', ''));
+    let itemName = item.name;
+
+    // Handle meal pricing
+    if (isMeal) {
+      basePrice += 2.50;
+      itemName = `${item.name} (Meal)`;
+    }
+
+    // Handle side size pricing
+    if (sideSize === 'large') {
+      basePrice += 1.00;
+    }
+
+    // Handle milkshake pricing
+    if (item.category === 'Milkshakes') {
+      basePrice = milkshakeSize === 'regular' ? 4.20 : 5.00;
+    }
 
     const basketItem: Omit<BasketItem, 'id' | 'quantity'> = {
       name: itemName,
-      price: `£${finalPrice.toFixed(2)}`,
+      price: `£${basePrice.toFixed(2)}`,
       category: item.category || 'Menu Item',
       customizations,
-      comment
+      comment,
+      sideSize,
+      milkshakeSize,
+      milkshakeFlavor
     };
 
     const existingItemIndex = basketItems.findIndex(
       (basketItem) =>
         basketItem.name === itemName &&
         JSON.stringify(basketItem.customizations) === JSON.stringify(customizations) &&
-        basketItem.comment === comment
+        basketItem.comment === comment &&
+        basketItem.sideSize === sideSize &&
+        basketItem.milkshakeSize === milkshakeSize &&
+        basketItem.milkshakeFlavor === milkshakeFlavor
     );
 
     if (existingItemIndex > -1) {
@@ -492,15 +599,9 @@ const Menu = () => {
 
   const sidesItems = [
     {
-      name: 'Regular Chips',
+      name: 'Chips',
       price: '£2.99',
       description: 'Golden crispy chips seasoned with sea salt.',
-      image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop'
-    },
-    {
-      name: 'Large Chips',
-      price: '£3.99',
-      description: 'Extra large portion of our golden crispy chips.',
       image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop'
     },
     {
@@ -514,20 +615,38 @@ const Menu = () => {
       price: '£4.99',
       description: 'Chips loaded with cheese, bacon and sour cream.',
       image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Onion Rings',
+      price: '£3.49',
+      description: 'Crispy beer-battered onion rings.',
+      image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop'
     }
   ];
 
   const drinkItems = [
     {
-      name: 'Coca Cola',
-      price: '£1.99',
-      description: 'Classic Coca Cola in a chilled bottle.',
+      name: 'Coca Cola Can',
+      price: '£1.25',
+      description: 'Classic Coca Cola in a 330ml can.',
       image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop'
     },
     {
-      name: 'Sprite',
-      price: '£1.99',
-      description: 'Refreshing lemon-lime soda.',
+      name: 'Coca Cola 1.5L',
+      price: '£2.99',
+      description: 'Classic Coca Cola in a 1.5L bottle.',
+      image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Sprite Can',
+      price: '£1.25',
+      description: 'Refreshing lemon-lime soda in a 330ml can.',
+      image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Sprite 1.5L',
+      price: '£2.99',
+      description: 'Refreshing lemon-lime soda in a 1.5L bottle.',
       image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop'
     },
     {
@@ -546,27 +665,9 @@ const Menu = () => {
 
   const milkshakeItems = [
     {
-      name: 'Oreo Milkshake',
-      price: '£4.50',
-      description: 'Creamy vanilla milkshake blended with Oreo cookies.',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop'
-    },
-    {
-      name: 'Strawberry Milkshake',
-      price: '£4.50',
-      description: 'Fresh strawberry milkshake with whipped cream.',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop'
-    },
-    {
-      name: 'Chocolate Milkshake',
-      price: '£4.50',
-      description: 'Rich chocolate milkshake topped with chocolate sauce.',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop'
-    },
-    {
-      name: 'Biscoff Milkshake',
-      price: '£4.50',
-      description: 'Caramelized biscuit milkshake with Biscoff cookies.',
+      name: 'Milkshake',
+      price: '£4.20',
+      description: 'Creamy milkshake in your choice of flavor and size.',
       image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop'
     }
   ];
@@ -662,7 +763,7 @@ const Menu = () => {
                 key={item.name}
                 item={item}
                 category="Starters"
-                showMealOption={true}
+                showSpecialInstructions={false}
                 onAddToBasket={addToBasket}
               />
             ))}
@@ -678,6 +779,7 @@ const Menu = () => {
                 item={item}
                 category="Fried Gold"
                 showMealOption={true}
+                showSpecialInstructions={false}
                 onAddToBasket={addToBasket}
               />
             ))}
@@ -754,6 +856,7 @@ const Menu = () => {
                 key={item.name}
                 item={item}
                 category="Kids"
+                showSpecialInstructions={false}
                 onAddToBasket={addToBasket}
               />
             ))}
@@ -768,6 +871,8 @@ const Menu = () => {
                 key={item.name}
                 item={item}
                 category="Sides"
+                showSizeOptions={true}
+                showSpecialInstructions={false}
                 onAddToBasket={addToBasket}
               />
             ))}
@@ -782,6 +887,7 @@ const Menu = () => {
                 key={item.name}
                 item={item}
                 category="Drinks"
+                showSpecialInstructions={false}
                 onAddToBasket={addToBasket}
               />
             ))}
@@ -796,6 +902,7 @@ const Menu = () => {
                 key={item.name}
                 item={item}
                 category="Milkshakes"
+                showSpecialInstructions={false}
                 onAddToBasket={addToBasket}
               />
             ))}
@@ -810,6 +917,7 @@ const Menu = () => {
                 key={item.name}
                 item={item}
                 category="Sweet Stacks"
+                showSpecialInstructions={false}
                 onAddToBasket={addToBasket}
               />
             ))}
