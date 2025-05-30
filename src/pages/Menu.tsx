@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -66,7 +65,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   };
 
   const handleAddToBasket = () => {
-    onAddToBasket(item, isMeal, selectedCustomizations.length > 0 ? selectedCustomizations : undefined, comment || undefined);
+    const itemWithCategory = { ...item, category };
+    onAddToBasket(itemWithCategory, isMeal, selectedCustomizations.length > 0 ? selectedCustomizations : undefined, comment || undefined);
     // Reset form
     setSelectedCustomizations([]);
     setIsMeal(false);
@@ -660,7 +660,7 @@ const Menu = () => {
             {startersItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Starters' }}
+                item={item}
                 category="Starters"
                 showMealOption={true}
                 onAddToBasket={addToBasket}
@@ -675,7 +675,7 @@ const Menu = () => {
             {friedGoldItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Fried Gold' }}
+                item={item}
                 category="Fried Gold"
                 showMealOption={true}
                 onAddToBasket={addToBasket}
@@ -690,7 +690,7 @@ const Menu = () => {
             {chickenBurgerItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Chicken Burgers' }}
+                item={item}
                 category="Chicken Burgers"
                 showMealOption={true}
                 onAddToBasket={addToBasket}
@@ -705,7 +705,7 @@ const Menu = () => {
             {smashBurgerItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Smash Burgers' }}
+                item={item}
                 category="Smash Burgers"
                 showMealOption={true}
                 onAddToBasket={addToBasket}
@@ -720,7 +720,7 @@ const Menu = () => {
             {pizzaItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Pizzas' }}
+                item={item}
                 category="Pizzas"
                 showMealOption={true}
                 showCustomizations={true}
@@ -737,7 +737,7 @@ const Menu = () => {
             {wrapItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Wraps' }}
+                item={item}
                 category="Wraps"
                 showMealOption={true}
                 onAddToBasket={addToBasket}
@@ -752,7 +752,7 @@ const Menu = () => {
             {kidsItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Kids' }}
+                item={item}
                 category="Kids"
                 onAddToBasket={addToBasket}
               />
@@ -766,7 +766,7 @@ const Menu = () => {
             {sidesItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Sides' }}
+                item={item}
                 category="Sides"
                 onAddToBasket={addToBasket}
               />
@@ -780,7 +780,7 @@ const Menu = () => {
             {drinkItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Drinks' }}
+                item={item}
                 category="Drinks"
                 onAddToBasket={addToBasket}
               />
@@ -794,7 +794,7 @@ const Menu = () => {
             {milkshakeItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Milkshakes' }}
+                item={item}
                 category="Milkshakes"
                 onAddToBasket={addToBasket}
               />
@@ -808,7 +808,7 @@ const Menu = () => {
             {sweetStacksItems.map((item) => (
               <MenuItemCard
                 key={item.name}
-                item={{ ...item, category: 'Sweet Stacks' }}
+                item={item}
                 category="Sweet Stacks"
                 onAddToBasket={addToBasket}
               />
