@@ -7,8 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { ShoppingCart } from 'lucide-react';
 import Basket, { BasketItem } from '@/components/Basket';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Menu = () => {
+  const navigate = useNavigate();
   const [customizations, setCustomizations] = useState<{[key: string]: string[]}>({});
   const [sideSizes, setSideSizes] = useState<{[key: string]: 'regular' | 'large'}>({});
   const [comments, setComments] = useState<{[key: string]: string}>({});
@@ -17,6 +19,7 @@ const Menu = () => {
   const [iceCreamFlavors, setIceCreamFlavors] = useState<{[key: string]: string[]}>({});
   const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
   const [isBasketOpen, setIsBasketOpen] = useState(false);
+  const [mealOptions, setMealOptions] = useState<{[key: string]: boolean}>({});
 
   const customizationOptions = [
     'Creamy mayo',
@@ -105,6 +108,13 @@ const Menu = () => {
     });
   };
 
+  const handleMealOptionChange = (itemIndex: string, isMeal: boolean) => {
+    setMealOptions(prev => ({
+      ...prev,
+      [itemIndex]: isMeal
+    }));
+  };
+
   const getMilkshakePrice = (size: 'regular' | 'large') => {
     return size === 'large' ? '£5.50' : '£4.50';
   };
@@ -114,15 +124,33 @@ const Menu = () => {
     return size === 'large' ? `£${(price + 1).toFixed(2)}` : regularPrice;
   };
 
+  const getItemPrice = (item: any, category: any, itemIndex: string) => {
+    let basePrice = 0;
+    
+    if (category.id === 'sides' && item.regularPrice) {
+      basePrice = parseFloat(getSidePrice(item.regularPrice, sideSizes[`sides-${itemIndex}`] || 'regular').replace('£', ''));
+    } else if (category.id === 'drinks' && item.name === 'Milkshakes') {
+      basePrice = parseFloat(getMilkshakePrice(milkshakeSizes['milkshakes'] || 'regular').replace('£', ''));
+    } else {
+      basePrice = parseFloat((item.price || item.regularPrice).replace('£', ''));
+    }
+
+    // Add meal option cost
+    if (category.hasMealOption && mealOptions[`${category.id}-${itemIndex}`]) {
+      basePrice += 2.50;
+    }
+
+    return `£${basePrice.toFixed(2)}`;
+  };
+
   const addToBasket = (item: any, category: any, itemIndex: string) => {
+    const finalPrice = getItemPrice(item, category, itemIndex);
+    const isMeal = category.hasMealOption && mealOptions[`${category.id}-${itemIndex}`];
+    
     const basketItem: BasketItem = {
       id: `${category.id}-${itemIndex}-${Date.now()}`,
-      name: item.name,
-      price: category.id === 'sides' && item.regularPrice 
-        ? getSidePrice(item.regularPrice, sideSizes[`sides-${itemIndex}`] || 'regular')
-        : category.id === 'drinks' && item.name === 'Milkshakes'
-        ? getMilkshakePrice(milkshakeSizes['milkshakes'] || 'regular')
-        : (item.price || item.regularPrice),
+      name: isMeal ? `${item.name} (Meal)` : item.name,
+      price: finalPrice,
       category: category.name,
       customizations: customizations[`${category.id}-${itemIndex}`] || [],
       sideSize: category.id === 'sides' ? sideSizes[`sides-${itemIndex}`] || 'regular' : undefined,
@@ -148,8 +176,18 @@ const Menu = () => {
     );
   };
 
+  const clearBasket = () => {
+    setBasketItems([]);
+  };
+
   const getBasketCount = () => {
     return basketItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const proceedToCheckout = () => {
+    if (basketItems.length > 0) {
+      navigate('/checkout', { state: { basketItems } });
+    }
   };
 
   const menuCategories = [
@@ -266,8 +304,7 @@ const Menu = () => {
       name: 'Loaded Stackers\' Fries',
       icon: '🍟',
       items: [
-        { name: 'Loaded Stackers\' Fries', description: 'Chunks of peri-peri chicken, crispy chicken bites, cheesy sauce and jalapeños.', price: '£7.50', badge: 'SIGNATURE', image: 'photo-1500673922987-e212871fec22' },
-        { name: 'Chili Cheese Fries', description: 'Fries, chili con carne, melted cheese, sour cream', price: '£6.50', badge: 'HEARTY', image: 'photo-1618160702438-9b02ab6515c9' }
+        { name: 'Loaded Stackers\' Fries', description: 'Chunks of peri-peri chicken, crispy chicken bites, cheesy sauce and jalapeños.', price: '£7.50', badge: 'SIGNATURE', image: 'photo-1500673922987-e212871fec22' }
       ]
     },
     {
@@ -438,15 +475,15 @@ const Menu = () => {
       {/* Menu Categories */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          {/* Category Navigation */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12 sticky top-20 bg-gray-50 py-4 z-40">
+          {/* Category Navigation - Fixed mobile positioning */}
+          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-12 sticky top-16 md:top-20 bg-gray-50 py-4 z-40 -mx-4 px-4">
             {menuCategories.map((category) => (
               <a
                 key={category.id}
                 href={`#${category.id}`}
-                className="bg-white border border-stackers-yellow text-stackers-charcoal hover:bg-stackers-yellow font-bold px-6 py-3 rounded-full transition-all duration-200 hover:scale-105"
+                className="bg-white border border-stackers-yellow text-stackers-charcoal hover:bg-stackers-yellow font-bold px-3 md:px-6 py-2 md:py-3 rounded-full transition-all duration-200 hover:scale-105 text-sm md:text-base"
               >
-                {category.icon} {category.name}
+                <span className="hidden md:inline">{category.icon} </span>{category.name}
               </a>
             ))}
           </div>
@@ -636,12 +673,7 @@ const Menu = () => {
                       
                       <div className="flex items-center justify-between">
                         <span className="text-2xl font-bold text-stackers-yellow">
-                          {category.id === 'sides' && item.regularPrice 
-                            ? getSidePrice(item.regularPrice, sideSizes[`sides-${index}`] || 'regular')
-                            : item.name === 'Milkshakes'
-                            ? getMilkshakePrice(milkshakeSizes['milkshakes'] || 'regular')
-                            : (item.price || item.regularPrice)
-                          }
+                          {getItemPrice(item, category, index.toString())}
                         </span>
                         <div className="flex flex-col gap-2">
                           <Button 
@@ -652,9 +684,21 @@ const Menu = () => {
                             Add to Order
                           </Button>
                           {category.hasMealOption && (
-                            <Button variant="outline" className="text-sm border-stackers-yellow text-stackers-charcoal hover:bg-stackers-yellow transition-colors">
-                              Make it a meal +£2.50
-                            </Button>
+                            <div className="flex items-center space-x-2 text-sm">
+                              <Checkbox 
+                                id={`meal-${category.id}-${index}`}
+                                checked={mealOptions[`${category.id}-${index}`] || false}
+                                onCheckedChange={(checked) => 
+                                  handleMealOptionChange(`${category.id}-${index}`, !!checked)
+                                }
+                              />
+                              <label 
+                                htmlFor={`meal-${category.id}-${index}`}
+                                className="text-stackers-charcoal cursor-pointer"
+                              >
+                                Make it a meal +£2.50
+                              </label>
+                            </div>
                           )}
                         </div>
                       </div>
@@ -692,6 +736,8 @@ const Menu = () => {
         items={basketItems}
         onRemoveItem={removeFromBasket}
         onUpdateQuantity={updateQuantity}
+        onClearBasket={clearBasket}
+        onProceedToCheckout={proceedToCheckout}
         isOpen={isBasketOpen}
         onClose={() => setIsBasketOpen(false)}
       />

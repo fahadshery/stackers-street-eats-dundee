@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { X, ShoppingCart } from 'lucide-react';
+import { X, ShoppingCart, Trash2 } from 'lucide-react';
 
 export interface BasketItem {
   id: string;
@@ -21,11 +21,21 @@ interface BasketProps {
   items: BasketItem[];
   onRemoveItem: (id: string) => void;
   onUpdateQuantity: (id: string, quantity: number) => void;
+  onClearBasket: () => void;
+  onProceedToCheckout: () => void;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const Basket: React.FC<BasketProps> = ({ items, onRemoveItem, onUpdateQuantity, isOpen, onClose }) => {
+const Basket: React.FC<BasketProps> = ({ 
+  items, 
+  onRemoveItem, 
+  onUpdateQuantity, 
+  onClearBasket,
+  onProceedToCheckout,
+  isOpen, 
+  onClose 
+}) => {
   const calculateTotal = () => {
     return items.reduce((total, item) => {
       const price = parseFloat(item.price.replace('£', ''));
@@ -44,9 +54,22 @@ const Basket: React.FC<BasketProps> = ({ items, onRemoveItem, onUpdateQuantity, 
               <ShoppingCart className="mr-2" size={24} />
               Your Basket
             </h2>
-            <Button variant="ghost" onClick={onClose} className="text-white hover:bg-gray-700">
-              <X size={24} />
-            </Button>
+            <div className="flex items-center gap-2">
+              {items.length > 0 && (
+                <Button 
+                  variant="ghost" 
+                  onClick={onClearBasket}
+                  className="text-white hover:bg-gray-700 text-sm"
+                  size="sm"
+                >
+                  <Trash2 size={16} className="mr-1" />
+                  Clear
+                </Button>
+              )}
+              <Button variant="ghost" onClick={onClose} className="text-white hover:bg-gray-700">
+                <X size={24} />
+              </Button>
+            </div>
           </div>
         </div>
         
@@ -132,7 +155,10 @@ const Basket: React.FC<BasketProps> = ({ items, onRemoveItem, onUpdateQuantity, 
                   <span>Total:</span>
                   <span className="text-stackers-yellow">£{calculateTotal()}</span>
                 </div>
-                <Button className="w-full mt-4 bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold">
+                <Button 
+                  className="w-full mt-4 bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                  onClick={onProceedToCheckout}
+                >
                   Proceed to Checkout
                 </Button>
               </div>

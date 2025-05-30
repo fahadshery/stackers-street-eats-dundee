@@ -1,9 +1,11 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Menu, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
@@ -12,6 +14,10 @@ const Header = () => {
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' }
   ];
+
+  const handleOrderNow = () => {
+    navigate('/menu');
+  };
 
   return (
     <header className="bg-stackers-charcoal text-white sticky top-0 z-50 shadow-lg">
@@ -39,7 +45,10 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-6 py-2 transition-all duration-200 hover:scale-105">
+            <Button 
+              onClick={handleOrderNow}
+              className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-6 py-2 transition-all duration-200 hover:scale-105"
+            >
               ORDER NOW
             </Button>
           </div>
@@ -68,7 +77,10 @@ const Header = () => {
                 </a>
               ))}
               <div className="px-4 pt-2">
-                <Button className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold py-2 transition-all duration-200">
+                <Button 
+                  onClick={handleOrderNow}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold py-2 transition-all duration-200"
+                >
                   ORDER NOW
                 </Button>
               </div>
