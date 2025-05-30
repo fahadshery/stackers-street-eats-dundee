@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -64,7 +65,7 @@ const PizzaCard: React.FC<PizzaCardProps> = ({
                     ...prev,
                     [pizza.name]: {
                       ...prev[pizza.name],
-                      [option]: checked
+                      [option]: !!checked
                     }
                   }))
                 }
@@ -86,7 +87,7 @@ const PizzaCard: React.FC<PizzaCardProps> = ({
             onCheckedChange={(checked) =>
               setMakeItMeal((prev) => ({
                 ...prev,
-                [pizza.name]: checked
+                [pizza.name]: !!checked
               }))
             }
           />
@@ -222,8 +223,21 @@ const Menu = () => {
   const [pizzaComments, setPizzaComments] = useState<{ [pizzaName: string]: string }>({});
   const [pizzaMakeItMeal, setPizzaMakeItMeal] = useState<{ [pizzaName: string]: boolean }>({});
 
+  // State for burger/wrap comments and make it meal
+  const [burgerComments, setBurgerComments] = useState<{ [itemName: string]: string }>({});
+  const [burgerMakeItMeal, setBurgerMakeItMeal] = useState<{ [itemName: string]: boolean }>({});
+  const [wrapComments, setWrapComments] = useState<{ [itemName: string]: string }>({});
+  const [wrapMakeItMeal, setWrapMakeItMeal] = useState<{ [itemName: string]: boolean }>({});
+
   // State for ice cream flavors selection
   const [iceCreamFlavors, setIceCreamFlavors] = useState<{ [flavor: string]: boolean }>({});
+
+  // State for milkshake size and flavor
+  const [milkshakeSize, setMilkshakeSize] = useState<'regular' | 'large'>('regular');
+  const [milkshakeFlavor, setMilkshakeFlavor] = useState<string>('');
+
+  // State for sides size
+  const [sideSize, setSideSize] = useState<{ [itemName: string]: 'regular' | 'large' }>({});
 
   const addToBasket = (item: Omit<BasketItem, 'id' | 'quantity'>) => {
     const existingItemIndex = basketItems.findIndex(
@@ -289,6 +303,48 @@ const Menu = () => {
     setPizzaCustomizations((prev) => ({ ...prev, [pizzaName]: {} }));
     setPizzaComments((prev) => ({ ...prev, [pizzaName]: '' }));
     setPizzaMakeItMeal((prev) => ({ ...prev, [pizzaName]: false }));
+  };
+
+  const handleAddBurger = (itemName: string, basePrice: string) => {
+    const comment = burgerComments[itemName] || '';
+    const makeItMeal = burgerMakeItMeal[itemName] || false;
+
+    let finalPrice = parseFloat(basePrice.replace('£', ''));
+    if (makeItMeal) {
+      finalPrice += 2.5;
+    }
+
+    addToBasket({
+      name: itemName,
+      price: `£${finalPrice.toFixed(2)}`,
+      category: 'Chicken Burgers',
+      comment: comment || undefined
+    });
+
+    // Reset form
+    setBurgerComments((prev) => ({ ...prev, [itemName]: '' }));
+    setBurgerMakeItMeal((prev) => ({ ...prev, [itemName]: false }));
+  };
+
+  const handleAddWrap = (itemName: string, basePrice: string) => {
+    const comment = wrapComments[itemName] || '';
+    const makeItMeal = wrapMakeItMeal[itemName] || false;
+
+    let finalPrice = parseFloat(basePrice.replace('£', ''));
+    if (makeItMeal) {
+      finalPrice += 2.5;
+    }
+
+    addToBasket({
+      name: itemName,
+      price: `£${finalPrice.toFixed(2)}`,
+      category: 'Wraps',
+      comment: comment || undefined
+    });
+
+    // Reset form
+    setWrapComments((prev) => ({ ...prev, [itemName]: '' }));
+    setWrapMakeItMeal((prev) => ({ ...prev, [itemName]: false }));
   };
 
   const removeFromBasket = (id: string) => {
@@ -358,23 +414,139 @@ const Menu = () => {
 
         {/* Starters Section */}
         <MenuSection id="starters" label="Starters" sectionRef={startersRef}>
-          {/* Example content */}
-          <p className="text-gray-600">Starters menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Chicken (1pc)', price: '£2.25' },
+              { name: 'Chicken (2pc)', price: '£3.99' },
+              { name: 'Chicken (3pc)', price: '£5.49' },
+              { name: 'Hot Wings (6pc)', price: '£4.99' },
+              { name: 'Hot Wings (12pc)', price: '£8.99' },
+              { name: 'Onion Rings (8pc)', price: '£3.49' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{item.price}</p>
+                <Button
+                  onClick={() => addToBasket({ name: item.name, price: item.price, category: 'Starters' })}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
 
         {/* Fried Gold Section */}
         <MenuSection id="fried-gold" label="Fried Gold" sectionRef={friedGoldRef}>
-          <p className="text-gray-600">Fried Gold menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Fish & Chips', price: '£6.99' },
+              { name: 'Battered Sausage & Chips', price: '£5.49' },
+              { name: 'Chicken Burger & Chips', price: '£7.99' },
+              { name: 'Scampi & Chips', price: '£6.49' },
+              { name: 'Pie & Chips', price: '£5.99' },
+              { name: 'Large Cod & Chips', price: '£8.99' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{item.price}</p>
+                <Button
+                  onClick={() => addToBasket({ name: item.name, price: item.price, category: 'Fried Gold' })}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
 
         {/* Chicken Burgers Section */}
         <MenuSection id="chicken-burgers" label="Chicken Burgers" sectionRef={chickenBurgersRef}>
-          <p className="text-gray-600">Chicken Burgers menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Classic Chicken Burger', price: '£6.99' },
+              { name: 'Spicy Chicken Burger', price: '£7.49' },
+              { name: 'BBQ Chicken Burger', price: '£7.99' },
+              { name: 'Southern Fried Chicken Burger', price: '£7.49' },
+              { name: 'Buffalo Chicken Burger', price: '£7.99' },
+              { name: 'Chicken Deluxe Burger', price: '£8.49' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{item.price}</p>
+                
+                {/* Make it a Meal */}
+                <div className="mb-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`${item.name}-meal`}
+                      checked={burgerMakeItMeal[item.name] || false}
+                      onCheckedChange={(checked) =>
+                        setBurgerMakeItMeal((prev) => ({
+                          ...prev,
+                          [item.name]: !!checked
+                        }))
+                      }
+                    />
+                    <Label htmlFor={`${item.name}-meal`} className="text-sm font-medium">
+                      Make it a meal +£2.50
+                    </Label>
+                  </div>
+                </div>
+
+                {/* Comment */}
+                <div className="mb-4">
+                  <Label className="text-sm font-medium mb-2 block">Special instructions:</Label>
+                  <textarea
+                    placeholder="Any special requests..."
+                    value={burgerComments[item.name] || ''}
+                    onChange={(e) =>
+                      setBurgerComments((prev) => ({
+                        ...prev,
+                        [item.name]: e.target.value
+                      }))
+                    }
+                    rows={2}
+                    className="w-full border border-gray-300 rounded-md p-2 resize-none"
+                  />
+                </div>
+
+                <Button
+                  onClick={() => handleAddBurger(item.name, item.price)}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
 
         {/* Smash Burgers Section */}
         <MenuSection id="smash-burgers" label="Smash Burgers" sectionRef={smashBurgersRef}>
-          <p className="text-gray-600">Smash Burgers menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Classic Smash Burger', price: '£5.99' },
+              { name: 'Double Smash Burger', price: '£7.99' },
+              { name: 'Bacon Smash Burger', price: '£6.99' },
+              { name: 'Cheese Smash Burger', price: '£6.49' },
+              { name: 'BBQ Bacon Smash', price: '£7.49' },
+              { name: 'Mushroom Swiss Smash', price: '£6.99' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{item.price}</p>
+                <Button
+                  onClick={() => addToBasket({ name: item.name, price: item.price, category: 'Smash Burgers' })}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
 
         {/* Pizzas Section - Updated with Make it a Meal */}
@@ -405,32 +577,341 @@ const Menu = () => {
 
         {/* Wraps Section */}
         <MenuSection id="wraps" label="Wraps" sectionRef={wrapsRef}>
-          <p className="text-gray-600">Wraps menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Chicken Caesar Wrap', price: '£5.99' },
+              { name: 'Buffalo Chicken Wrap', price: '£6.49' },
+              { name: 'BBQ Chicken Wrap', price: '£6.49' },
+              { name: 'Veggie Wrap', price: '£5.49' },
+              { name: 'Tuna Mayo Wrap', price: '£5.99' },
+              { name: 'BLT Wrap', price: '£5.49' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{item.price}</p>
+                
+                {/* Make it a Meal */}
+                <div className="mb-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`${item.name}-meal`}
+                      checked={wrapMakeItMeal[item.name] || false}
+                      onCheckedChange={(checked) =>
+                        setWrapMakeItMeal((prev) => ({
+                          ...prev,
+                          [item.name]: !!checked
+                        }))
+                      }
+                    />
+                    <Label htmlFor={`${item.name}-meal`} className="text-sm font-medium">
+                      Make it a meal +£2.50
+                    </Label>
+                  </div>
+                </div>
+
+                {/* Comment */}
+                <div className="mb-4">
+                  <Label className="text-sm font-medium mb-2 block">Special instructions:</Label>
+                  <textarea
+                    placeholder="Any special requests..."
+                    value={wrapComments[item.name] || ''}
+                    onChange={(e) =>
+                      setWrapComments((prev) => ({
+                        ...prev,
+                        [item.name]: e.target.value
+                      }))
+                    }
+                    rows={2}
+                    className="w-full border border-gray-300 rounded-md p-2 resize-none"
+                  />
+                </div>
+
+                <Button
+                  onClick={() => handleAddWrap(item.name, item.price)}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
 
         {/* Kids Section */}
         <MenuSection id="kids" label="Kids" sectionRef={kidsRef}>
-          <p className="text-gray-600">Kids menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Kids Chicken Nuggets & Chips', price: '£4.99' },
+              { name: 'Kids Fish Fingers & Chips', price: '£4.99' },
+              { name: 'Kids Burger & Chips', price: '£5.49' },
+              { name: 'Kids Pizza Slice & Chips', price: '£4.99' },
+              { name: 'Kids Sausage & Chips', price: '£4.49' },
+              { name: 'Kids Beans & Chips', price: '£3.99' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{item.price}</p>
+                <Button
+                  onClick={() => addToBasket({ name: item.name, price: item.price, category: 'Kids' })}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
 
         {/* Sides Section */}
         <MenuSection id="sides" label="Sides" sectionRef={sidesRef}>
-          <p className="text-gray-600">Sides menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Regular Chips', price: '£2.99', large: '£3.99' },
+              { name: 'Cheesy Chips', price: '£3.49', large: '£4.49' },
+              { name: 'Loaded Fries', price: '£4.99', large: '£5.99' },
+              { name: 'Onion Rings', price: '£3.49', large: '£4.49' },
+              { name: 'Mozzarella Sticks', price: '£4.99', large: '£5.99' },
+              { name: 'Garlic Bread', price: '£2.99', large: '£3.99' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <div className="mb-4">
+                  <div className="flex items-center space-x-4 mb-2">
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        name={`${item.name}-size`}
+                        checked={sideSize[item.name] === 'regular' || !sideSize[item.name]}
+                        onChange={() => setSideSize(prev => ({ ...prev, [item.name]: 'regular' }))}
+                        className="text-stackers-yellow"
+                      />
+                      <span className="text-sm">Regular - {item.price}</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        name={`${item.name}-size`}
+                        checked={sideSize[item.name] === 'large'}
+                        onChange={() => setSideSize(prev => ({ ...prev, [item.name]: 'large' }))}
+                        className="text-stackers-yellow"
+                      />
+                      <span className="text-sm">Large - {item.large}</span>
+                    </label>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => {
+                    const selectedSize = sideSize[item.name] || 'regular';
+                    const price = selectedSize === 'large' ? item.large : item.price;
+                    addToBasket({
+                      name: item.name,
+                      price,
+                      category: 'Sides',
+                      sideSize: selectedSize
+                    });
+                  }}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
 
         {/* Drinks Section */}
         <MenuSection id="drinks" label="Drinks" sectionRef={drinksRef}>
-          <p className="text-gray-600">Drinks menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Coca Cola', price: '£1.99' },
+              { name: 'Pepsi', price: '£1.99' },
+              { name: 'Sprite', price: '£1.99' },
+              { name: 'Orange Juice', price: '£2.49' },
+              { name: 'Apple Juice', price: '£2.49' },
+              { name: 'Water', price: '£1.49' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{item.price}</p>
+                <Button
+                  onClick={() => addToBasket({ name: item.name, price: item.price, category: 'Drinks' })}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
 
         {/* Milkshakes Section */}
         <MenuSection id="milkshakes" label="Milkshakes" sectionRef={milkshakesRef}>
-          <p className="text-gray-600">Milkshakes menu items go here.</p>
+          <div className="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+            <h3 className="text-xl font-semibold text-stackers-charcoal mb-4">Premium Milkshakes</h3>
+            
+            {/* Size Selection */}
+            <div className="mb-4">
+              <p className="font-medium mb-2">Size:</p>
+              <div className="flex space-x-4">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="milkshake-size"
+                    checked={milkshakeSize === 'regular'}
+                    onChange={() => setMilkshakeSize('regular')}
+                    className="text-stackers-yellow"
+                  />
+                  <span className="text-sm">Regular - £4.50</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="milkshake-size"
+                    checked={milkshakeSize === 'large'}
+                    onChange={() => setMilkshakeSize('large')}
+                    className="text-stackers-yellow"
+                  />
+                  <span className="text-sm">Large - £5.50</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Flavor Selection */}
+            <div className="mb-4">
+              <p className="font-medium mb-2">Flavor:</p>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  'Oreo', 'Biscoff', 'Strawberry', 'Kinder Bueno / White Kinder Bueno',
+                  'Maltesers', 'Galaxy Caramel / Galaxy', 'Milky Bar', 'Banana',
+                  'Ferrero Rocher', 'Mango', 'Twix', 'Mars Bar',
+                  'Snickers', 'Milky Way', 'Crunchie'
+                ].map((flavor) => (
+                  <label key={flavor} className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="milkshake-flavor"
+                      checked={milkshakeFlavor === flavor}
+                      onChange={() => setMilkshakeFlavor(flavor)}
+                      className="text-stackers-yellow"
+                    />
+                    <span className="text-sm">{flavor}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <Button
+              onClick={() => {
+                if (milkshakeFlavor) {
+                  const price = milkshakeSize === 'large' ? '£5.50' : '£4.50';
+                  addToBasket({
+                    name: 'Premium Milkshake',
+                    price,
+                    category: 'Milkshakes',
+                    milkshakeSize,
+                    milkshakeFlavor
+                  });
+                  setMilkshakeFlavor('');
+                }
+              }}
+              disabled={!milkshakeFlavor}
+              className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold disabled:opacity-50"
+            >
+              Add to Order
+            </Button>
+          </div>
         </MenuSection>
 
         {/* Sweet Stacks Section */}
         <MenuSection id="sweet-stacks" label="Sweet Stacks" sectionRef={sweetStacksRef}>
-          <p className="text-gray-600">Sweet Stacks menu items go here.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Regular Sweet Items */}
+            {[
+              { name: 'Chocolate Waffle', price: '£5.99' },
+              { name: 'Strawberry Crepe', price: '£6.49' },
+              { name: 'Cookie Dough Delight', price: '£5.49' },
+              { name: 'Banana Split', price: '£4.99' },
+              { name: 'Apple Pie', price: '£3.99' },
+              { name: 'Cheesecake Slice', price: '£4.49' }
+            ].map((item) => (
+              <div key={item.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{item.price}</p>
+                <Button
+                  onClick={() => addToBasket({ name: item.name, price: item.price, category: 'Sweet Stacks' })}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+
+            {/* Ice Cream Section */}
+            {[
+              { name: '1 Scoop Premium Ice Cream', price: '£3.99', scoops: 1 },
+              { name: '2 Scoops Premium Ice Cream', price: '£5.99', scoops: 2 },
+              { name: '3 Scoops Premium Ice Cream', price: '£7.99', scoops: 3 }
+            ].map((iceCream) => (
+              <div key={iceCream.name} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{iceCream.name}</h3>
+                <p className="text-lg font-bold text-stackers-yellow mb-4">{iceCream.price}</p>
+                
+                <div className="mb-4">
+                  <p className="font-medium mb-2">Choose {iceCream.scoops} flavor{iceCream.scoops > 1 ? 's' : ''}:</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      'Vanilla', 'Strawberry', 'Scottish Tablet', 'Blue Bubblegum',
+                      'Belgian Chocolate', 'White Bueno', 'Cookies & Cream',
+                      'Raspberry Ripple', 'Chocolate Fudge Brownie', 'Honeycomb', 'Mint'
+                    ].map((flavor) => {
+                      const selectedCount = Object.values(iceCreamFlavors).filter(Boolean).length;
+                      const isDisabled = !iceCreamFlavors[flavor] && selectedCount >= iceCream.scoops;
+                      
+                      return (
+                        <label key={flavor} className={`flex items-center space-x-2 ${isDisabled ? 'opacity-50' : ''}`}>
+                          <input
+                            type="checkbox"
+                            checked={iceCreamFlavors[flavor] || false}
+                            disabled={isDisabled}
+                            onChange={(e) => {
+                              setIceCreamFlavors(prev => ({
+                                ...prev,
+                                [flavor]: e.target.checked
+                              }));
+                            }}
+                            className="text-stackers-yellow"
+                          />
+                          <span className="text-sm">{flavor}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <Button
+                  onClick={() => {
+                    const selectedFlavors = Object.entries(iceCreamFlavors)
+                      .filter(([_, selected]) => selected)
+                      .map(([flavor]) => flavor);
+                    
+                    if (selectedFlavors.length === iceCream.scoops) {
+                      addToBasket({
+                        name: iceCream.name,
+                        price: iceCream.price,
+                        category: 'Sweet Stacks',
+                        iceCreamFlavors: selectedFlavors
+                      });
+                      setIceCreamFlavors({});
+                    }
+                  }}
+                  disabled={Object.values(iceCreamFlavors).filter(Boolean).length !== iceCream.scoops}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold disabled:opacity-50"
+                >
+                  Add to Order
+                </Button>
+              </div>
+            ))}
+          </div>
         </MenuSection>
       </div>
 
