@@ -564,13 +564,6 @@ export const mealDealsItems: MenuItem[] = [
     category: 'Meal Deals'
   },
   {
-    name: 'Solo Supreme',
-    price: '£10.99',
-    description: 'The perfect solo feast that brings together our best fried favorites. Get 4 pieces of our crispy fried chicken and 4 golden chicken strips, served with a generous portion of fries and your choice of canned drink. This hearty combo delivers serious satisfaction when you are craving the ultimate chicken experience all to yourself.',
-    image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
-    category: 'Meal Deals'
-  },
-  {
     name: 'Party Platter',
     price: '£24.99',
     description: 'The ultimate party platter. Includes 4 pieces of crispy fried chicken, 2 Chicken Stack Classic burgers, 2 golden fries, and 2 chilled cans of juice — perfect for sharing',
@@ -587,6 +580,13 @@ export const mealDealsItems: MenuItem[] = [
 ];
 
 export const boxesItems: MenuItem[] = [
+    {
+    name: 'Solo Supreme Box',
+    price: '£10.99',
+    description: 'The perfect solo feast that brings together our best fried favorites. Get 4 pieces of our crispy fried chicken and 4 golden chicken strips, served with a generous portion of fries and your choice of canned drink. This hearty combo delivers serious satisfaction when you are craving the ultimate chicken experience all to yourself.',
+    image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
+    category: 'Boxes'
+  },
   {
     name: 'Burger Bash Box',
     price: '£15.00',
