@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -60,8 +61,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [selectedCustomizations, setSelectedCustomizations] = useState<string[]>([]);
   const [isMeal, setIsMeal] = useState(false);
   const [comment, setComment] = useState('');
-  const [sideSize, setSideSize] = useState('regular');
-  const [milkshakeSize, setMilkshakeSize] = useState('regular');
+  const [sideSize, setSideSize] = useState<'regular' | 'large'>('regular');
+  const [milkshakeSize, setMilkshakeSize] = useState<'regular' | 'large'>('regular');
   const [milkshakeFlavor, setMilkshakeFlavor] = useState('Oreo');
 
   const handleCustomizationChange = (customization: string, checked: boolean) => {
@@ -73,9 +74,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   };
 
   const handleAddToBasket = () => {
-    const itemWithCategory = { ...item, category };
     onAddToBasket(
-      itemWithCategory, 
+      item, 
       isMeal, 
       selectedCustomizations.length > 0 ? selectedCustomizations : undefined, 
       comment || undefined,
@@ -153,7 +153,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         {showSizeOptions && (
           <div className="mb-4">
             <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-            <RadioGroup value={sideSize} onValueChange={setSideSize}>
+            <RadioGroup value={sideSize} onValueChange={(value: 'regular' | 'large') => setSideSize(value)}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="regular" id={`${item.name}-regular`} />
                 <Label htmlFor={`${item.name}-regular`} className="text-sm">Regular</Label>
@@ -170,7 +170,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           <>
             <div className="mb-4">
               <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-              <RadioGroup value={milkshakeSize} onValueChange={setMilkshakeSize}>
+              <RadioGroup value={milkshakeSize} onValueChange={(value: 'regular' | 'large') => setMilkshakeSize(value)}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="regular" id={`${item.name}-regular-shake`} />
                   <Label htmlFor={`${item.name}-regular-shake`} className="text-sm">Regular (£4.20)</Label>
