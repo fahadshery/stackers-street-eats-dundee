@@ -134,7 +134,18 @@ const Menu = () => {
     }
   };
 
-  const addToBasket = (item: MenuItem, isMeal: boolean, customizations?: string[], comment?: string, sideSize?: string, milkshakeSize?: string, milkshakeFlavor?: string, pizzaSize?: string, iceCreamScoops?: number, iceCreamFlavors?: string[]) => {
+  const addToBasket = (
+    item: MenuItem, 
+    isMeal: boolean, 
+    customizations?: string[], 
+    comment?: string, 
+    sideSize?: 'regular' | 'large', 
+    milkshakeSize?: 'regular' | 'large', 
+    milkshakeFlavor?: string, 
+    pizzaSize?: string, 
+    iceCreamScoops?: number, 
+    iceCreamFlavors?: string[]
+  ) => {
     let basePrice = parseFloat(item.price.replace('£', ''));
     let itemName = item.name;
 
@@ -173,6 +184,11 @@ const Menu = () => {
       }
       
       itemName = `${item.name} (${pizzaSize})`;
+      
+      // Add (Meal) tag for pizzas if selected
+      if (isMeal) {
+        itemName = `${item.name} (${pizzaSize}) (Meal)`;
+      }
     }
 
     const basketItem: Omit<BasketItem, 'id' | 'quantity'> = {
@@ -184,7 +200,8 @@ const Menu = () => {
       sideSize,
       milkshakeSize,
       milkshakeFlavor,
-      iceCreamFlavors
+      iceCreamFlavors,
+      iceCreamScoops
     };
 
     const existingItemIndex = basketItems.findIndex(
@@ -195,7 +212,8 @@ const Menu = () => {
         basketItem.sideSize === sideSize &&
         basketItem.milkshakeSize === milkshakeSize &&
         basketItem.milkshakeFlavor === milkshakeFlavor &&
-        JSON.stringify(basketItem.iceCreamFlavors) === JSON.stringify(iceCreamFlavors)
+        JSON.stringify(basketItem.iceCreamFlavors) === JSON.stringify(iceCreamFlavors) &&
+        basketItem.iceCreamScoops === iceCreamScoops
     );
 
     if (existingItemIndex > -1) {

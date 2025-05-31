@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -256,11 +255,9 @@ const Checkout = () => {
                         </p>
                       )}
                       
-                      {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && (
+                      {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.iceCreamFlavors.length === 1 ? '1 Scoop' : 
-                           item.iceCreamFlavors.length === 2 ? '2 Scoops' : 
-                           '3 Scoops'}, Flavors: {item.iceCreamFlavors.join(', ')}
+                          {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavors: {item.iceCreamFlavors.join(', ')}
                         </p>
                       )}
                       
