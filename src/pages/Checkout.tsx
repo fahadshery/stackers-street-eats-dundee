@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -6,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, ShoppingBag, Tag, Gift } from 'lucide-react';
 import { BasketItem } from '@/components/Basket';
@@ -236,7 +236,7 @@ const Checkout = () => {
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <h3 className="font-semibold text-stackers-charcoal">{item.name}</h3>
-                      <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                      <p className="text-sm text-gray-600">{item.category}</p>
                       
                       {item.customizations && item.customizations.length > 0 && (
                         <p className="text-xs text-gray-500 mt-1">
@@ -245,7 +245,9 @@ const Checkout = () => {
                       )}
                       
                       {item.sideSize && (
-                        <p className="text-xs text-gray-500 mt-1">Size: {item.sideSize}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Size: {item.sideSize}
+                        </p>
                       )}
                       
                       {item.milkshakeSize && (
@@ -256,16 +258,21 @@ const Checkout = () => {
                       
                       {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && (
                         <p className="text-xs text-gray-500 mt-1">
-                          Flavors: {item.iceCreamFlavors.join(', ')}
+                          {item.iceCreamFlavors.length === 1 ? '1 Scoop' : 
+                           item.iceCreamFlavors.length === 2 ? '2 Scoops' : 
+                           '3 Scoops'}, Flavors: {item.iceCreamFlavors.join(', ')}
                         </p>
                       )}
                       
                       {item.comment && (
-                        <p className="text-xs text-gray-500 mt-1 italic">Note: {item.comment}</p>
+                        <p className="text-xs text-gray-500 mt-1 italic">
+                          Note: {item.comment}
+                        </p>
                       )}
                     </div>
                     <div className="text-right">
                       <span className="font-bold text-stackers-yellow">{item.price}</span>
+                      <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                     </div>
                   </div>
                 </div>
