@@ -61,61 +61,111 @@ export const startersItems: MenuItem[] = [
 
 export const friedGoldItems: MenuItem[] = [
   {
-    name: 'Fish & Chips',
-    price: '£6.99',
+    name: 'Chicken (1pc)',
+    price: '£2.25',
     description: 'Fresh cod in crispy batter served with golden chips and mushy peas.',
     image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
-    name: 'Battered Sausage & Chips',
-    price: '£5.49',
+    name: 'Chicken (2pcs)',
+    price: '£4.25',
     description: 'Premium pork sausage in crispy batter with chips.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
-    name: 'Scampi & Chips',
-    price: '£6.49',
+    name: 'Chicken (3pcs)',
+    price: '£5.75',
     description: 'Wholetail breaded scampi with chips and tartare sauce.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
-    name: 'Pie & Chips',
-    price: '£5.99',
-    description: 'Traditional steak and kidney pie served with chips and gravy.',
+    name: 'Wings (1pc)',
+    price: '£2.25',
+    description: 'Fresh cod in crispy batter served with golden chips and mushy peas.',
+    image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
+  },
+  {
+    name: 'Wings (2pcs)',
+    price: '£4.25',
+    description: 'Premium pork sausage in crispy batter with chips.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
+  },
+  {
+    name: 'Wings (3pcs)',
+    price: '£5.75',
+    description: 'Wholetail breaded scampi with chips and tartare sauce.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
+  },
+  
+  {
+    name: 'Strips (3pcs)',
+    price: '£3.99',
+    description: 'Fresh cod in crispy batter served with golden chips and mushy peas.',
+    image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
+  },
+  {
+    name: 'Strips (6pcs)',
+    price: '£5.99',
+    description: 'Premium pork sausage in crispy batter with chips.',
+    image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
+  },
+  {
+    name: 'Strips (12pcs)',
+    price: '£9.99',
+    description: 'Wholetail breaded scampi with chips and tartare sauce.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   }
 ];
 
 export const chickenBurgerItems: MenuItem[] = [
   {
-    name: 'Classic Chicken Burger',
-    price: '£6.99',
-    description: 'Crispy chicken breast with lettuce, tomato and mayo in a brioche bun.',
+    name: 'Chicken Stack Classic',
+    price: '£6.45',
+    description: 'Succulent chicken coated in a seasoned breading, stacked in a soft seeded bun, layered with melted cheese, fresh lettuce, onions, creamy mayo. A true Stackers favourite.',
     image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   },
   {
-    name: 'Spicy Chicken Burger',
-    price: '£7.49',
-    description: 'Spicy chicken breast with jalapeños, cheese and chipotle mayo.',
+    name: 'Zing Stack',
+    price: '£7.45',
+    description: 'Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn’t your thing!',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   },
   {
-    name: 'BBQ Chicken Burger',
-    price: '£7.99',
-    description: 'Grilled chicken with BBQ sauce, crispy bacon and onion rings.',
+    name: 'Peri-Peri Chicken Stack',
+    price: '£7.45',
+    description: 'Tender grilled peri-peri chicken, melted cheese, peri mayo, crisp lettuce, and fresh onions all stacked in a soft bun for the perfect bite. Grilled to perfection, stacked for satisfaction.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   },
   {
-    name: 'Buffalo Chicken Burger',
-    price: '£7.99',
-    description: 'Buffalo chicken with blue cheese sauce and crispy lettuce.',
+    name: 'Stack Veg Titan',
+    price: '£8',
+    description: 'Grilled halloumi, cheese, golden hash brown, fresh veggie patty, onion rings, mayo, red onions, and fresh lettuce. Crunchy. Cheesy. Legendary.',
+    image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
+    category: 'Chicken Burgers'
+  },
+  {
+    name: 'Firebird Stack',
+    price: '£8.45',
+    description: 'Crispy fried chicken meets melted cheese, our signature fire-cracker hot sauce, creamy mayo, topped with fresh lettuce, onions and fiery jalapeños for a kick. All nestled in a toasted bun. Packed with spice and crunch.',
+    image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
+    category: 'Chicken Burgers'
+  },
+  {
+    name: 'Halloumi Chicken Stack',
+    price: '£8.99',
+    description: 'Golden crispy fried chicken layered with melted cheese, flame grilled halloumi, tangy Algerian sauce, creamy mayo, fresh lettuce, zesty onions, fiery jalapeños, then crowned with crunchy nachos for the ultimate texture explosion. Engineered for serious taste seekers.',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   }
@@ -123,15 +173,15 @@ export const chickenBurgerItems: MenuItem[] = [
 
 export const smashBurgerItems: MenuItem[] = [
   {
-    name: 'Classic Smash Burger',
-    price: '£5.99',
-    description: 'Double smashed beef patties with cheese, pickles and special sauce.',
+    name: 'Stack Classic',
+    price: '£6.45',
+    description: 'Premium quality Angus beef, melted cheese, our secret sauce, mayo, onions, gherkins, and fresh lettuce on a soft bun. Simple. Juicy. Iconic.',
     image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
   },
   {
-    name: 'Double Smash Burger',
-    price: '£7.99',
+    name: 'BBQ Stack',
+    price: '£7.45',
     description: 'Four smashed patties with double cheese and all the fixings.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
