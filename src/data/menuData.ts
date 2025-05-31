@@ -12,42 +12,49 @@ export const startersItems: MenuItem[] = [
     name: 'Mozzarella Sticks (6)',
     price: '£4.25',
     description: 'Golden-fried and gooey on the inside — served hot and melty with a crunchy coating.',
-    image: 'https://unsplash.com/photos/a-black-plate-topped-with-fried-food-next-to-a-cup-of-dipping-sauce-sdz8yS12NoY?w=400&h=300&fit=crop',
-    category: 'Starters'
-  },
-  {
-    name: 'Chicken Wings (12pc)',
-    price: '£8.99',
-    description: 'Double portion of our signature crispy chicken wings, perfect for sharing.',
     image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop',
     category: 'Starters'
   },
   {
-    name: 'Hot Wings (6pc)',
-    price: '£4.99',
-    description: 'Spicy chicken wings with a fiery kick that will leave you wanting more.',
+    name: 'Onion Rings (10)',
+    price: '£4.25',
+    description: 'Crispy battered onion rings fried to perfection — a crunchy, savoury classic.',
+    image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop',
+    category: 'Starters'
+  },
+  {
+    name: 'Jalapeños Poppers (6)',
+    price: '£4.25',
+    description: 'Spicy jalapeños filled with creamy cheese, lightly crumbed and fried for a fiery bite.',
     image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
     category: 'Starters'
   },
   {
-    name: 'Hot Wings (12pc)',
-    price: '£8.99',
-    description: 'Double portion of our spiciest wings for the heat lovers.',
+    name: 'Garlic Bread (4)',
+    price: '£3.25',
+    description: 'Simple, soft, and satisfying.',
     image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
     category: 'Starters'
   },
   {
-    name: 'Onion Rings (8pc)',
-    price: '£3.49',
-    description: 'Crispy beer-battered onion rings served with our house sauce.',
+    name: 'Garlic Bread and Cheese (4)',
+    price: '£3.75',
+    description: 'Our classic garlic bread topped with melted cheese for that extra indulgence.',
     image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop',
     category: 'Starters'
   },
   {
-    name: 'Mozzarella Sticks (6pc)',
-    price: '£4.99',
-    description: 'Golden fried mozzarella sticks with marinara dipping sauce.',
+    name: 'Chargrilled Halloumi (2)',
+    price: '£4.25',
+    description: 'Thick-cut halloumi slices grilled with a golden char — salty, savoury and satisfying.',
     image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop',
+    category: 'Starters'
+  },
+  {
+    name: 'Peri-Peri Chicken Strips (4)',
+    price: '£4.25',
+    description: 'Tender chicken marinated in our signature peri-peri spices and grilled to juicy perfection.',
+    image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop',
     category: 'Starters'
   }
 ];
