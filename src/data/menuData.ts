@@ -9,10 +9,10 @@ export interface MenuItem {
 
 export const startersItems: MenuItem[] = [
   {
-    name: 'Chicken Wings (6pc)',
-    price: '£4.99',
-    description: 'Crispy golden chicken wings seasoned with our special blend of spices.',
-    image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop',
+    name: 'Mozzarella Sticks (6)',
+    price: '£4.25',
+    description: 'Golden-fried and gooey on the inside — served hot and melty with a crunchy coating.',
+    image: 'https://unsplash.com/photos/a-black-plate-topped-with-fried-food-next-to-a-cup-of-dipping-sauce-sdz8yS12NoY?w=400&h=300&fit=crop',
     category: 'Starters'
   },
   {
