@@ -604,13 +604,7 @@ export const boxesItems: MenuItem[] = [
   {
     name: 'Date Night',
     price: '£13.99',
-    description: 'Perfect for two to share — whether it’s burgers and banter or wings and a movie.
-    Includes:
-    🍔 2 x Chicken Stack Classic Burgers
-    🍗 1 x 10" Peri Peri Chicken Pizza
-    🍟 1 x Regular Fries
-    🥤 2 x Cans of Juice
-    ❤️ takeaway for a cosy night in.',
+    description: 'Perfect for two to share — whether it’s burgers and banter or wings and a movie. Includes: 🍔 2 x Chicken Stack Classic Burgers, 🍗 1 x 10" Peri Peri Chicken Pizza, 🍟 1 x Regular Fries, 🥤 2 x Cans of Juice, ❤️ takeaway for a cosy night in.',
     image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
     category: 'Boxes'
   }
