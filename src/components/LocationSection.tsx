@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/button';
 
 const LocationSection = () => {
   const openingHours = [
-    { day: "Monday", hours: "12:00 PM - 10:00 PM" },
-    { day: "Tuesday", hours: "12:00 PM - 10:00 PM" },
-    { day: "Wednesday", hours: "12:00 PM - 10:00 PM" },
-    { day: "Thursday", hours: "12:00 PM - 10:00 PM" },
-    { day: "Friday", hours: "12:00 PM - 11:00 PM" },
-    { day: "Saturday", hours: "12:00 PM - 11:00 PM" },
-    { day: "Sunday", hours: "2:00 PM - 9:00 PM" }
+    { day: "Monday", hours: "15:00 PM - 11:00 PM" },
+    { day: "Tuesday", hours: "15:00 PM - 11:00 PM" },
+    { day: "Wednesday", hours: "15:00 PM - 11:00 PM" },
+    { day: "Thursday", hours: "15:00 PM - 11:00 PM" },
+    { day: "Friday", hours: "15:00 PM - 11:00 PM" },
+    { day: "Saturday", hours: "15:00 PM - 11:00 PM" },
+    { day: "Sunday", hours: "15:00 PM - 11:00 PM" }
   ];
 
   return (
@@ -48,15 +48,15 @@ const LocationSection = () => {
               <div className="space-y-3">
                 <p className="flex items-center">
                   <span className="text-stackers-yellow mr-2">📞</span>
-                  01382 123 456
+                  01382 624 786
                 </p>
                 <p className="flex items-center">
                   <span className="text-stackers-yellow mr-2">💬</span>
-                  WhatsApp: 07123 456 789
+                  WhatsApp: 07988 747 121
                 </p>
                 <p className="flex items-center">
                   <span className="text-stackers-yellow mr-2">✉️</span>
-                  hello@stackersdundee.co.uk
+                  hello@stackersmash.com
                 </p>
               </div>
             </div>
