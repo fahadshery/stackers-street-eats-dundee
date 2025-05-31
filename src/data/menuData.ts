@@ -227,7 +227,7 @@ export const pizzaItems: MenuItem[] = [
   {
     name: 'Pepperoni Feast',
     price: '£6.95',
-    description: 'For the pepperoni lovers who believe more is always better. We load our rich tomato base with double the pepperoni and a generous blanket of melted mozzarella cheese. Every bite delivers that perfect spicy, savory punch that makes this pizza a crowd favorite.',
+    description: 'For the pepperoni lovers who believe more is always better. We load our rich tomato base with double the pepperoni and a generous blanket of melted mozzarella cheese. Every bite delivers that perfect spicy, savory punch that makes this pizza a crowd favourite.',
     image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
     category: 'Pizzas'
   },
@@ -583,7 +583,7 @@ export const boxesItems: MenuItem[] = [
     {
     name: 'Solo Supreme Box',
     price: '£10.99',
-    description: 'The perfect solo feast that brings together our best fried favorites. Get 4 pieces of our crispy fried chicken and 4 golden chicken strips, served with a generous portion of fries and your choice of canned drink. This hearty combo delivers serious satisfaction when you are craving the ultimate chicken experience all to yourself.',
+    description: 'The perfect solo feast that brings together our best fried favourites. Get 4 pieces of our crispy fried chicken and 4 golden chicken strips, served with a generous portion of fries and your choice of canned drink. This hearty combo delivers serious satisfaction when you are craving the ultimate chicken experience all to yourself.',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Boxes'
   },
