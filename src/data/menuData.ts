@@ -23,7 +23,7 @@ export const startersItems: MenuItem[] = [
     category: 'Starters'
   },
   {
-    name: 'Jalapeños Poppers (6) &#127798',
+    name: 'Jalapeños Poppers (6) 🌶',
     price: '£4.25',
     description: 'Spicy jalapeños filled with creamy cheese, lightly crumbed and fried for a delicious bite.',
     image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
@@ -149,21 +149,21 @@ export const chickenBurgerItems: MenuItem[] = [
     category: 'Chicken Burgers'
   },
   {
-    name: 'Stack Veg Titan',
+    name: 'Stack Veg Titan 🌱',
     price: '£8',
     description: 'Grilled halloumi, cheese, golden hash brown, fresh veggie patty, onion rings, mayo, red onions, and fresh lettuce. Crunchy. Cheesy. Legendary.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   },
   {
-    name: 'Firebird Stack',
+    name: 'Firebird Stack 🌶🌶',
     price: '£8.45',
     description: 'Crispy fried chicken meets melted cheese, our signature fire-cracker hot sauce, creamy mayo, topped with fresh lettuce, onions and fiery jalapeños for a kick. All nestled in a toasted bun. Packed with spice and crunch.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   },
   {
-    name: 'Halloumi Chicken Stack',
+    name: 'Halloumi Chicken Stack 🌶',
     price: '£8.99',
     description: 'Golden crispy fried chicken layered with melted cheese, flame grilled halloumi, tangy Algerian sauce, creamy mayo, fresh lettuce, zesty onions, fiery jalapeños, then crowned with crunchy nachos for the ultimate texture explosion. Engineered for serious taste seekers.',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
@@ -201,7 +201,7 @@ export const smashBurgerItems: MenuItem[] = [
     category: 'Smash Burgers'
   },
   {
-    name: 'Fire Stack',
+    name: 'Fire Stack 🌶',
     price: '£10.45',
     description: 'Juicy Angus beef stacked with turkey rashers, crispy hash brown, fiery jalapeños, melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Crunchy. Spicy. Loaded.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
@@ -253,7 +253,7 @@ export const pizzaItems: MenuItem[] = [
     category: 'Pizzas'
   },
   {
-    name: 'Spicy Meatballs',
+    name: 'Spicy Meatballs 🌶',
     price: '£8.45',
     description: 'Bring the heat with our seasoned meatballs smothered in fiery peri-peri sauce, topped with sharp onions and spicy jalapeños, all finished with melted mozzarella cheese.',
     image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
@@ -284,7 +284,7 @@ export const wrapItems: MenuItem[] = [
     category: 'Wraps'
   },
   {
-    name: 'BBQ Blaze Wrap',
+    name: 'BBQ Blaze Wrap 🌶',
     price: '£6.45',
     description: 'Bold BBQ flavour meets crispy fried chicken, layered with your choice of jalapeños, lettuce, onions, and creamy mayo.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
@@ -298,21 +298,21 @@ export const wrapItems: MenuItem[] = [
     category: 'Wraps'
   },
   {
-    name: 'Peri-Peri Chicken Wrap',
+    name: 'Peri-Peri Chicken Wrap 🌶',
     price: '£6.45',
     description: 'Succulent grilled peri-peri chicken with your choice of lettuce, onions, and smooth mayo.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
     category: 'Wraps'
   },
   {
-    name: 'Fire-cracker Wrap',
+    name: 'Fire-cracker Wrap 🌶🌶',
     price: '£6.99',
     description: 'Crunchy and crispy fried chicken strips with our signature fire-cracker hot sauce with optional fresh lettuce, & jalapeños.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
     category: 'Wraps'
   },
   {
-    name: 'Grilloumi Stack Wrap',
+    name: 'Grilloumi Stack Wrap 🌱',
     price: '£7.45',
     description: 'Grilled halloumi, stacked with lettuce, onions, and mayo. A melt-in-your-mouth vegetarian delight.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
