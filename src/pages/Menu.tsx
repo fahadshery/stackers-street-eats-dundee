@@ -86,8 +86,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setSelectedCustomizations([]);
     setIsMeal(false);
     setComment('');
-    setSideSize('regular' as 'regular' | 'large');
-    setMilkshakeSize('regular' as 'regular' | 'large');
+    setSideSize('regular');
+    setMilkshakeSize('regular');
     setMilkshakeFlavor('Oreo');
   };
 
