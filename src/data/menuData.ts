@@ -590,14 +590,27 @@ export const boxesItems: MenuItem[] = [
   {
     name: 'Burger Bash Box',
     price: '£15.00',
-    description: 'A selection of our best burgers in one convenient box.',
+    description: 'Stack Classic smash burger, Zing Stack burger, Peri-Peri Chicken Stack burger, curly fries, and a can of juice.',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Boxes'
   },
   {
     name: 'Fried Gold Box',
     price: '£18.00',
-    description: 'Mix of our finest fried items including fish, chicken and sides.',
+    description: 'Zing Stack burger, 5 gold strips, 5 gold wings, 5 mozzarella sticks, 5 jalapeño poppers, curly fries, 2 garlic dips and 2 cans of juice.',
+    image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
+    category: 'Boxes'
+  },
+  {
+    name: 'Date Night',
+    price: '£13.99',
+    description: 'Perfect for two to share — whether it’s burgers and banter or wings and a movie.
+    Includes:
+    🍔 2 x Chicken Stack Classic Burgers
+    🍗 1 x 10" Peri Peri Chicken Pizza
+    🍟 1 x Regular Fries
+    🥤 2 x Cans of Juice
+    ❤️ takeaway for a cosy night in.',
     image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
     category: 'Boxes'
   }
