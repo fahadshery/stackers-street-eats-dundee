@@ -44,7 +44,8 @@ interface MenuItemCardProps {
   customizations?: string[];
   showSizeOptions?: boolean;
   showSpecialInstructions?: boolean;
-  onAddToBasket: (item: any, isMeal: boolean, customizations?: string[], comment?: string, sideSize?: string, milkshakeSize?: string, milkshakeFlavor?: string) => void;
+  showPizzaSize?: boolean;
+  onAddToBasket: (item: any, isMeal: boolean, customizations?: string[], comment?: string, sideSize?: string, milkshakeSize?: string, milkshakeFlavor?: string, pizzaSize?: string) => void;
 }
 
 const MenuItemCard: React.FC<MenuItemCardProps> = ({
@@ -55,6 +56,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   customizations = [],
   showSizeOptions = false,
   showSpecialInstructions = true,
+  showPizzaSize = false,
   onAddToBasket
 }) => {
   const [selectedCustomizations, setSelectedCustomizations] = useState<string[]>([]);
@@ -63,6 +65,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [sideSize, setSideSize] = useState<'regular' | 'large'>('regular');
   const [milkshakeSize, setMilkshakeSize] = useState<'regular' | 'large'>('regular');
   const [milkshakeFlavor, setMilkshakeFlavor] = useState('Oreo');
+  const [pizzaSize, setPizzaSize] = useState<'10"' | '12"'>('10"');
 
   const handleCustomizationChange = (customization: string, checked: boolean) => {
     if (checked) {
@@ -80,15 +83,17 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       comment || undefined,
       showSizeOptions ? sideSize : undefined,
       category === 'Milkshakes' ? milkshakeSize : undefined,
-      category === 'Milkshakes' ? milkshakeFlavor : undefined
+      category === 'Milkshakes' ? milkshakeFlavor : undefined,
+      showPizzaSize ? pizzaSize : undefined
     );
-    // Reset form with properly typed values
+    // Reset form
     setSelectedCustomizations([]);
     setIsMeal(false);
     setComment('');
     setSideSize('regular');
     setMilkshakeSize('regular');
     setMilkshakeFlavor('Oreo');
+    setPizzaSize('10"');
   };
 
   const displayPrice = () => {
@@ -104,6 +109,17 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     
     if (category === 'Milkshakes') {
       basePrice = milkshakeSize === 'regular' ? 4.20 : 5.00;
+    }
+
+    // Pizza sizing and customization pricing
+    if (showPizzaSize) {
+      if (pizzaSize === '12"') {
+        basePrice += 3.00; // 12" is £3 extra
+      }
+      
+      // Add customization costs
+      const customizationCost = pizzaSize === '10"' ? 1.00 : 1.50;
+      basePrice += selectedCustomizations.length * customizationCost;
     }
     
     return `£${basePrice.toFixed(2)}`;
@@ -129,9 +145,27 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         <p className="text-gray-600 text-sm mb-4 leading-relaxed">{item.description}</p>
         <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
 
+        {showPizzaSize && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Pizza Size:</p>
+            <RadioGroup value={pizzaSize} onValueChange={(value: '10"' | '12"') => setPizzaSize(value)}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value='10"' id={`${item.name}-10inch`} />
+                <Label htmlFor={`${item.name}-10inch`} className="text-sm">10" (Standard)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value='12"' id={`${item.name}-12inch`} />
+                <Label htmlFor={`${item.name}-12inch`} className="text-sm">12" (+£3.00)</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        )}
+
         {showCustomizations && customizations.length > 0 && (
           <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Customizations:</p>
+            <p className="font-medium mb-2 text-stackers-charcoal">
+              Customizations {showPizzaSize && `(${pizzaSize === '10"' ? '£1.00' : '£1.50'} each):`}
+            </p>
             <div className="space-y-2">
               {customizations.map((customization) => (
                 <div key={customization} className="flex items-center space-x-2">
@@ -253,6 +287,9 @@ const Menu = () => {
   const drinksRef = useRef<HTMLElement>(null);
   const milkshakesRef = useRef<HTMLElement>(null);
   const sweetStacksRef = useRef<HTMLElement>(null);
+  const mealDealsRef = useRef<HTMLElement>(null);
+  const boxesRef = useRef<HTMLElement>(null);
+  const loadedFriesRef = useRef<HTMLElement>(null);
 
   // Load basket from localStorage on component mount
   useEffect(() => {
@@ -281,7 +318,10 @@ const Menu = () => {
         { ref: sidesRef, id: 'sides' },
         { ref: drinksRef, id: 'drinks' },
         { ref: milkshakesRef, id: 'milkshakes' },
-        { ref: sweetStacksRef, id: 'sweet-stacks' }
+        { ref: sweetStacksRef, id: 'sweet-stacks' },
+        { ref: mealDealsRef, id: 'meal-deals' },
+        { ref: boxesRef, id: 'boxes' },
+        { ref: loadedFriesRef, id: 'loaded-fries' }
       ];
 
       const scrollPosition = window.scrollY + 200;
@@ -315,7 +355,10 @@ const Menu = () => {
       sides: sidesRef,
       drinks: drinksRef,
       milkshakes: milkshakesRef,
-      'sweet-stacks': sweetStacksRef
+      'sweet-stacks': sweetStacksRef,
+      'meal-deals': mealDealsRef,
+      boxes: boxesRef,
+      'loaded-fries': loadedFriesRef
     };
 
     const targetRef = sectionRefs[sectionId];
@@ -329,7 +372,7 @@ const Menu = () => {
     }
   };
 
-  const addToBasket = (item: any, isMeal: boolean, customizations?: string[], comment?: string, sideSize?: string, milkshakeSize?: string, milkshakeFlavor?: string) => {
+  const addToBasket = (item: any, isMeal: boolean, customizations?: string[], comment?: string, sideSize?: string, milkshakeSize?: string, milkshakeFlavor?: string, pizzaSize?: string) => {
     let basePrice = parseFloat(item.price.replace('£', ''));
     let itemName = item.name;
 
@@ -347,6 +390,20 @@ const Menu = () => {
     // Handle milkshake pricing
     if (item.category === 'Milkshakes') {
       basePrice = milkshakeSize === 'regular' ? 4.20 : 5.00;
+    }
+
+    // Handle pizza sizing and customizations
+    if (pizzaSize) {
+      if (pizzaSize === '12"') {
+        basePrice += 3.00;
+      }
+      
+      if (customizations && customizations.length > 0) {
+        const customizationCost = pizzaSize === '10"' ? 1.00 : 1.50;
+        basePrice += customizations.length * customizationCost;
+      }
+      
+      itemName = `${item.name} (${pizzaSize})`;
     }
 
     const basketItem: Omit<BasketItem, 'id' | 'quantity'> = {
@@ -698,7 +755,71 @@ const Menu = () => {
     }
   ];
 
-  const pizzaCustomizations = ['Extra Cheese', 'Extra Pepperoni', 'Mushrooms', 'Olives', 'Peppers'];
+  // New menu categories
+  const mealDealsItems = [
+    {
+      name: 'Student Deals',
+      price: '£9.99',
+      description: 'Special discounted meals for students with valid ID.',
+      image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Blue Card Holders',
+      price: '£8.99',
+      description: 'Exclusive deals for blue card holders.',
+      image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Deals for Educators',
+      price: '£10.99',
+      description: 'Special pricing for teachers and education professionals.',
+      image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Solo Supreme',
+      price: '£12.99',
+      description: 'Perfect individual meal with burger, sides and drink.',
+      image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Party Platter',
+      price: '£29.99',
+      description: 'Large sharing platter perfect for groups and parties.',
+      image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Mighty Tower',
+      price: '£15.99',
+      description: 'Towering burger stack with multiple patties and sides.',
+      image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop'
+    }
+  ];
+
+  const boxesItems = [
+    {
+      name: 'Burger Bash Box',
+      price: '£15.00',
+      description: 'A selection of our best burgers in one convenient box.',
+      image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop'
+    },
+    {
+      name: 'Fried Gold Box',
+      price: '£18.00',
+      description: 'Mix of our finest fried items including fish, chicken and sides.',
+      image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop'
+    }
+  ];
+
+  const loadedFriesItems = [
+    {
+      name: "Loaded Stackers' Fries",
+      price: '£7.50',
+      description: 'Chunks of peri-peri chicken, crispy chicken bites, cheesy sauce and jalapeños.',
+      image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop'
+    }
+  ];
+
+  const pizzaCustomizations = ['Extra Cheese', 'Extra Pepperoni', 'Mushrooms', 'Olives', 'Peppers', 'Pineapple', 'Ham'];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -719,7 +840,10 @@ const Menu = () => {
               { id: 'sides', label: 'Sides' },
               { id: 'drinks', label: 'Drinks' },
               { id: 'milkshakes', label: 'Milkshakes' },
-              { id: 'sweet-stacks', label: 'Sweet Stacks' }
+              { id: 'sweet-stacks', label: 'Sweet Stacks' },
+              { id: 'meal-deals', label: 'Meal Deals' },
+              { id: 'boxes', label: 'Boxes' },
+              { id: 'loaded-fries', label: 'Loaded Fries' }
             ].map((section) => (
               <Button
                 key={section.id}
@@ -826,6 +950,7 @@ const Menu = () => {
                 showMealOption={true}
                 showCustomizations={true}
                 customizations={pizzaCustomizations}
+                showPizzaSize={true}
                 onAddToBasket={addToBasket}
               />
             ))}
@@ -916,6 +1041,51 @@ const Menu = () => {
                 key={item.name}
                 item={item}
                 category="Sweet Stacks"
+                showSpecialInstructions={false}
+                onAddToBasket={addToBasket}
+              />
+            ))}
+          </div>
+        </MenuSection>
+
+        {/* Meal Deals Section */}
+        <MenuSection id="meal-deals" label="Meal Deals" sectionRef={mealDealsRef} isActive={activeSection === 'meal-deals'}>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {mealDealsItems.map((item) => (
+              <MenuItemCard
+                key={item.name}
+                item={item}
+                category="Meal Deals"
+                showSpecialInstructions={false}
+                onAddToBasket={addToBasket}
+              />
+            ))}
+          </div>
+        </MenuSection>
+
+        {/* Boxes Section */}
+        <MenuSection id="boxes" label="Boxes" sectionRef={boxesRef} isActive={activeSection === 'boxes'}>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {boxesItems.map((item) => (
+              <MenuItemCard
+                key={item.name}
+                item={item}
+                category="Boxes"
+                showSpecialInstructions={false}
+                onAddToBasket={addToBasket}
+              />
+            ))}
+          </div>
+        </MenuSection>
+
+        {/* Loaded Stackers' Fries Section */}
+        <MenuSection id="loaded-fries" label="Loaded Stackers' Fries" sectionRef={loadedFriesRef} isActive={activeSection === 'loaded-fries'}>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {loadedFriesItems.map((item) => (
+              <MenuItemCard
+                key={item.name}
+                item={item}
+                category="Loaded Stackers' Fries"
                 showSpecialInstructions={false}
                 onAddToBasket={addToBasket}
               />
