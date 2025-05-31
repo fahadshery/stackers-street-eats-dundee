@@ -271,7 +271,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                 onCheckedChange={(checked) => setIsMeal(!!checked)}
               />
               <Label htmlFor={`${item.name}-meal`} className="text-sm font-medium">
-                Make it a meal +£2.50
+                Make it a meal +£2.50 (chips and a can of juice)
               </Label>
             </div>
           </div>
