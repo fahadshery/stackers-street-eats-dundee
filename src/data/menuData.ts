@@ -504,7 +504,7 @@ export const iceCreamItems: MenuItem[] = [
   {
     name: 'Ice Cream',
     price: '£2.50',
-    description: 'Premium ice cream in your choice of scoops and flavours.',
+    description: 'Scoop into pure indulgence with our premium-quality ice cream crafted for rich flavour and smooth texture. Choose from a variety of delicious flavours to finish your meal on a sweet, satisfying note.',
     image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
     category: 'Ice Creams'
   }
