@@ -25,14 +25,14 @@ export const startersItems: MenuItem[] = [
   {
     name: 'Jalapeños Poppers (6)',
     price: '£4.25',
-    description: 'Spicy jalapeños filled with creamy cheese, lightly crumbed and fried for a fiery bite.',
+    description: 'Spicy jalapeños filled with creamy cheese, lightly crumbed and fried for a delicious bite.',
     image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
     category: 'Starters'
   },
   {
     name: 'Garlic Bread (4)',
     price: '£3.25',
-    description: 'Simple, soft, and satisfying.',
+    description: 'Crispy Garlic Bread. Simple, soft, and satisfying.',
     image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
     category: 'Starters'
   },
@@ -46,7 +46,7 @@ export const startersItems: MenuItem[] = [
   {
     name: 'Chargrilled Halloumi (2)',
     price: '£4.25',
-    description: 'Thick-cut halloumi slices grilled with a golden char — salty, savoury and satisfying.',
+    description: 'Thick-cut halloumi slices grilled with a golden char — delicious and satisfying.',
     image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop',
     category: 'Starters'
   },
@@ -63,42 +63,42 @@ export const friedGoldItems: MenuItem[] = [
   {
     name: 'Chicken (1pc)',
     price: '£2.25',
-    description: 'Fresh cod in crispy batter served with golden chips and mushy peas.',
+    description: 'Juicy, golden fried chicken piece. Hand breaded in a signature recipe',
     image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
     name: 'Chicken (2pcs)',
     price: '£4.25',
-    description: 'Premium pork sausage in crispy batter with chips.',
+    description: 'Two juicy, golden fried chicken pieces. Hand breaded in a signature recipe',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
     name: 'Chicken (3pcs)',
     price: '£5.75',
-    description: 'Wholetail breaded scampi with chips and tartare sauce.',
+    description: 'Three juicy, golden fried chicken pieces. Hand breaded in a signature recipe',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
     name: 'Wings (1pc)',
     price: '£2.25',
-    description: 'Fresh cod in crispy batter served with golden chips and mushy peas.',
+    description: 'One crispy, golden-fried wing in our signature breading bursting with flavour — a tasty teaser.',
     image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
     name: 'Wings (2pcs)',
     price: '£4.25',
-    description: 'Premium pork sausage in crispy batter with chips.',
+    description: 'Two juicy wings, fried to a golden crunch — ideal for a light starter or a side.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
     name: 'Wings (3pcs)',
     price: '£5.75',
-    description: 'Wholetail breaded scampi with chips and tartare sauce.',
+    description: 'Three crispy wings, seasoned and fried to perfection — bold flavour in every bite.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
@@ -106,21 +106,21 @@ export const friedGoldItems: MenuItem[] = [
   {
     name: 'Strips (3pcs)',
     price: '£3.99',
-    description: 'Fresh cod in crispy batter served with golden chips and mushy peas.',
+    description: '3 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
     image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
     name: 'Strips (6pcs)',
     price: '£5.99',
-    description: 'Premium pork sausage in crispy batter with chips.',
+    description: '6 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
   {
     name: 'Strips (12pcs)',
     price: '£9.99',
-    description: 'Wholetail breaded scampi with chips and tartare sauce.',
+    description: '12 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   }
@@ -182,21 +182,35 @@ export const smashBurgerItems: MenuItem[] = [
   {
     name: 'BBQ Stack',
     price: '£7.45',
-    description: 'Four smashed patties with double cheese and all the fixings.',
+    description: 'Tender Angus beef, melted cheese, BBQ sauce, onions, and fresh lettuce on a soft bun. Smoky, juicy, and irresistible!',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
   },
   {
-    name: 'Bacon Smash Burger',
-    price: '£6.99',
-    description: 'Smashed patties with crispy bacon, cheese and onions.',
+    name: 'Double Stack',
+    price: '£7.45',
+    description: 'Signature Angus beef stacked with cheese, secret sauce, mayo, onions, gherkins, and lettuce in a toasted bun. Twice the beef, double the flavour.',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
   },
   {
-    name: 'BBQ Bacon Smash',
-    price: '£7.49',
-    description: 'Smashed beef with BBQ sauce, bacon and onion rings.',
+    name: 'Stackzilla',
+    price: '£8.45',
+    description: 'A towering Angus beef with melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Massive. Meaty. Unstoppable.',
+    image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
+    category: 'Smash Burgers'
+  },
+  {
+    name: 'Fire Stack',
+    price: '£10.45',
+    description: 'Juicy Angus beef stacked with turkey rashers, crispy hash brown, fiery jalapeños, melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Crunchy. Spicy. Loaded.',
+    image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
+    category: 'Smash Burgers'
+  },
+  {
+    name: 'Stack Titan',
+    price: '£10.99',
+    description: 'Premium Angus beef, secret seasoning, cheddar, mozzarella, hash brown, two crispy onion rings, turkey rashers, jalapeños, mayo, red onions, gherkins, lettuce, and our secret sauce in a toasted bun. The ultimate flavour stack.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
   }
@@ -235,30 +249,44 @@ export const pizzaItems: MenuItem[] = [
 
 export const wrapItems: MenuItem[] = [
   {
-    name: 'Chicken Caesar Wrap',
-    price: '£5.99',
-    description: 'Grilled chicken with romaine lettuce, parmesan and caesar dressing.',
+    name: 'Chicken Stack Wrap',
+    price: '£6.45',
+    description: 'Crispy fried chicken with your choice of fresh lettuce, onions, creamy mayo, and our signature secret sauce.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Wraps'
   },
   {
-    name: 'Buffalo Chicken Wrap',
-    price: '£6.49',
-    description: 'Spicy buffalo chicken with lettuce, tomatoes and ranch dressing.',
+    name: 'BBQ Blaze Wrap',
+    price: '£6.45',
+    description: 'Bold BBQ flavour meets crispy fried chicken, layered with your choice of jalapeños, lettuce, onions, and creamy mayo.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
     category: 'Wraps'
   },
   {
-    name: 'Veggie Wrap',
-    price: '£5.49',
-    description: 'Fresh vegetables with hummus and mixed greens.',
+    name: 'Grilled Chicken Wrap',
+    price: '£6.45',
+    description: 'Juicy grilled chicken with your choice of fresh lettuce, onions, and smooth mayo, all wrapped for a lighter, satisfying bite.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Wraps'
   },
   {
-    name: 'BLT Wrap',
-    price: '£5.49',
-    description: 'Crispy bacon, lettuce, tomato and mayo in a flour tortilla.',
+    name: 'Peri-Peri Chicken Wrap',
+    price: '£6.45',
+    description: 'Succulent grilled peri-peri chicken with your choice of lettuce, onions, and smooth mayo.',
+    image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
+    category: 'Wraps'
+  },
+  {
+    name: 'Fire-cracker Wrap',
+    price: '£6.99',
+    description: 'Crunchy and crispy fried chicken strips with our signature fire-cracker hot sauce with optional fresh lettuce, & jalapeños.',
+    image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
+    category: 'Wraps'
+  },
+  {
+    name: 'Grilloumi Stack Wrap',
+    price: '£7.45',
+    description: 'Grilled halloumi, stacked with lettuce, onions, and mayo. A melt-in-your-mouth vegetarian delight.',
     image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
     category: 'Wraps'
   }
@@ -266,78 +294,99 @@ export const wrapItems: MenuItem[] = [
 
 export const kidsItems: MenuItem[] = [
   {
-    name: 'Kids Chicken Nuggets & Chips',
-    price: '£4.99',
-    description: 'Golden chicken nuggets with crispy chips and beans.',
+    name: 'Kids Chicken Nuggets (2), Mozzarella sticks (2) & Chips',
+    price: '3.99',
+    description: 'Golden chicken nuggets with mozzarella sticks, crispy chips and a free fruitshoot.',
     image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=300&fit=crop',
     category: 'Kids'
   },
   {
-    name: 'Kids Fish Fingers & Chips',
-    price: '£4.99',
-    description: 'Crispy fish fingers with chips and peas.',
+    name: 'Chicken nuggets (4) & chips',
+    price: '£4.95',
+    description: 'Golden chicken nuggets (4) served with crispy chips — the perfect mini meal for little Stackers! Comes with a free fruitshoot',
+    image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop',
+    category: 'Kids'
+  },
+  {
+    name: 'Gold strips (4) with chips',
+    price: '£5.50',
+    description: '4 crispy, tender chicken strips served with a side of golden fries — a tasty treat for young Stackers! Comes with a free fruitshoot.',
     image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
     category: 'Kids'
   },
   {
     name: 'Kids Burger & Chips',
-    price: '£5.49',
-    description: 'Mini beef burger with cheese and chips.',
+    price: '£6.50',
+    description: 'Mini kids burger with chips and a free fruitshoot.',
     image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
-    category: 'Kids'
-  },
-  {
-    name: 'Kids Pizza Slice & Chips',
-    price: '£4.99',
-    description: 'Margherita pizza slice with crispy chips.',
-    image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop',
     category: 'Kids'
   }
 ];
 
 export const sidesItems: MenuItem[] = [
   {
-    name: 'Chips',
-    price: '£2.99',
-    description: 'Golden crispy chips seasoned with sea salt.',
+    name: 'Coleslaw',
+    price: '£1.50',
+    description: 'A refreshing, creamy blend of shredded cabbage, carrots, and a tangy dressing — the perfect cool companion to any Stackers meal.',
     image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop',
+    category: 'Sides'
+  },
+  {
+    name: 'Chips / Fries',
+    price: '£2.25',
+    description: 'Golden, crispy fries served hot and perfectly seasoned — the ultimate classic side to stack up your meal.',
+    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop',
+    category: 'Sides'
+  },
+  {
+    name: 'Peri-Peri Chips',
+    price: '£2.75',
+    description: 'Crispy golden fries tossed in our fiery peri-peri seasoning — bold, zesty, and packed with flavour for those who like a little heat on the side.',
+    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop',
+    category: 'Sides'
+  },
+  {
+    name: 'Curly Fries',
+    price: '£3.00',
+    description: 'Twisted, crispy, and irresistibly fun — our seasoned curly fries bring bold flavour and crunch to every bite. A side with serious taste!',
+    image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop',
     category: 'Sides'
   },
   {
     name: 'Cheesy Chips',
-    price: '£3.49',
-    description: 'Crispy chips topped with melted cheese.',
-    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop',
+    price: '£3.95',
+    description: 'Golden fries smothered in rich, melted cheese for the ultimate gooey, savoury indulgence. A comfort food classic done the Stackers way.',
+    image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop',
     category: 'Sides'
   },
   {
-    name: 'Loaded Fries',
-    price: '£4.99',
-    description: 'Chips loaded with cheese, bacon and sour cream.',
-    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop',
+    name: 'Peri-Peri Curly Fries',
+    price: '£4.00',
+    description: 'Crispy, seasoned curly fries tossed in fiery Peri-Peri spice—bold, twisty, and packed with flavour in every bite.',
+    image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop',
     category: 'Sides'
   },
   {
-    name: 'Onion Rings',
-    price: '£3.49',
-    description: 'Crispy beer-battered onion rings.',
+    name: 'Peri-Peri Cheesy Chips',
+    price: '£4.45',
+    description: 'Golden fries dusted in zesty Peri-Peri seasoning, smothered in melted cheese for a spicy, gooey, irresistible sidekick to any meal.',
     image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop',
     category: 'Sides'
   }
 ];
 
 export const drinkItems: MenuItem[] = [
-  {
-    name: 'Coca Cola Can',
+    {
+    name: 'Irn Bru Can',
     price: '£1.25',
     description: 'Classic Coca Cola in a 330ml can.',
     image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
   {
-    name: 'Coca Cola 1.5L',
-    price: '£2.99',
-    description: 'Classic Coca Cola in a 1.5L bottle.',
+    name: 'Coca Cola Can',
+    price: '£1.25',
+    description: 'Classic Coca Cola in a 330ml can.',
     image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
@@ -349,24 +398,66 @@ export const drinkItems: MenuItem[] = [
     category: 'Drinks'
   },
   {
-    name: 'Sprite 1.5L',
-    price: '£2.99',
-    description: 'Refreshing lemon-lime soda in a 1.5L bottle.',
+    name: 'Fanta Can',
+    price: '£1.25',
+    description: 'Refreshing lemon-lime soda in a 330ml can.',
     image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
   {
-    name: 'Orange Juice',
-    price: '£2.49',
-    description: 'Fresh squeezed orange juice.',
-    image: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=400&h=300&fit=crop',
+    name: 'Rubicon Can',
+    price: '£1.25',
+    description: 'Refreshing lemon-lime soda in a 330ml can.',
+    image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
+    category: 'Drinks'
+  },
+  {
+    name: 'Pepsi Can',
+    price: '£1.25',
+    description: 'Refreshing lemon-lime soda in a 330ml can.',
+    image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
+    category: 'Drinks'
+  },
+  {
+    name: 'Pepsi Max Can',
+    price: '£1.25',
+    description: 'Refreshing lemon-lime soda in a 330ml can.',
+    image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
+    category: 'Drinks'
+  },
+  {
+    name: 'Diet Pepsi Can',
+    price: '£1.25',
+    description: 'Refreshing lemon-lime soda in a 330ml can.',
+    image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
   {
     name: 'Water',
-    price: '£1.49',
+    price: '£0.85',
     description: 'Still mineral water.',
     image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=300&fit=crop',
+    category: 'Drinks'
+  },
+    {
+    name: 'Irn Bru 1.5L',
+    price: '£2.99',
+    description: 'Classic Coca Cola in a 1.5L bottle.',
+    image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
+    category: 'Drinks'
+  },
+  {
+    name: 'Coca Cola 1.5L',
+    price: '£2.99',
+    description: 'Classic Coca Cola in a 1.5L bottle.',
+    image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
+    category: 'Drinks'
+  },
+  {
+    name: 'Sprite 1.5L',
+    price: '£2.99',
+    description: 'Refreshing lemon-lime soda in a 1.5L bottle.',
+    image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
     category: 'Drinks'
   }
 ];
