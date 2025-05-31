@@ -23,7 +23,7 @@ export const startersItems: MenuItem[] = [
     category: 'Starters'
   },
   {
-    name: 'Jalapeños Poppers (6) 127798',
+    name: 'Jalapeños Poppers (6) &#127798',
     price: '£4.25',
     description: 'Spicy jalapeños filled with creamy cheese, lightly crumbed and fried for a delicious bite.',
     image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
