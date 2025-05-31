@@ -604,7 +604,7 @@ export const boxesItems: MenuItem[] = [
   {
     name: 'Date Night Box',
     price: '£13.99',
-    description: 'Perfect for two to share — whether it’s burgers and banter or a Sunday strip. Includes:\n 🍔 2 x Zing Stack Burgers,\n 🍗 3 Gold Fried Strips,\n 🍟 1 x Regular Fries,\n 🥤 2 x Cans of Juice, Stackers Garlic Dip, \n ❤️ takeaway for a cosy night in.',
+    description: 'Perfect for two to share — whether it’s burgers and banter or a Sunday strip. Includes: 🍔 2 x Zing Stack Burgers,🍗 3 Gold Fried Strips, 🍟 1 x Regular Fries, 🥤 2 x Cans of Juice, Stackers Garlic Dip, ❤️ takeaway for a cosy night in.',
     image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?w=400&h=300&fit=crop',
     category: 'Boxes'
   }
