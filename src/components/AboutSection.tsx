@@ -37,7 +37,7 @@ const AboutSection = () => {
               
               <div className="bg-stackers-red text-white p-6 rounded-lg transform hover:scale-105 transition-all duration-200">
                 <h3 className="text-xl font-bold mb-2">🍗 Fried Chicken</h3>
-                <p>Crispy coating, tender inside</p>
+                <p>Signature crispy coating, tender inside</p>
               </div>
               
               <div className="bg-stackers-yellow text-stackers-charcoal p-6 rounded-lg transform hover:scale-105 transition-all duration-200">
