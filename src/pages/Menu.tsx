@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -83,12 +82,12 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       category === 'Milkshakes' ? milkshakeSize : undefined,
       category === 'Milkshakes' ? milkshakeFlavor : undefined
     );
-    // Reset form
+    // Reset form with properly typed values
     setSelectedCustomizations([]);
     setIsMeal(false);
     setComment('');
-    setSideSize('regular');
-    setMilkshakeSize('regular');
+    setSideSize('regular' as 'regular' | 'large');
+    setMilkshakeSize('regular' as 'regular' | 'large');
     setMilkshakeFlavor('Oreo');
   };
 
