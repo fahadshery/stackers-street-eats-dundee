@@ -188,14 +188,14 @@ export const smashBurgerItems: MenuItem[] = [
   },
   {
     name: 'Double Stack',
-    price: '£7.45',
+    price: '£8.45',
     description: 'Signature Angus beef stacked with cheese, secret sauce, mayo, onions, gherkins, and lettuce in a toasted bun. Twice the beef, double the flavour.',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
   },
   {
     name: 'Stackzilla',
-    price: '£8.45',
+    price: '£10.45',
     description: 'A towering Angus beef with melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Massive. Meaty. Unstoppable.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
@@ -218,30 +218,58 @@ export const smashBurgerItems: MenuItem[] = [
 
 export const pizzaItems: MenuItem[] = [
   {
-    name: 'Margherita Pizza',
-    price: '£8.99',
-    description: 'Classic pizza with tomato sauce, fresh mozzarella and basil.',
+    name: 'Margherita',
+    price: '£5.95',
+    description: 'Our classic Margherita brings together the perfect harmony of flavors with a rich, house-made tomato base and generous melted mozzarella cheese on our signature crispy crust. Simple, fresh, and absolutely delicious – sometimes the classics are classic for a reason.',
     image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop',
     category: 'Pizzas'
   },
   {
-    name: 'Pepperoni Pizza',
-    price: '£9.99',
-    description: 'Traditional pepperoni pizza with mozzarella cheese.',
+    name: 'Pepperoni Feast',
+    price: '£6.95',
+    description: 'For the pepperoni lovers who believe more is always better. We load our rich tomato base with double the pepperoni and a generous blanket of melted mozzarella cheese. Every bite delivers that perfect spicy, savory punch that makes this pizza a crowd favorite.',
     image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
     category: 'Pizzas'
   },
   {
-    name: 'BBQ Chicken Pizza',
-    price: '£10.99',
-    description: 'BBQ sauce base with grilled chicken, red onions and peppers.',
+    name: 'Meat Feast',
+    price: '£7.45',
+    description: 'Chicken, ham, meatballs, and pepperoni.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Pizzas'
   },
   {
-    name: 'Meat Feast Pizza',
-    price: '£11.99',
-    description: 'Loaded with pepperoni, sausage, ham and bacon.',
+    name: 'BBQ Sizzlers',
+    price: '£7.45',
+    description: 'Turn up the heat with our smoky BBQ sauce base loaded with spicy pepperoni and tender chicken pieces, all topped with melted mozzarella cheese. This bold combination brings together tangy BBQ flavors with premium meats for a pizza that packs serious flavour and satisfaction.',
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'Veggie Sizzler',
+    price: '£7.45',
+    description: 'A vibrant medley of fresh vegetables that brings serious flavour and crunch. Our rich tomato base is topped with juicy tomatoes, earthy mushrooms, colourful peppers, sweet onions, golden sweetcorn, and fiery jalapeños, all finished with melted mozzarella cheese.',
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'Spicy Meatballs',
+    price: '£8.45',
+    description: 'Bring the heat with our seasoned meatballs smothered in fiery peri-peri sauce, topped with sharp onions and spicy jalapeños, all finished with melted mozzarella cheese.',
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'Peri-Peri Chicken',
+    price: '£8.45',
+    description: 'Fire up your taste buds with freshly grilled peri-peri chicken paired with colorful peppers, spicy jalapeños, and sharp red onions on our rich tomato base. Topped with melted mozzarella cheese, this fiery combination delivers authentic peri-peri heat with every delicious bite.',
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'Stackers Special',
+    price: '£8.95',
+    description: 'Our signature pizza that brings together the best of everything. We load our base with zesty pepperoni, seasoned meatballs, and freshly grilled peri-peri chicken, then add sharp onions and colorful peppers, all drizzled with our fiery peri-peri sauce and topped with melted mozzarella cheese. This is our ultimate creation for those who want it all.',
     image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
     category: 'Pizzas'
   }
@@ -476,7 +504,7 @@ export const iceCreamItems: MenuItem[] = [
   {
     name: 'Ice Cream',
     price: '£2.50',
-    description: 'Premium ice cream in your choice of scoops and flavors.',
+    description: 'Premium ice cream in your choice of scoops and flavours.',
     image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
     category: 'Ice Creams'
   }
@@ -517,42 +545,42 @@ export const mealDealsItems: MenuItem[] = [
   {
     name: 'Student Deals',
     price: '£9.99',
-    description: 'Special discounted meals for students with valid ID.',
+    description: 'Flash your valid Student ID in-store and get 15% off your total bill! Perfect for study breaks, post-lecture cravings, or just stacking up on flavour.',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   },
   {
     name: 'Blue Card Holders',
-    price: '£8.99',
-    description: 'Exclusive deals for blue card holders.',
+    price: '£9.99',
+    description: 'A small thank you to those who serve our city & community. Police, NHS staff, veterans, firefighters, ambulance crews and other Blue Light Card holders enjoy 15% off your total bill. Valid in-store with proof of service.',
     image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   },
   {
-    name: 'Deals for Educators',
-    price: '£10.99',
-    description: 'Special pricing for teachers and education professionals.',
+    name: 'Educators’ Appreciation',
+    price: '£9.99',
+    description: 'To those who shape minds and inspire futures — enjoy 15% off your total bill as a thank you for all you do. Open to teachers, professors, and educators with valid school or university ID. In-store only.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   },
   {
     name: 'Solo Supreme',
-    price: '£12.99',
-    description: 'Perfect individual meal with burger, sides and drink.',
+    price: '£10.99',
+    description: 'The perfect solo feast that brings together our best fried favorites. Get 4 pieces of our crispy fried chicken and 4 golden chicken strips, served with a generous portion of fries and your choice of canned drink. This hearty combo delivers serious satisfaction when you are craving the ultimate chicken experience all to yourself.',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   },
   {
     name: 'Party Platter',
-    price: '£29.99',
-    description: 'Large sharing platter perfect for groups and parties.',
+    price: '£24.99',
+    description: 'The ultimate party platter. Includes 4 pieces of crispy fried chicken, 2 Chicken Stack Classic burgers, 2 golden fries, and 2 chilled cans of juice — perfect for sharing',
     image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   },
   {
     name: 'Mighty Tower',
-    price: '£15.99',
-    description: 'Towering burger stack with multiple patties and sides.',
+    price: '£34.99',
+    description: 'Stacked to impress! A feast of Margherita 12” pizza, 6 crispy fried chicken pieces, 6 fiery hot wings, 6 tender chicken strips, Zing Stack burger, Peri-Peri Chicken Stack burger, Peri-Peri Chicken Wrap, Chicken Stack Wrap, 2 golden fries, and a 1.5L drink to wash it all down.',
     image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   }
