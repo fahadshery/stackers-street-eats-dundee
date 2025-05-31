@@ -5,25 +5,25 @@ const MenuHighlights = () => {
   const menuItems = [
     {
       category: "Smash Burgers",
-      name: "The Stacker Supreme",
-      description: "Double smash patties, cheese, lettuce, tomato, special sauce",
-      price: "£8.50",
-      badge: "BESTSELLER",
+      name: "Stackzilla",
+      description: "A towering Angus beef with melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Massive. Meaty. Unstoppable.",
+      price: "£10.45",
+      badge: "SMASH BURGERS",
       bgColor: "bg-stackers-yellow"
     },
     {
       category: "Fried Chicken",
-      name: "Crispy Stack Chicken",
-      description: "Buttermilk fried chicken, slaw, spicy mayo",
-      price: "£7.50",
-      badge: "SPICY",
+      name: "Zing Stack Burger",
+      description: "Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn’t your thing!",
+      price: "£7.45",
+      badge: "BESTSELLER",
       bgColor: "bg-stackers-red"
     },
     {
-      category: "Loaded Fries",
-      name: "Loaded Stacker Fries",
-      description: "Crispy fries, cheese sauce, bacon bits, spring onions",
-      price: "£6.00",
+      category: "Boxes",
+      name: "Burger Bash Box",
+      description: "Stack Classic smash burger, Zing Stack burger, Peri-Peri Chicken Stack burger, curly fries, and a can of juice.",
+      price: "£15.00",
       badge: "SHARING SIZE",
       bgColor: "bg-stackers-charcoal"
     },
@@ -45,7 +45,7 @@ const MenuHighlights = () => {
             Menu <span className="text-stackers-yellow">Highlights</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Can't decide? Here are the crowd favorites that keep our customers coming back for more
+            Can't decide? Here are the crowd favorites that keep our customers coming back for more 😍
           </p>
         </div>
         
