@@ -220,7 +220,7 @@ export const pizzaItems: MenuItem[] = [
   {
     name: 'Margherita',
     price: '£5.95',
-    description: 'Our classic Margherita brings together the perfect harmony of flavors with a rich, house-made tomato base and generous melted mozzarella cheese on our signature crispy crust. Simple, fresh, and absolutely delicious – sometimes the classics are classic for a reason.',
+    description: 'Our classic Margherita brings together the perfect harmony of flavours with a rich, house-made tomato base and generous melted mozzarella cheese on our signature crispy crust. Simple, fresh, and absolutely delicious – sometimes the classics are classic for a reason.',
     image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop',
     category: 'Pizzas'
   },
@@ -241,7 +241,7 @@ export const pizzaItems: MenuItem[] = [
   {
     name: 'BBQ Sizzlers',
     price: '£7.45',
-    description: 'Turn up the heat with our smoky BBQ sauce base loaded with spicy pepperoni and tender chicken pieces, all topped with melted mozzarella cheese. This bold combination brings together tangy BBQ flavors with premium meats for a pizza that packs serious flavour and satisfaction.',
+    description: 'Turn up the heat with our smoky BBQ sauce base loaded with spicy pepperoni and tender chicken pieces, all topped with melted mozzarella cheese. This bold combination brings together tangy BBQ flavours with premium meats for a pizza that packs serious flavour and satisfaction.',
     image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
     category: 'Pizzas'
   },
@@ -535,7 +535,7 @@ export const sweetStacksItems: MenuItem[] = [
   {
     name: 'Premium Ice Cream (2 Scoops)',
     price: '£3.99',
-    description: 'Two scoops of premium ice cream in your choice of flavors.',
+    description: 'Two scoops of premium ice cream in your choice of flavours.',
     image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   }
@@ -622,13 +622,13 @@ export const loadedFriesItems: MenuItem[] = [
 
 export const pizzaCustomizations = ['Extra Cheese', 'Extra Pepperoni', 'Mushrooms', 'Olives', 'Peppers', 'Pineapple', 'Ham'];
 
-export const milkshakeFlavors = [
+export const milkshakeflavours = [
   'Oreo', 'Biscoff', 'Strawberry', 'Kinder Bueno', 'White Kinder Bueno', 
   'Malteaser', 'Galaxy Caramel', 'Galaxy', 'Milky bar', 'Banana', 
   'Ferrero Rocher', 'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'
 ];
 
-export const iceCreamFlavors = [
+export const iceCreamflavours = [
   'Vanilla', 'Strawberry', 'Scottish Tablet', 'Blue Bubblegum', 'Belgian Chocolate',
   'White Bueno', 'Cookies & Cream', 'Raspberry Ripple', 'Chocolate Fudge Brownie',
   'Honeycomb', 'Mint'
