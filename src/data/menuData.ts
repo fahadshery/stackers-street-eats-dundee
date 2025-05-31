@@ -494,7 +494,7 @@ export const milkshakeItems: MenuItem[] = [
   {
     name: 'Milkshake',
     price: '£4.20',
-    description: 'Creamy milkshake in your choice of flavor and size.',
+    description: 'Thick, creamy, and blended to perfection. Our milkshakes come in a variety of irresistible flavours. Whether you are craving classic chocolate, fruity strawberry, or indulgent Biscoff, we have got the perfect shake to sip and savour.',
     image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop',
     category: 'Milkshakes'
   }
