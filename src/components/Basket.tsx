@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { X, ShoppingCart, Trash2 } from 'lucide-react';
@@ -52,6 +53,14 @@ const Basket: React.FC<BasketProps> = ({
     return ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Boxes', 'Meal Deals', 'Loaded Stackers\' Fries', 'Sweet Stacks'].includes(category);
   };
 
+  const getItemDisplayName = (item: BasketItem) => {
+    if (item.category === 'Sweet Stacks') {
+      // For Sweet Stacks, don't include the description in the heading
+      return item.name;
+    }
+    return item.name;
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -91,7 +100,7 @@ const Basket: React.FC<BasketProps> = ({
                 <div key={item.id} className="border-b pb-4 mb-4">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-stackers-charcoal">{item.name}</h3>
+                      <h3 className="font-semibold text-stackers-charcoal">{getItemDisplayName(item)}</h3>
                       <p className="text-sm text-gray-600">{item.category}</p>
                       
                       {shouldShowDescription(item.category) && item.description && (
@@ -126,7 +135,7 @@ const Basket: React.FC<BasketProps> = ({
                       
                       {item.sweetStacksType && item.sweetStacksFlavor && (
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.sweetStacksType} - {item.sweetStacksFlavor.split(':')[0]}
+                          {item.sweetStacksType}: {item.sweetStacksFlavor.split(':')[0]}
                         </p>
                       )}
                       

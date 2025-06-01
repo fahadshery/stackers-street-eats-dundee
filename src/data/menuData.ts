@@ -1,4 +1,3 @@
-
 export interface MenuItem {
   name: string;
   price: string;
@@ -138,7 +137,7 @@ export const chickenBurgerItems: MenuItem[] = [
     name: 'Zing Stack',
     price: '£7.45',
     description: 'Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn’t your thing!',
-    image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
+    image: '/lovable-uploads/87273272-8fc5-4ce7-a00d-c3e91bff28f2.png',
     category: 'Chicken Burgers'
   },
   {
@@ -513,29 +512,36 @@ export const iceCreamItems: MenuItem[] = [
 export const sweetStacksItems: MenuItem[] = [
   {
     name: 'Chocolate Waffle',
-    price: '£5.99',
-    description: 'Warm waffle drizzled with chocolate sauce and fresh berries.',
+    price: '£6.50',
+    description: 'Warm waffle ready for your sweet customization.',
     image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
     name: 'Strawberry Crepe',
-    price: '£6.49',
-    description: 'Delicate crepe filled with fresh strawberries and cream.',
+    price: '£6.50',
+    description: 'Delicate crepe ready for your sweet customization.',
     image: 'https://images.unsplash.com/photo-1519915195129-7d93adf4b882?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
     name: 'Cookie Dough Delight',
-    price: '£5.49',
-    description: 'Warm cookie dough served with vanilla ice cream.',
+    price: '£6.50',
+    description: 'Warm cookie dough ready for your sweet customization.',
     image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
-    name: 'Premium Ice Cream (2 Scoops)',
+    name: 'Cheesecake Slices',
     price: '£3.99',
-    description: 'Two scoops of premium ice cream in your choice of flavours.',
+    description: 'Rich and creamy cheesecake slice in your choice of delicious flavours.',
+    image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
+    category: 'Sweet Stacks'
+  },
+  {
+    name: 'Stackers\' Specials',
+    price: '£4.99',
+    description: 'Choose from our special dessert selection with unique treats and flavours.',
     image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   }

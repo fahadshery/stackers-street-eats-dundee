@@ -177,21 +177,39 @@ const Menu = () => {
 
     // Handle Sweet Stacks pricing
     if (item.category === 'Sweet Stacks') {
-      basePrice = 6.50; // Base price for all Sweet Stacks
-      
-      // Add sweet dips pricing
-      if (sweetDips && sweetDips.length > 0) {
-        basePrice += sweetDips.length * 1.00;
-      }
-      
-      // Add toppings pricing
-      if (toppings && toppings.length > 0) {
-        basePrice += toppings.length * 0.50;
-      }
-      
-      // Update item name with type and flavor
-      if (sweetStacksType && sweetStacksFlavor) {
-        itemName = `${sweetStacksType} - ${sweetStacksFlavor}`;
+      if (item.name === 'Chocolate Waffle' || item.name === 'Strawberry Crepe' || item.name === 'Cookie Dough Delight') {
+        basePrice = 6.50; // Base price for customizable Sweet Stacks
+        
+        // Add sweet dips pricing
+        if (sweetDips && sweetDips.length > 0) {
+          basePrice += sweetDips.length * 1.00;
+        }
+        
+        // Add toppings pricing
+        if (toppings && toppings.length > 0) {
+          basePrice += toppings.length * 0.50;
+        }
+        
+        // Update item name with type and flavor
+        if (sweetStacksType && sweetStacksFlavor) {
+          itemName = `${sweetStacksType} - ${sweetStacksFlavor.split(':')[0]}`;
+        }
+      } else if (item.name === 'Cheesecake Slices') {
+        basePrice = 3.99;
+        if (sweetStacksFlavor) {
+          itemName = `${sweetStacksFlavor} Cheesecake`;
+        }
+      } else if (item.name === 'Stackers\' Specials') {
+        // Price is determined by the selected special item
+        const specialItems = [
+          { name: 'Waffle on a Stick', price: 4.99 },
+          { name: 'Dubai Kunafa', price: 6.50 },
+          { name: 'Churros (5)', price: 5.50 },
+          { name: 'Mini Pancakes (10)', price: 6.50 }
+        ];
+        const selectedItem = specialItems.find(special => special.name === sweetStacksFlavor);
+        basePrice = selectedItem ? selectedItem.price : 4.99;
+        itemName = sweetStacksFlavor || item.name;
       }
     }
 
