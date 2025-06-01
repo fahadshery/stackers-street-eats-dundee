@@ -30,7 +30,7 @@ const GiftCards = () => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
     setRecipientEmail(email);
-    
+
     if (email && !validateEmail(email)) {
       setEmailError('Please enter a valid email address');
     } else {
@@ -67,7 +67,7 @@ const GiftCards = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
+
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <Gift className="mx-auto h-16 w-16 text-stackers-yellow mb-4" />
@@ -87,7 +87,7 @@ const GiftCards = () => {
                   Purchase Gift Card
                 </CardTitle>
                 <CardDescription>
-                  Buy a gift card for someone special
+                  Buy a gift card for someone special 💗
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -121,7 +121,7 @@ const GiftCards = () => {
                         £{selectedAmount}
                       </span>
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="recipientName">Recipient Name *</Label>
                       <Input
@@ -131,7 +131,7 @@ const GiftCards = () => {
                         placeholder="Who is this gift card for?"
                       />
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="recipientEmail">Recipient Email *</Label>
                       <Input
@@ -146,7 +146,7 @@ const GiftCards = () => {
                         <p className="text-red-500 text-sm mt-1">{emailError}</p>
                       )}
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="senderName">Your Name *</Label>
                       <Input
@@ -156,17 +156,17 @@ const GiftCards = () => {
                         placeholder="Who is this gift card from?"
                       />
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="message">Personal Message (Optional)</Label>
                       <Input
                         id="message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Add a personal message..."
+                        placeholder="Add a personal message to make their day..."
                       />
                     </div>
-                    
+
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
@@ -208,7 +208,7 @@ const GiftCards = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
@@ -234,10 +234,10 @@ const GiftCards = () => {
               <CardHeader>
                 <CardTitle className="flex items-center text-stackers-charcoal">
                   <Check className="mr-2" size={24} />
-                  Redeem Gift Card
+                  Check Your Gift Card
                 </CardTitle>
                 <CardDescription>
-                  Already have a gift card? Use it here or at checkout
+                  Already have a gift card? Check it's balance here..
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -248,21 +248,21 @@ const GiftCards = () => {
                     placeholder="Enter your gift card code"
                   />
                 </div>
-                
-                <Button 
+
+                <Button
                   className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400"
                   onClick={() => alert('Gift card validation would happen here')}
                 >
                   Check Balance
                 </Button>
-                
+
                 <Separator />
-                
+
                 <div className="text-center">
                   <p className="text-gray-600 mb-4">
                     Ready to order? You can also redeem your gift card at checkout.
                   </p>
-                  <Button 
+                  <Button
                     variant="outline"
                     onClick={() => navigate('/menu')}
                     className="border-stackers-yellow text-stackers-yellow hover:bg-stackers-yellow hover:text-stackers-charcoal"

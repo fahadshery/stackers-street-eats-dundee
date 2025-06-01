@@ -134,15 +134,15 @@ const Menu = () => {
   };
 
   const addToBasket = (
-    item: MenuItem, 
-    isMeal: boolean, 
-    customizations?: string[], 
-    comment?: string, 
-    sideSize?: 'regular' | 'large', 
-    milkshakeSize?: 'regular' | 'large', 
-    milkshakeFlavor?: string, 
-    pizzaSize?: string, 
-    iceCreamScoops?: number, 
+    item: MenuItem,
+    isMeal: boolean,
+    customizations?: string[],
+    comment?: string,
+    sideSize?: 'regular' | 'large',
+    milkshakeSize?: 'regular' | 'large',
+    milkshakeFlavor?: string,
+    pizzaSize?: string,
+    iceCreamScoops?: number,
     iceCreamFlavors?: string[],
     sweetStacksType?: string,
     sweetStacksFlavor?: string,
@@ -177,19 +177,19 @@ const Menu = () => {
 
     // Handle Sweet Stacks pricing
     if (item.category === 'Sweet Stacks') {
-      if (item.name === 'Chocolate Waffle' || item.name === 'Strawberry Crepe' || item.name === 'Cookie Dough Delight') {
+      if (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') {
         basePrice = 6.50; // Base price for customizable Sweet Stacks
-        
+
         // Add sweet dips pricing
         if (sweetDips && sweetDips.length > 0) {
           basePrice += sweetDips.length * 1.00;
         }
-        
+
         // Add toppings pricing
         if (toppings && toppings.length > 0) {
           basePrice += toppings.length * 0.50;
         }
-        
+
         // Update item name with type and flavor
         if (sweetStacksType && sweetStacksFlavor) {
           itemName = `${sweetStacksType} - ${sweetStacksFlavor.split(':')[0]}`;
@@ -218,14 +218,14 @@ const Menu = () => {
       if (pizzaSize === '12"') {
         basePrice += 3.00;
       }
-      
+
       if (customizations && customizations.length > 0) {
         const customizationCost = pizzaSize === '10"' ? 1.00 : 1.50;
         basePrice += customizations.length * customizationCost;
       }
-      
+
       itemName = `${item.name} (${pizzaSize})`;
-      
+
       // Add (Meal) tag for pizzas if selected
       if (isMeal) {
         itemName = `${item.name} (${pizzaSize}) (Meal)`;
@@ -292,7 +292,7 @@ const Menu = () => {
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen bg-gray-50 relative"
       style={{
         backgroundImage: `url('/lovable-uploads/426be6e6-1553-496a-9104-16472d338479.png')`,
@@ -303,7 +303,7 @@ const Menu = () => {
     >
       {/* Overlay to dim the background */}
       <div className="absolute inset-0 bg-white/85 z-0"></div>
-      
+
       <div className="relative z-10">
         <Header />
 

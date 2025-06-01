@@ -17,15 +17,15 @@ interface MenuItemCardProps {
   showPizzaSize?: boolean;
   showSweetStacks?: boolean;
   onAddToBasket: (
-    item: MenuItem, 
-    isMeal: boolean, 
-    customizations?: string[], 
-    comment?: string, 
-    sideSize?: string, 
-    milkshakeSize?: string, 
-    milkshakeFlavor?: string, 
-    pizzaSize?: string, 
-    iceCreamScoops?: number, 
+    item: MenuItem,
+    isMeal: boolean,
+    customizations?: string[],
+    comment?: string,
+    sideSize?: string,
+    milkshakeSize?: string,
+    milkshakeFlavor?: string,
+    pizzaSize?: string,
+    iceCreamScoops?: number,
     iceCreamFlavors?: string[],
     sweetStacksType?: string,
     sweetStacksFlavor?: string,
@@ -43,13 +43,13 @@ const sweetStacksFlavors = [
 ];
 
 const sweetDipOptions = [
-  'Belgian Chocolate', 'Nutella', 'Biscoff', 'Pistachio', 'White Chocolate', 
-  'Milk Chocolate', 'Mango', 'Strawberry', 'Raspberry', 'Toffee', 
+  'Belgian Chocolate', 'Nutella', 'Biscoff', 'Pistachio', 'White Chocolate',
+  'Milk Chocolate', 'Mango', 'Strawberry', 'Raspberry', 'Toffee',
   'Caramel', 'Mint', 'Bubblegum'
 ];
 
 const toppingOptions = [
-  'Mini Marshmallows', 'Fudge Cube', 'White Chocolate Flakes', 'Crushed Oreo', 
+  'Mini Marshmallows', 'Fudge Cube', 'White Chocolate Flakes', 'Crushed Oreo',
   'Malteaser', 'Crispy M&M\'s', 'Nuts'
 ];
 
@@ -85,12 +85,12 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [pizzaSize, setPizzaSize] = useState<'10"' | '12"'>('10"');
   const [iceCreamScoops, setIceCreamScoops] = useState<1 | 2 | 3>(1);
   const [selectedIceCreamFlavors, setSelectedIceCreamFlavors] = useState<string[]>([]);
-  
+
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
   const [selectedSweetDips, setSelectedSweetDips] = useState<string[]>([]);
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
-  
+
   // Cheesecake and Stackers' Specials states
   const [cheesecakeFlavor, setCheesecakeFlavor] = useState<string>('Strawberry');
   const [stackersSpecialItem, setStackersSpecialItem] = useState<string>('Waffle on a Stick');
@@ -130,11 +130,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const handleAddToBasket = () => {
     let finalSweetStacksType = '';
     let finalSweetStacksFlavor = sweetStacksFlavor;
-    
+
     // Handle different Sweet Stacks items
-    if (item.name === 'Chocolate Waffle') {
+    if (item.name === 'Waffle') {
       finalSweetStacksType = 'Waffles';
-    } else if (item.name === 'Strawberry Crepe') {
+    } else if (item.name === 'Crepe') {
       finalSweetStacksType = 'Crepes';
     } else if (item.name === 'Cookie Dough Delight') {
       finalSweetStacksType = 'Cookie Dough';
@@ -147,9 +147,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     }
 
     onAddToBasket(
-      item, 
-      isMeal, 
-      selectedCustomizations.length > 0 ? selectedCustomizations : undefined, 
+      item,
+      isMeal,
+      selectedCustomizations.length > 0 ? selectedCustomizations : undefined,
       comment || undefined,
       showSizeOptions ? sideSize : undefined,
       category === 'Milkshakes' ? milkshakeSize : undefined,
@@ -162,7 +162,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       showSweetStacks && selectedSweetDips.length > 0 ? selectedSweetDips : undefined,
       showSweetStacks && selectedToppings.length > 0 ? selectedToppings : undefined
     );
-    
+
     // Reset form
     setSelectedCustomizations([]);
     setIsMeal(false);
@@ -182,15 +182,15 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
   const displayPrice = () => {
     let basePrice = parseFloat(item.price.replace('£', ''));
-    
+
     if (isMeal) {
       basePrice += 2.50;
     }
-    
+
     if (showSizeOptions && sideSize === 'large') {
       basePrice += 1.00;
     }
-    
+
     if (category === 'Milkshakes') {
       basePrice = milkshakeSize === 'regular' ? 4.20 : 5.00;
     }
@@ -204,7 +204,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     // Sweet Stacks pricing
     if (showSweetStacks) {
       // Handle different Sweet Stacks items
-      if (item.name === 'Chocolate Waffle' || item.name === 'Strawberry Crepe' || item.name === 'Cookie Dough Delight') {
+      if (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') {
         basePrice = 6.50; // Base price for Waffles, Crepes, Cookie Dough
       } else if (item.name === 'Cheesecake Slices') {
         basePrice = 3.99; // Fixed price for cheesecake
@@ -212,7 +212,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         const selectedItem = stackersSpecialItems.find(special => special.name === stackersSpecialItem);
         basePrice = selectedItem ? selectedItem.price : 4.99;
       }
-      
+
       // Add sweet dips and toppings pricing only for customizable items
       if (item.name !== 'Cheesecake Slices' && item.name !== 'Stackers\' Specials') {
         basePrice += selectedSweetDips.length * 1.00; // £1 per sweet dip
@@ -225,12 +225,12 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       if (pizzaSize === '12"') {
         basePrice += 3.00; // 12" is £3 extra
       }
-      
+
       // Add customization costs
       const customizationCost = pizzaSize === '10"' ? 1.00 : 1.50;
       basePrice += selectedCustomizations.length * customizationCost;
     }
-    
+
     return `£${basePrice.toFixed(2)}`;
   };
 
@@ -238,14 +238,14 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     if (category === 'Ice Creams' && selectedIceCreamFlavors.length !== iceCreamScoops) {
       return true;
     }
-    
+
     if (showSweetStacks) {
       // For customizable Sweet Stacks items, require flavor selection
-      if ((item.name === 'Chocolate Waffle' || item.name === 'Strawberry Crepe' || item.name === 'Cookie Dough Delight') && !sweetStacksFlavor) {
+      if ((item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && !sweetStacksFlavor) {
         return true;
       }
     }
-    
+
     return false;
   };
 
@@ -263,10 +263,10 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         <p className="text-gray-600 text-sm mb-4 leading-relaxed">{item.description}</p>
         <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
 
-        {showSweetStacks && (item.name === 'Chocolate Waffle' || item.name === 'Strawberry Crepe' || item.name === 'Cookie Dough Delight') && (
+        {showSweetStacks && (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && (
           <>
             <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Flavor:</p>
+              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
               <RadioGroup value={sweetStacksFlavor} onValueChange={setSweetStacksFlavor}>
                 {sweetStacksFlavors.map((flavor) => {
                   const flavorName = flavor.split(':')[0];
@@ -316,7 +316,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
         {showSweetStacks && item.name === 'Cheesecake Slices' && (
           <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Flavor:</p>
+            <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
             <RadioGroup value={cheesecakeFlavor} onValueChange={setCheesecakeFlavor}>
               {cheesecakeFlavors.map((flavor) => (
                 <div key={flavor} className="flex items-center space-x-2">
@@ -417,7 +417,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               </RadioGroup>
             </div>
             <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Flavor:</p>
+              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
               <RadioGroup value={milkshakeFlavor} onValueChange={setMilkshakeFlavor}>
                 <div className="grid grid-cols-2 gap-2">
                   {milkshakeflavours.map((flavor) => (
@@ -460,7 +460,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             </div>
             <div className="mb-4">
               <p className="font-medium mb-2 text-stackers-charcoal">
-                Choose {iceCreamScoops} flavor{iceCreamScoops > 1 ? 's' : ''} ({selectedIceCreamFlavors.length}/{iceCreamScoops} selected):
+                Choose {iceCreamScoops} flavour{iceCreamScoops > 1 ? 's' : ''} ({selectedIceCreamFlavors.length}/{iceCreamScoops} selected):
               </p>
               <div className="grid grid-cols-2 gap-2">
                 {iceCreamflavours.map((flavor) => (

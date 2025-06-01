@@ -101,7 +101,7 @@ export const friedGoldItems: MenuItem[] = [
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
-  
+
   {
     name: 'Strips (3pcs)',
     price: '£3.99',
@@ -403,7 +403,7 @@ export const sidesItems: MenuItem[] = [
 ];
 
 export const drinkItems: MenuItem[] = [
-    {
+  {
     name: 'Irn Bru Can',
     price: '£1.25',
     description: 'Classic Coca Cola in a 330ml can.',
@@ -466,7 +466,7 @@ export const drinkItems: MenuItem[] = [
     image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
-    {
+  {
     name: 'Irn Bru 1.5L',
     price: '£2.99',
     description: 'Classic Coca Cola in a 1.5L bottle.',
@@ -511,23 +511,23 @@ export const iceCreamItems: MenuItem[] = [
 
 export const sweetStacksItems: MenuItem[] = [
   {
-    name: 'Chocolate Waffle',
+    name: 'Waffle',
     price: '£6.50',
-    description: 'Warm waffle ready for your sweet customization.',
+    description: 'Warm waffle made from fresh waffle mix, ready for your sweet customisation.',
     image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
-    name: 'Strawberry Crepe',
+    name: 'Crepe',
     price: '£6.50',
-    description: 'Delicate crepe ready for your sweet customization.',
+    description: 'Delicate crepe ready for your sweet customisation.',
     image: 'https://images.unsplash.com/photo-1519915195129-7d93adf4b882?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
     name: 'Cookie Dough Delight',
     price: '£6.50',
-    description: 'Warm cookie dough ready for your sweet customization.',
+    description: 'Warm cookie dough ready for your sweet customisation.',
     image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
@@ -563,13 +563,6 @@ export const mealDealsItems: MenuItem[] = [
     category: 'Meal Deals'
   },
   {
-    name: 'Educators’ Appreciation',
-    price: '£9.99',
-    description: 'To those who shape minds and inspire futures — enjoy 15% off your total bill as a thank you for all you do. Open to teachers, professors, and educators with valid school or university ID. In-store only.',
-    image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
-    category: 'Meal Deals'
-  },
-  {
     name: 'Party Platter',
     price: '£24.99',
     description: 'The ultimate party platter. Includes 4 pieces of crispy fried chicken, 2 Chicken Stack Classic burgers, 2 golden fries, and 2 chilled cans of juice — perfect for sharing',
@@ -586,7 +579,7 @@ export const mealDealsItems: MenuItem[] = [
 ];
 
 export const boxesItems: MenuItem[] = [
-    {
+  {
     name: 'Solo Supreme Box',
     price: '£10.99',
     description: 'The perfect solo feast that brings together our best fried favourites. Get 4 pieces of our crispy fried chicken and 4 golden chicken strips, served with a generous portion of fries and your choice of canned drink. This hearty combo delivers serious satisfaction when you are craving the ultimate chicken experience all to yourself.',
@@ -629,8 +622,8 @@ export const loadedFriesItems: MenuItem[] = [
 export const pizzaCustomizations = ['Extra Cheese', 'Extra Pepperoni', 'Mushrooms', 'Olives', 'Peppers', 'Pineapple', 'Ham'];
 
 export const milkshakeflavours = [
-  'Oreo', 'Biscoff', 'Strawberry', 'Kinder Bueno', 'White Kinder Bueno', 
-  'Malteaser', 'Galaxy Caramel', 'Galaxy', 'Milky bar', 'Banana', 
+  'Oreo', 'Biscoff', 'Strawberry', 'Kinder Bueno', 'White Kinder Bueno',
+  'Malteaser', 'Galaxy Caramel', 'Galaxy', 'Milky bar', 'Banana',
   'Ferrero Rocher', 'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'
 ];
 

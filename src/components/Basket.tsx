@@ -33,14 +33,14 @@ interface BasketProps {
   onClose: () => void;
 }
 
-const Basket: React.FC<BasketProps> = ({ 
-  items, 
-  onRemoveItem, 
-  onUpdateQuantity, 
+const Basket: React.FC<BasketProps> = ({
+  items,
+  onRemoveItem,
+  onUpdateQuantity,
   onClearBasket,
   onProceedToCheckout,
-  isOpen, 
-  onClose 
+  isOpen,
+  onClose
 }) => {
   const calculateTotal = () => {
     return items.reduce((total, item) => {
@@ -74,8 +74,8 @@ const Basket: React.FC<BasketProps> = ({
             </h2>
             <div className="flex items-center gap-2">
               {items.length > 0 && (
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   onClick={onClearBasket}
                   className="text-white hover:bg-gray-700 text-sm"
                   size="sm"
@@ -90,7 +90,7 @@ const Basket: React.FC<BasketProps> = ({
             </div>
           </div>
         </div>
-        
+
         <div className="p-4">
           {items.length === 0 ? (
             <p className="text-gray-500 text-center py-8">Your basket is empty</p>
@@ -102,67 +102,67 @@ const Basket: React.FC<BasketProps> = ({
                     <div className="flex-1">
                       <h3 className="font-semibold text-stackers-charcoal">{getItemDisplayName(item)}</h3>
                       <p className="text-sm text-gray-600">{item.category}</p>
-                      
+
                       {shouldShowDescription(item.category) && item.description && (
                         <p className="text-xs text-gray-500 mt-1 italic">
                           {item.description}
                         </p>
                       )}
-                      
+
                       {item.customizations && item.customizations.length > 0 && (
                         <p className="text-xs text-gray-500 mt-1">
                           Customizations: {item.customizations.join(', ')}
                         </p>
                       )}
-                      
+
                       {item.sideSize && (
                         <p className="text-xs text-gray-500 mt-1">
                           Size: {item.sideSize}
                         </p>
                       )}
-                      
+
                       {item.milkshakeSize && (
                         <p className="text-xs text-gray-500 mt-1">
-                          Size: {item.milkshakeSize}, Flavor: {item.milkshakeFlavor}
+                          Size: {item.milkshakeSize}, Flavour: {item.milkshakeFlavor}
                         </p>
                       )}
-                      
+
                       {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavors: {item.iceCreamFlavors.join(', ')}
+                          {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavours: {item.iceCreamFlavors.join(', ')}
                         </p>
                       )}
-                      
+
                       {item.sweetStacksType && item.sweetStacksFlavor && (
                         <p className="text-xs text-gray-500 mt-1">
                           {item.sweetStacksType}: {item.sweetStacksFlavor.split(':')[0]}
                         </p>
                       )}
-                      
+
                       {item.sweetDips && item.sweetDips.length > 0 && (
                         <p className="text-xs text-gray-500 mt-1">
                           Sweet Dips: {item.sweetDips.join(', ')}
                         </p>
                       )}
-                      
+
                       {item.toppings && item.toppings.length > 0 && (
                         <p className="text-xs text-gray-500 mt-1">
                           Toppings: {item.toppings.join(', ')}
                         </p>
                       )}
-                      
+
                       {item.comment && (
                         <p className="text-xs text-gray-500 mt-1 italic">
                           Note: {item.comment}
                         </p>
                       )}
                     </div>
-                    
+
                     <div className="text-right ml-4">
                       <p className="font-bold text-stackers-yellow">{item.price}</p>
                       <div className="flex items-center mt-2">
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
                           onClick={() => onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))}
                           className="w-8 h-8 p-0"
@@ -170,8 +170,8 @@ const Basket: React.FC<BasketProps> = ({
                           -
                         </Button>
                         <span className="mx-2 font-semibold">{item.quantity}</span>
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
                           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
                           className="w-8 h-8 p-0"
@@ -179,8 +179,8 @@ const Basket: React.FC<BasketProps> = ({
                           +
                         </Button>
                       </div>
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => onRemoveItem(item.id)}
                         className="text-red-500 hover:text-red-700 mt-1"
@@ -191,13 +191,13 @@ const Basket: React.FC<BasketProps> = ({
                   </div>
                 </div>
               ))}
-              
+
               <div className="border-t pt-4 mt-4">
                 <div className="flex justify-between items-center text-xl font-bold">
                   <span>Total:</span>
                   <span className="text-stackers-yellow">£{calculateTotal()}</span>
                 </div>
-                <Button 
+                <Button
                   className="w-full mt-4 bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
                   onClick={onProceedToCheckout}
                 >

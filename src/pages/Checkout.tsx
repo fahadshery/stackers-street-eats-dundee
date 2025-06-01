@@ -14,7 +14,7 @@ const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const basketItems: BasketItem[] = location.state?.basketItems || [];
-  
+
   const [orderType, setOrderType] = useState<'collection' | 'delivery'>('collection');
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -26,14 +26,14 @@ const Checkout = () => {
     city: '',
     postcode: ''
   });
-  
+
   const [couponCode, setCouponCode] = useState('');
   const [giftCardCode, setGiftCardCode] = useState('');
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [giftCardValue, setGiftCardValue] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
   const [giftCardApplied, setGiftCardApplied] = useState(false);
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   // Load basket from localStorage if not passed through navigation
   useEffect(() => {
@@ -58,12 +58,12 @@ const Checkout = () => {
   };
 
   const calculateIceCreamDiscount = () => {
-    const hasWaffleCrepeOrCookie = basketItems.some(item => 
-      item.category === 'Sweet Stacks' && 
+    const hasWaffleCrepeOrCookie = basketItems.some(item =>
+      item.category === 'Sweet Stacks' &&
       (item.name.includes('Waffle') || item.name.includes('Crepe') || item.name.includes('Cookie Dough'))
     );
-    
-    const hasIceCream = basketItems.some(item => 
+
+    const hasIceCream = basketItems.some(item =>
       item.name.includes('Premium Ice Cream')
     );
 
@@ -96,7 +96,7 @@ const Checkout = () => {
       ...prev,
       [field]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({
@@ -107,7 +107,7 @@ const Checkout = () => {
   };
 
   const validateForm = () => {
-    const newErrors: {[key: string]: string} = {};
+    const newErrors: { [key: string]: string } = {};
 
     if (!customerInfo.name.trim()) {
       newErrors.name = 'Name is required';
@@ -148,7 +148,7 @@ const Checkout = () => {
 
   const applyCoupon = () => {
     // Mock coupon validation
-    const validCoupons: {[key: string]: number} = {
+    const validCoupons: { [key: string]: number } = {
       'SAVE10': 10,
       'WELCOME15': 15,
       'STUDENT20': 20
@@ -164,7 +164,7 @@ const Checkout = () => {
 
   const applyGiftCard = () => {
     // Mock gift card validation
-    const validGiftCards: {[key: string]: number} = {
+    const validGiftCards: { [key: string]: number } = {
       'GIFT50': 50,
       'GIFT25': 25,
       'GIFT100': 100
@@ -182,7 +182,7 @@ const Checkout = () => {
     if (!validateForm()) {
       return;
     }
-    
+
     // This would typically integrate with a payment processor
     alert('Payment functionality would be integrated here with Apple Pay, Debit Card, Credit Card options');
   };
@@ -199,7 +199,7 @@ const Checkout = () => {
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-4xl font-bold text-stackers-charcoal mb-4">No Items in Basket</h1>
           <p className="text-gray-600 mb-8">Please add items to your basket before proceeding to checkout.</p>
-          <Button 
+          <Button
             onClick={() => navigate('/menu')}
             className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
           >
@@ -212,7 +212,7 @@ const Checkout = () => {
   }
 
   return (
-    <div 
+    <div
       className="min-h-screen bg-gray-50 relative"
       style={{
         backgroundImage: `url('/lovable-uploads/426be6e6-1553-496a-9104-16472d338479.png')`,
@@ -223,13 +223,13 @@ const Checkout = () => {
     >
       {/* Overlay to dim the background */}
       <div className="absolute inset-0 bg-white/85 z-0"></div>
-      
+
       <div className="relative z-10">
         <Header />
-        
+
         <div className="container mx-auto px-4 py-8">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => navigate('/menu')}
             className="mb-6 text-stackers-charcoal hover:bg-gray-200"
           >
@@ -244,7 +244,7 @@ const Checkout = () => {
                 <ShoppingBag className="mr-2" size={24} />
                 Order Summary
               </h2>
-              
+
               <div className="space-y-4">
                 {basketItems.map((item) => (
                   <div key={item.id} className="border-b pb-4">
@@ -252,55 +252,55 @@ const Checkout = () => {
                       <div className="flex-1">
                         <h3 className="font-semibold text-stackers-charcoal">{item.name}</h3>
                         <p className="text-sm text-gray-600">{item.category}</p>
-                        
+
                         {shouldShowDescription(item.category) && item.description && (
                           <p className="text-xs text-gray-500 mt-1 italic">
                             {item.description}
                           </p>
                         )}
-                        
+
                         {item.customizations && item.customizations.length > 0 && (
                           <p className="text-xs text-gray-500 mt-1">
                             Customizations: {item.customizations.join(', ')}
                           </p>
                         )}
-                        
+
                         {item.sideSize && (
                           <p className="text-xs text-gray-500 mt-1">
                             Size: {item.sideSize}
                           </p>
                         )}
-                        
+
                         {item.milkshakeSize && (
                           <p className="text-xs text-gray-500 mt-1">
-                            Size: {item.milkshakeSize}, Flavor: {item.milkshakeFlavor}
+                            Size: {item.milkshakeSize}, Flavour: {item.milkshakeFlavor}
                           </p>
                         )}
-                        
+
                         {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
                           <p className="text-xs text-gray-500 mt-1">
-                            {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavors: {item.iceCreamFlavors.join(', ')}
+                            {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavours: {item.iceCreamFlavors.join(', ')}
                           </p>
                         )}
-                        
+
                         {item.sweetStacksType && item.sweetStacksFlavor && (
                           <p className="text-xs text-gray-500 mt-1">
                             {item.sweetStacksType} - {item.sweetStacksFlavor.split(':')[0]}
                           </p>
                         )}
-                        
+
                         {item.sweetDips && item.sweetDips.length > 0 && (
                           <p className="text-xs text-gray-500 mt-1">
                             Sweet Dips: {item.sweetDips.join(', ')}
                           </p>
                         )}
-                        
+
                         {item.toppings && item.toppings.length > 0 && (
                           <p className="text-xs text-gray-500 mt-1">
                             Toppings: {item.toppings.join(', ')}
                           </p>
                         )}
-                        
+
                         {item.comment && (
                           <p className="text-xs text-gray-500 mt-1 italic">
                             Note: {item.comment}
@@ -314,34 +314,34 @@ const Checkout = () => {
                     </div>
                   </div>
                 ))}
-                
+
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span>Subtotal:</span>
                     <span>£{calculateSubtotal().toFixed(2)}</span>
                   </div>
-                  
+
                   {calculateIceCreamDiscount() > 0 && (
                     <div className="flex justify-between text-green-600">
                       <span>Ice Cream Discount:</span>
                       <span>-£{calculateIceCreamDiscount().toFixed(2)}</span>
                     </div>
                   )}
-                  
+
                   {couponDiscount > 0 && (
                     <div className="flex justify-between text-green-600">
                       <span>Coupon Discount:</span>
                       <span>-£{couponDiscount.toFixed(2)}</span>
                     </div>
                   )}
-                  
+
                   {giftCardValue > 0 && (
                     <div className="flex justify-between text-green-600">
                       <span>Gift Card:</span>
                       <span>-£{giftCardValue.toFixed(2)}</span>
                     </div>
                   )}
-                  
+
                   <Separator />
                   <div className="flex justify-between items-center text-xl font-bold">
                     <span>Total:</span>
@@ -401,7 +401,7 @@ const Checkout = () => {
             {/* Order Details */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-bold text-stackers-charcoal mb-6">Order Details</h2>
-              
+
               {/* Order Type Selection */}
               <div className="mb-6">
                 <Label className="text-lg font-semibold text-stackers-charcoal mb-3 block">
@@ -539,14 +539,14 @@ const Checkout = () => {
                     {orderType === 'collection' ? 'Ready for collection in 15-20 minutes' : 'Delivery within 30-45 minutes'}
                   </p>
                 </div>
-                
-                <Button 
+
+                <Button
                   className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold py-3 text-lg"
                   onClick={handlePayment}
                 >
                   Pay Now - £{calculateTotal().toFixed(2)}
                 </Button>
-                
+
                 <p className="text-xs text-gray-500 text-center mt-2">
                   Secure payment with Apple Pay, Debit Card, or Credit Card
                 </p>
