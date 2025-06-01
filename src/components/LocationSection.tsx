@@ -34,9 +34,9 @@ const LocationSection = () => {
                 <h3 className="text-2xl font-bold text-stackers-charcoal">Location</h3>
               </div>
               <p className="text-lg text-gray-700 mb-4">
-                123 High Street<br />
+                96 High Street<br />
                 Dundee, Scotland<br />
-                DD1 1AA
+                DD2 3AY
               </p>
               <Button className="bg-stackers-red hover:bg-red-600 text-white">
                 Get Directions

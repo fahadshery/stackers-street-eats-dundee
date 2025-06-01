@@ -113,9 +113,9 @@ const Contact = () => {
                   📍 Visit Our Kitchen
                 </h3>
                 <div className="space-y-2 text-gray-700">
-                  <p className="text-lg">123 High Street</p>
+                  <p className="text-lg">96 High Street</p>
                   <p className="text-lg">Dundee, Scotland</p>
-                  <p className="text-lg">DD1 1AA</p>
+                  <p className="text-lg">DD2 3AY</p>
                 </div>
                 <Button className="mt-4 bg-stackers-red hover:bg-red-600 text-white">
                   Get Directions
@@ -132,7 +132,7 @@ const Contact = () => {
                     <span className="text-stackers-yellow mr-3 text-lg">📞</span>
                     <div>
                       <p className="font-medium">Phone</p>
-                      <p className="text-gray-300">01382 123 456</p>
+                      <p className="text-gray-300">01382 624 786</p>
                     </div>
                   </div>
                   
@@ -140,7 +140,7 @@ const Contact = () => {
                     <span className="text-stackers-yellow mr-3 text-lg">💚</span>
                     <div>
                       <p className="font-medium">WhatsApp</p>
-                      <p className="text-gray-300">07123 456 789</p>
+                      <p className="text-gray-300">07988 747 121</p>
                     </div>
                   </div>
                   
@@ -148,7 +148,7 @@ const Contact = () => {
                     <span className="text-stackers-yellow mr-3 text-lg">✉️</span>
                     <div>
                       <p className="font-medium">Email</p>
-                      <p className="text-gray-300">hello@stackersdundee.co.uk</p>
+                      <p className="text-gray-300">hello@stackersmash.com</p>
                     </div>
                   </div>
                 </div>
@@ -201,7 +201,7 @@ const Contact = () => {
               <div className="text-center">
                 <div className="text-4xl mb-2">🗺️</div>
                 <p className="text-gray-600">Interactive map coming soon!</p>
-                <p className="text-sm text-gray-500">123 High Street, Dundee DD1 1AA</p>
+                <p className="text-sm text-gray-500">96 High Street, Dundee DD2 3AY</p>
               </div>
             </div>
           </div>

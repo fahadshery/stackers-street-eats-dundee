@@ -18,8 +18,25 @@ const GiftCards = () => {
   const [senderName, setSenderName] = useState('');
   const [message, setMessage] = useState('');
   const [purchaseStep, setPurchaseStep] = useState<'select' | 'details' | 'payment'>('select');
+  const [emailError, setEmailError] = useState('');
 
   const giftCardAmounts = [5, 10, 20, 50];
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value;
+    setRecipientEmail(email);
+    
+    if (email && !validateEmail(email)) {
+      setEmailError('Please enter a valid email address');
+    } else {
+      setEmailError('');
+    }
+  };
 
   const handleAmountSelect = (amount: number) => {
     setSelectedAmount(amount);
@@ -27,10 +44,12 @@ const GiftCards = () => {
   };
 
   const handleDetailsSubmit = () => {
-    if (recipientEmail && recipientName && senderName) {
+    if (recipientEmail && recipientName && senderName && validateEmail(recipientEmail)) {
       setPurchaseStep('payment');
     }
   };
+
+  const isFormValid = recipientEmail && recipientName && senderName && validateEmail(recipientEmail) && !emailError;
 
   const handlePurchase = () => {
     // This would integrate with a payment processor
@@ -41,6 +60,7 @@ const GiftCards = () => {
     setRecipientName('');
     setSenderName('');
     setMessage('');
+    setEmailError('');
     setPurchaseStep('select');
   };
 
@@ -118,9 +138,13 @@ const GiftCards = () => {
                         id="recipientEmail"
                         type="email"
                         value={recipientEmail}
-                        onChange={(e) => setRecipientEmail(e.target.value)}
+                        onChange={handleEmailChange}
                         placeholder="Where should we send the gift card?"
+                        className={emailError ? 'border-red-500' : ''}
                       />
+                      {emailError && (
+                        <p className="text-red-500 text-sm mt-1">{emailError}</p>
+                      )}
                     </div>
                     
                     <div>
@@ -153,7 +177,7 @@ const GiftCards = () => {
                       </Button>
                       <Button
                         onClick={handleDetailsSubmit}
-                        disabled={!recipientEmail || !recipientName || !senderName}
+                        disabled={!isFormValid}
                         className="flex-1 bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400"
                       >
                         Continue

@@ -23,6 +23,7 @@ const Footer = () => {
             <ul className="space-y-2 text-gray-300">
               <li><a href="/" className="hover:text-stackers-yellow transition-colors">Home</a></li>
               <li><a href="/menu" className="hover:text-stackers-yellow transition-colors">Menu</a></li>
+              <li><a href="/gift-cards" className="hover:text-stackers-yellow transition-colors">Gift Cards</a></li>
               <li><a href="/about" className="hover:text-stackers-yellow transition-colors">About</a></li>
               <li><a href="/contact" className="hover:text-stackers-yellow transition-colors">Contact</a></li>
             </ul>
@@ -32,10 +33,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold text-stackers-yellow mb-4">Menu</h4>
             <ul className="space-y-2 text-gray-300">
-              <li><a href="/menu#burgers" className="hover:text-stackers-yellow transition-colors">Smash Burgers</a></li>
-              <li><a href="/menu#chicken" className="hover:text-stackers-yellow transition-colors">Fried Chicken</a></li>
-              <li><a href="/menu#fries" className="hover:text-stackers-yellow transition-colors">Loaded Fries</a></li>
-              <li><a href="/menu#desserts" className="hover:text-stackers-yellow transition-colors">Desserts</a></li>
+              <li><a href="/menu#smash-burgers" className="hover:text-stackers-yellow transition-colors">Smash Burgers</a></li>
+              <li><a href="/menu#fried-gold" className="hover:text-stackers-yellow transition-colors">Fried Chicken</a></li>
+              <li><a href="/menu#loaded-fries" className="hover:text-stackers-yellow transition-colors">Loaded Fries</a></li>
+              <li><a href="/menu#sweet-stacks" className="hover:text-stackers-yellow transition-colors">Desserts</a></li>
             </ul>
           </div>
           
@@ -43,10 +44,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold text-stackers-yellow mb-4">Contact</h4>
             <div className="space-y-2 text-gray-300">
-              <p>123 High Street</p>
-              <p>Dundee, Scotland DD1 1AA</p>
-              <p>📞 01382 123 456</p>
-              <p>✉️ hello@stackersdundee.co.uk</p>
+              <p>96 High Street</p>
+              <p>Dundee, Scotland DD2 3AY</p>
+              <p>📞 01382 624 786</p>
+              <p>✉️ hello@stackersmash.com</p>
             </div>
           </div>
         </div>

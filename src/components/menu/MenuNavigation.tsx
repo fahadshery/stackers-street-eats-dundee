@@ -8,7 +8,7 @@ interface MenuNavigationProps {
 }
 
 const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeSection, onScrollToSection }) => {
-  const sections = [
+  const sectionsLine1 = [
     { id: 'starters', label: 'Starters' },
     { id: 'fried-gold', label: 'Fried Gold' },
     { id: 'smash-burgers', label: 'Smash Burgers' },
@@ -16,7 +16,10 @@ const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeSection, onScroll
     { id: 'wraps', label: 'Wraps' },
     { id: 'pizzas', label: 'Pizzas' },
     { id: 'boxes', label: 'Boxes' },
-    { id: 'meal-deals', label: 'Meal Deals' },
+    { id: 'meal-deals', label: 'Meal Deals' }
+  ];
+
+  const sectionsLine2 = [
     { id: 'loaded-fries', label: 'Loaded Fries' },
     { id: 'kids', label: 'Kids' },
     { id: 'sides', label: 'Sides' },
@@ -29,13 +32,32 @@ const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeSection, onScroll
   return (
     <div className="sticky top-16 bg-white shadow-md z-40 border-b">
       <div className="container mx-auto px-4">
-        <div className="flex overflow-x-auto py-3 space-x-4 scrollbar-hide">
-          {sections.map((section) => (
+        {/* First line */}
+        <div className="flex flex-wrap justify-center py-2 space-x-2">
+          {sectionsLine1.map((section) => (
             <Button
               key={section.id}
               variant="ghost"
               onClick={() => onScrollToSection(section.id)}
-              className={`whitespace-nowrap px-4 py-2 font-medium transition-colors ${
+              className={`whitespace-nowrap px-3 py-1 text-sm font-medium transition-colors ${
+                activeSection === section.id
+                  ? 'bg-stackers-yellow text-stackers-charcoal'
+                  : 'text-gray-700 hover:text-stackers-yellow hover:bg-gray-100'
+              }`}
+            >
+              {section.label}
+            </Button>
+          ))}
+        </div>
+        
+        {/* Second line */}
+        <div className="flex flex-wrap justify-center py-2 space-x-2 border-t border-gray-200">
+          {sectionsLine2.map((section) => (
+            <Button
+              key={section.id}
+              variant="ghost"
+              onClick={() => onScrollToSection(section.id)}
+              className={`whitespace-nowrap px-3 py-1 text-sm font-medium transition-colors ${
                 activeSection === section.id
                   ? 'bg-stackers-yellow text-stackers-charcoal'
                   : 'text-gray-700 hover:text-stackers-yellow hover:bg-gray-100'
