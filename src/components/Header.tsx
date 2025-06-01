@@ -11,6 +11,7 @@ const Header = () => {
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Menu', href: '/menu' },
+    { name: 'Gift Cards', href: '/gift-cards' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' }
   ];
@@ -25,10 +26,19 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
+            {/* Desktop Logo */}
             <img 
               src="/lovable-uploads/1c302daa-0169-4d63-bc70-bbcfba050a32.png" 
               alt="STACKERS" 
-              className="h-8 w-auto"
+              className="h-8 w-auto hidden md:block"
+              onClick={() => navigate('/')}
+              style={{ cursor: 'pointer' }}
+            />
+            {/* Mobile Logo */}
+            <img 
+              src="/lovable-uploads/cd6add94-33ad-480b-81fd-35ac59fe407b.png" 
+              alt="STACKERS" 
+              className="h-8 w-auto md:hidden"
               onClick={() => navigate('/')}
               style={{ cursor: 'pointer' }}
             />
