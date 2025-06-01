@@ -25,9 +25,13 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-stackers-yellow">
-              STACKERS
-            </h1>
+            <img 
+              src="/lovable-uploads/1c302daa-0169-4d63-bc70-bbcfba050a32.png" 
+              alt="STACKERS" 
+              className="h-8 w-auto"
+              onClick={() => navigate('/')}
+              style={{ cursor: 'pointer' }}
+            />
           </div>
 
           {/* Desktop Navigation */}

@@ -1,7 +1,18 @@
 
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
+  const handleOrderNow = () => {
+    navigate('/menu');
+  };
+
+  const handleViewMenu = () => {
+    navigate('/menu');
+  };
+
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-stackers-charcoal via-gray-900 to-stackers-charcoal flex items-center">
       {/* Background Pattern */}
@@ -28,10 +39,17 @@ const HeroSection = () => {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-8 py-4 text-lg transition-all duration-200 hover:scale-105 transform">
+            <Button 
+              onClick={handleOrderNow}
+              className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-8 py-4 text-lg transition-all duration-200 hover:scale-105 transform"
+            >
               ORDER NOW
             </Button>
-            <Button variant="outline" className="border-stackers-yellow text-stackers-yellow hover:bg-stackers-yellow hover:text-stackers-charcoal font-bold px-8 py-4 text-lg transition-all duration-200">
+            <Button 
+              variant="outline" 
+              onClick={handleViewMenu}
+              className="border-stackers-yellow text-stackers-yellow hover:bg-stackers-yellow hover:text-stackers-charcoal font-bold px-8 py-4 text-lg transition-all duration-200"
+            >
               VIEW MENU
             </Button>
           </div>

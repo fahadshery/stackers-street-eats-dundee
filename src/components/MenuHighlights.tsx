@@ -1,7 +1,10 @@
 
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const MenuHighlights = () => {
+  const navigate = useNavigate();
+
   const menuItems = [
     {
       category: "Smash Burgers",
@@ -9,15 +12,17 @@ const MenuHighlights = () => {
       description: "A towering Angus beef with melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Massive. Meaty. Unstoppable.",
       price: "£10.45",
       badge: "SMASH BURGERS",
-      bgColor: "bg-stackers-yellow"
+      bgColor: "bg-stackers-yellow",
+      categoryId: "smash-burgers"
     },
     {
       category: "Fried Chicken",
       name: "Zing Stack Burger",
-      description: "Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn’t your thing!",
+      description: "Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn't your thing!",
       price: "£7.45",
       badge: "BESTSELLER",
-      bgColor: "bg-stackers-red"
+      bgColor: "bg-stackers-red",
+      categoryId: "chicken-burgers"
     },
     {
       category: "Boxes",
@@ -25,7 +30,8 @@ const MenuHighlights = () => {
       description: "Stack Classic smash burger, Zing Stack burger, Peri-Peri Chicken Stack burger, curly fries, and a can of juice.",
       price: "£15.00",
       badge: "SHARING SIZE",
-      bgColor: "bg-stackers-charcoal"
+      bgColor: "bg-stackers-charcoal",
+      categoryId: "boxes"
     },
     {
       category: "Desserts",
@@ -33,9 +39,18 @@ const MenuHighlights = () => {
       description: "Warm waffles, ice cream, berry compote, maple syrup",
       price: "£5.50",
       badge: "SWEET",
-      bgColor: "bg-purple-600"
+      bgColor: "bg-purple-600",
+      categoryId: "sweet-stacks"
     }
   ];
+
+  const handleAddToMenu = (categoryId: string) => {
+    navigate(`/menu#${categoryId}`);
+  };
+
+  const handleViewFullMenu = () => {
+    navigate('/menu');
+  };
 
   return (
     <section className="py-20 bg-gray-50">
@@ -79,6 +94,7 @@ const MenuHighlights = () => {
                   </span>
                   <Button 
                     size="sm" 
+                    onClick={() => handleAddToMenu(item.categoryId)}
                     className="bg-stackers-charcoal hover:bg-gray-800 text-white"
                   >
                     Add
@@ -90,7 +106,10 @@ const MenuHighlights = () => {
         </div>
         
         <div className="text-center">
-          <Button className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-8 py-4 text-lg">
+          <Button 
+            onClick={handleViewFullMenu}
+            className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-8 py-4 text-lg"
+          >
             VIEW FULL MENU
           </Button>
         </div>
