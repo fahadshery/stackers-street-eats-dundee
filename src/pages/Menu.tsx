@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -144,7 +143,11 @@ const Menu = () => {
     milkshakeFlavor?: string, 
     pizzaSize?: string, 
     iceCreamScoops?: number, 
-    iceCreamFlavors?: string[]
+    iceCreamFlavors?: string[],
+    sweetStacksType?: string,
+    sweetStacksFlavor?: string,
+    sweetDips?: string[],
+    toppings?: string[]
   ) => {
     let basePrice = parseFloat(item.price.replace('£', ''));
     let itemName = item.name;
@@ -172,6 +175,26 @@ const Menu = () => {
       else if (iceCreamScoops === 3) basePrice = 4.75;
     }
 
+    // Handle Sweet Stacks pricing
+    if (item.category === 'Sweet Stacks') {
+      basePrice = 6.50; // Base price for all Sweet Stacks
+      
+      // Add sweet dips pricing
+      if (sweetDips && sweetDips.length > 0) {
+        basePrice += sweetDips.length * 1.00;
+      }
+      
+      // Add toppings pricing
+      if (toppings && toppings.length > 0) {
+        basePrice += toppings.length * 0.50;
+      }
+      
+      // Update item name with type and flavor
+      if (sweetStacksType && sweetStacksFlavor) {
+        itemName = `${sweetStacksType} - ${sweetStacksFlavor}`;
+      }
+    }
+
     // Handle pizza sizing and customizations
     if (pizzaSize) {
       if (pizzaSize === '12"') {
@@ -195,13 +218,18 @@ const Menu = () => {
       name: itemName,
       price: `£${basePrice.toFixed(2)}`,
       category: item.category,
+      description: item.description,
       customizations,
       comment,
       sideSize,
       milkshakeSize,
       milkshakeFlavor,
       iceCreamFlavors,
-      iceCreamScoops
+      iceCreamScoops,
+      sweetStacksType,
+      sweetStacksFlavor,
+      sweetDips,
+      toppings
     };
 
     const existingItemIndex = basketItems.findIndex(
@@ -213,7 +241,11 @@ const Menu = () => {
         basketItem.milkshakeSize === milkshakeSize &&
         basketItem.milkshakeFlavor === milkshakeFlavor &&
         JSON.stringify(basketItem.iceCreamFlavors) === JSON.stringify(iceCreamFlavors) &&
-        basketItem.iceCreamScoops === iceCreamScoops
+        basketItem.iceCreamScoops === iceCreamScoops &&
+        basketItem.sweetStacksType === sweetStacksType &&
+        basketItem.sweetStacksFlavor === sweetStacksFlavor &&
+        JSON.stringify(basketItem.sweetDips) === JSON.stringify(sweetDips) &&
+        JSON.stringify(basketItem.toppings) === JSON.stringify(toppings)
     );
 
     if (existingItemIndex > -1) {
@@ -242,242 +274,256 @@ const Menu = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <div 
+      className="min-h-screen bg-gray-50 relative"
+      style={{
+        backgroundImage: `url('/lovable-uploads/426be6e6-1553-496a-9104-16472d338479.png')`,
+        backgroundRepeat: 'repeat',
+        backgroundSize: '300px 300px',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Overlay to dim the background */}
+      <div className="absolute inset-0 bg-white/85 z-0"></div>
+      
+      <div className="relative z-10">
+        <Header />
 
-      <MenuNavigation activeSection={activeSection} onScrollToSection={scrollToSection} />
+        <MenuNavigation activeSection={activeSection} onScrollToSection={scrollToSection} />
 
-      <div className="container mx-auto px-4 py-8">
-        <BasketButton basketItems={basketItems} onOpenBasket={() => setIsBasketOpen(true)} />
+        <div className="container mx-auto px-4 py-8">
+          <BasketButton basketItems={basketItems} onOpenBasket={() => setIsBasketOpen(true)} />
 
-        {/* Sections rendered in the new order */}
-        <MenuSection id="starters" label="Starters" sectionRef={startersRef} isActive={activeSection === 'starters'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {startersItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Starters"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          {/* Sections rendered in the new order */}
+          <MenuSection id="starters" label="Starters" sectionRef={startersRef} isActive={activeSection === 'starters'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {startersItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Starters"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="fried-gold" label="Fried Gold" sectionRef={friedGoldRef} isActive={activeSection === 'fried-gold'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {friedGoldItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Fried Gold"
-                showMealOption={true}
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="fried-gold" label="Fried Gold" sectionRef={friedGoldRef} isActive={activeSection === 'fried-gold'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {friedGoldItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Fried Gold"
+                  showMealOption={true}
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="smash-burgers" label="Smash Burgers" sectionRef={smashBurgersRef} isActive={activeSection === 'smash-burgers'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {smashBurgerItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Smash Burgers"
-                showMealOption={true}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="smash-burgers" label="Smash Burgers" sectionRef={smashBurgersRef} isActive={activeSection === 'smash-burgers'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {smashBurgerItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Smash Burgers"
+                  showMealOption={true}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="chicken-burgers" label="Chicken Burgers" sectionRef={chickenBurgersRef} isActive={activeSection === 'chicken-burgers'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {chickenBurgerItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Chicken Burgers"
-                showMealOption={true}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="chicken-burgers" label="Chicken Burgers" sectionRef={chickenBurgersRef} isActive={activeSection === 'chicken-burgers'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {chickenBurgerItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Chicken Burgers"
+                  showMealOption={true}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="wraps" label="Wraps" sectionRef={wrapsRef} isActive={activeSection === 'wraps'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {wrapItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Wraps"
-                showMealOption={true}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="wraps" label="Wraps" sectionRef={wrapsRef} isActive={activeSection === 'wraps'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {wrapItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Wraps"
+                  showMealOption={true}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="pizzas" label="Pizzas" sectionRef={pizzasRef} isActive={activeSection === 'pizzas'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {pizzaItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Pizzas"
-                showMealOption={true}
-                showCustomizations={true}
-                customizations={pizzaCustomizations}
-                showPizzaSize={true}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="pizzas" label="Pizzas" sectionRef={pizzasRef} isActive={activeSection === 'pizzas'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {pizzaItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Pizzas"
+                  showMealOption={true}
+                  showCustomizations={true}
+                  customizations={pizzaCustomizations}
+                  showPizzaSize={true}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="boxes" label="Boxes" sectionRef={boxesRef} isActive={activeSection === 'boxes'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {boxesItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Boxes"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="boxes" label="Boxes" sectionRef={boxesRef} isActive={activeSection === 'boxes'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {boxesItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Boxes"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="meal-deals" label="Meal Deals" sectionRef={mealDealsRef} isActive={activeSection === 'meal-deals'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mealDealsItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Meal Deals"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="meal-deals" label="Meal Deals" sectionRef={mealDealsRef} isActive={activeSection === 'meal-deals'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {mealDealsItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Meal Deals"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="loaded-fries" label="Loaded Stackers' Fries" sectionRef={loadedFriesRef} isActive={activeSection === 'loaded-fries'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {loadedFriesItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Loaded Stackers' Fries"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="loaded-fries" label="Loaded Stackers' Fries" sectionRef={loadedFriesRef} isActive={activeSection === 'loaded-fries'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {loadedFriesItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Loaded Stackers' Fries"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="kids" label="Kids" sectionRef={kidsRef} isActive={activeSection === 'kids'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {kidsItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Kids"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="kids" label="Kids" sectionRef={kidsRef} isActive={activeSection === 'kids'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {kidsItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Kids"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="sides" label="Sides" sectionRef={sidesRef} isActive={activeSection === 'sides'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sidesItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Sides"
-                showSizeOptions={true}
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="sides" label="Sides" sectionRef={sidesRef} isActive={activeSection === 'sides'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {sidesItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Sides"
+                  showSizeOptions={true}
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="sweet-stacks" label="Sweet Stacks" sectionRef={sweetStacksRef} isActive={activeSection === 'sweet-stacks'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sweetStacksItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Sweet Stacks"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="sweet-stacks" label="Sweet Stacks" sectionRef={sweetStacksRef} isActive={activeSection === 'sweet-stacks'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {sweetStacksItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Sweet Stacks"
+                  showSpecialInstructions={false}
+                  showSweetStacks={true}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="ice-creams" label="Ice Creams" sectionRef={iceCreamRef} isActive={activeSection === 'ice-creams'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {iceCreamItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Ice Creams"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="ice-creams" label="Ice Creams" sectionRef={iceCreamRef} isActive={activeSection === 'ice-creams'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {iceCreamItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Ice Creams"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="milkshakes" label="Milkshakes" sectionRef={milkshakesRef} isActive={activeSection === 'milkshakes'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {milkshakeItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Milkshakes"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="milkshakes" label="Milkshakes" sectionRef={milkshakesRef} isActive={activeSection === 'milkshakes'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {milkshakeItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Milkshakes"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
 
-        <MenuSection id="drinks" label="Drinks" sectionRef={drinksRef} isActive={activeSection === 'drinks'}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {drinkItems.map((item) => (
-              <MenuItemCard
-                key={item.name}
-                item={item}
-                category="Drinks"
-                showSpecialInstructions={false}
-                onAddToBasket={addToBasket}
-              />
-            ))}
-          </div>
-        </MenuSection>
+          <MenuSection id="drinks" label="Drinks" sectionRef={drinksRef} isActive={activeSection === 'drinks'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {drinkItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Drinks"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
+        </div>
+
+        <Basket
+          items={basketItems}
+          onRemoveItem={removeFromBasket}
+          onUpdateQuantity={updateQuantity}
+          onClearBasket={() => setBasketItems([])}
+          onProceedToCheckout={() => navigate('/checkout', { state: { basketItems } })}
+          isOpen={isBasketOpen}
+          onClose={() => setIsBasketOpen(false)}
+        />
+
+        <Footer />
       </div>
-
-      <Basket
-        items={basketItems}
-        onRemoveItem={removeFromBasket}
-        onUpdateQuantity={updateQuantity}
-        onClearBasket={() => setBasketItems([])}
-        onProceedToCheckout={() => navigate('/checkout', { state: { basketItems } })}
-        isOpen={isBasketOpen}
-        onClose={() => setIsBasketOpen(false)}
-      />
-
-      <Footer />
     </div>
   );
 };

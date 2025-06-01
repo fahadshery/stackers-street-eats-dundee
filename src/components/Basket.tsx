@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { X, ShoppingCart, Trash2 } from 'lucide-react';
@@ -8,6 +7,7 @@ export interface BasketItem {
   name: string;
   price: string;
   category: string;
+  description?: string;
   customizations?: string[];
   sideSize?: 'regular' | 'large';
   comment?: string;
@@ -15,6 +15,10 @@ export interface BasketItem {
   milkshakeFlavor?: string;
   iceCreamFlavors?: string[];
   iceCreamScoops?: number;
+  sweetStacksType?: string;
+  sweetStacksFlavor?: string;
+  sweetDips?: string[];
+  toppings?: string[];
   quantity: number;
 }
 
@@ -42,6 +46,10 @@ const Basket: React.FC<BasketProps> = ({
       const price = parseFloat(item.price.replace('£', ''));
       return total + (price * item.quantity);
     }, 0).toFixed(2);
+  };
+
+  const shouldShowDescription = (category: string) => {
+    return ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Boxes', 'Meal Deals', 'Loaded Stackers\' Fries', 'Sweet Stacks'].includes(category);
   };
 
   if (!isOpen) return null;
@@ -86,6 +94,12 @@ const Basket: React.FC<BasketProps> = ({
                       <h3 className="font-semibold text-stackers-charcoal">{item.name}</h3>
                       <p className="text-sm text-gray-600">{item.category}</p>
                       
+                      {shouldShowDescription(item.category) && item.description && (
+                        <p className="text-xs text-gray-500 mt-1 italic">
+                          {item.description}
+                        </p>
+                      )}
+                      
                       {item.customizations && item.customizations.length > 0 && (
                         <p className="text-xs text-gray-500 mt-1">
                           Customizations: {item.customizations.join(', ')}
@@ -107,6 +121,24 @@ const Basket: React.FC<BasketProps> = ({
                       {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
                         <p className="text-xs text-gray-500 mt-1">
                           {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavors: {item.iceCreamFlavors.join(', ')}
+                        </p>
+                      )}
+                      
+                      {item.sweetStacksType && item.sweetStacksFlavor && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          {item.sweetStacksType} - {item.sweetStacksFlavor.split(':')[0]}
+                        </p>
+                      )}
+                      
+                      {item.sweetDips && item.sweetDips.length > 0 && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Sweet Dips: {item.sweetDips.join(', ')}
+                        </p>
+                      )}
+                      
+                      {item.toppings && item.toppings.length > 0 && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Toppings: {item.toppings.join(', ')}
                         </p>
                       )}
                       

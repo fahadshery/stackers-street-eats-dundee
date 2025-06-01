@@ -15,8 +15,42 @@ interface MenuItemCardProps {
   showSizeOptions?: boolean;
   showSpecialInstructions?: boolean;
   showPizzaSize?: boolean;
-  onAddToBasket: (item: MenuItem, isMeal: boolean, customizations?: string[], comment?: string, sideSize?: string, milkshakeSize?: string, milkshakeFlavor?: string, pizzaSize?: string, iceCreamScoops?: number, iceCreamFlavors?: string[]) => void;
+  showSweetStacks?: boolean;
+  onAddToBasket: (
+    item: MenuItem, 
+    isMeal: boolean, 
+    customizations?: string[], 
+    comment?: string, 
+    sideSize?: string, 
+    milkshakeSize?: string, 
+    milkshakeFlavor?: string, 
+    pizzaSize?: string, 
+    iceCreamScoops?: number, 
+    iceCreamFlavors?: string[],
+    sweetStacksType?: string,
+    sweetStacksFlavor?: string,
+    sweetDips?: string[],
+    toppings?: string[]
+  ) => void;
 }
+
+const sweetStacksTypes = ['Waffles', 'Crepes', 'Cookie Dough'];
+const sweetStacksFlavors = [
+  'Banoffee Bliss: Fresh banana slices, drizzled in warm Nutella and rich toffee sauce, finished with a sprinkle of crunchy chopped nuts.',
+  'Biscoff Dream: Loaded with Biscoff pieces, drizzled in luscious Biscoff and Belgian chocolate sauce, then topped with a dusting of Biscoff crumbs and delicate white chocolate curls.',
+  'Bueno Bash: Indulgent Kinder Bueno pieces, drizzled with creamy white and milk chocolate sauces, and finished with rich chocolate shavings.',
+  'Cookies & Cream Craze: Chunky Oreo pieces, drizzled in smooth milk chocolate sauce.',
+  'Stackers\' Royal Delight: Juicy strawberries topped with Ferrero Rocher OR Raffaello, generously drizzled with warm Belgian chocolate OR silky Nutella.'
+];
+const sweetDipOptions = [
+  'Belgian Chocolate', 'Nutella', 'Biscoff', 'Pistachio', 'White Chocolate', 
+  'Milk Chocolate', 'Mango', 'Strawberry', 'Raspberry', 'Toffee', 
+  'Caramel', 'Mint', 'Bubblegum'
+];
+const toppingOptions = [
+  'Mini Marshmallows', 'Fudge Cube', 'White Chocolate Flakes', 'Crushed Oreo', 
+  'Malteaser', 'Crispy M&M\'s', 'Nuts'
+];
 
 const MenuItemCard: React.FC<MenuItemCardProps> = ({
   item,
@@ -27,6 +61,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   showSizeOptions = false,
   showSpecialInstructions = true,
   showPizzaSize = false,
+  showSweetStacks = false,
   onAddToBasket
 }) => {
   const [selectedCustomizations, setSelectedCustomizations] = useState<string[]>([]);
@@ -38,6 +73,12 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [pizzaSize, setPizzaSize] = useState<'10"' | '12"'>('10"');
   const [iceCreamScoops, setIceCreamScoops] = useState<1 | 2 | 3>(1);
   const [selectedIceCreamFlavors, setSelectedIceCreamFlavors] = useState<string[]>([]);
+  
+  // Sweet Stacks states
+  const [sweetStacksType, setSweetStacksType] = useState<string>('Waffles');
+  const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
+  const [selectedSweetDips, setSelectedSweetDips] = useState<string[]>([]);
+  const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
 
   const handleCustomizationChange = (customization: string, checked: boolean) => {
     if (checked) {
@@ -55,6 +96,22 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     }
   };
 
+  const handleSweetDipChange = (dip: string, checked: boolean) => {
+    if (checked) {
+      setSelectedSweetDips(prev => [...prev, dip]);
+    } else {
+      setSelectedSweetDips(prev => prev.filter(d => d !== dip));
+    }
+  };
+
+  const handleToppingChange = (topping: string, checked: boolean) => {
+    if (checked) {
+      setSelectedToppings(prev => [...prev, topping]);
+    } else {
+      setSelectedToppings(prev => prev.filter(t => t !== topping));
+    }
+  };
+
   const handleAddToBasket = () => {
     onAddToBasket(
       item, 
@@ -66,7 +123,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       category === 'Milkshakes' ? milkshakeFlavor : undefined,
       showPizzaSize ? pizzaSize : undefined,
       category === 'Ice Creams' ? iceCreamScoops : undefined,
-      category === 'Ice Creams' && selectedIceCreamFlavors.length > 0 ? selectedIceCreamFlavors : undefined
+      category === 'Ice Creams' && selectedIceCreamFlavors.length > 0 ? selectedIceCreamFlavors : undefined,
+      showSweetStacks ? sweetStacksType : undefined,
+      showSweetStacks && sweetStacksFlavor ? sweetStacksFlavor : undefined,
+      showSweetStacks && selectedSweetDips.length > 0 ? selectedSweetDips : undefined,
+      showSweetStacks && selectedToppings.length > 0 ? selectedToppings : undefined
     );
     // Reset form
     setSelectedCustomizations([]);
@@ -78,6 +139,10 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setPizzaSize('10"');
     setIceCreamScoops(1);
     setSelectedIceCreamFlavors([]);
+    setSweetStacksType('Waffles');
+    setSweetStacksFlavor('');
+    setSelectedSweetDips([]);
+    setSelectedToppings([]);
   };
 
   const displayPrice = () => {
@@ -99,6 +164,13 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       if (iceCreamScoops === 1) basePrice = 2.50;
       else if (iceCreamScoops === 2) basePrice = 3.75;
       else if (iceCreamScoops === 3) basePrice = 4.75;
+    }
+
+    // Sweet Stacks pricing
+    if (showSweetStacks) {
+      basePrice = 6.50; // Base price for all Sweet Stacks
+      basePrice += selectedSweetDips.length * 1.00; // £1 per sweet dip
+      basePrice += selectedToppings.length * 0.50; // £0.50 per topping
     }
 
     // Pizza sizing and customization pricing
@@ -128,6 +200,69 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
         <p className="text-gray-600 text-sm mb-4 leading-relaxed">{item.description}</p>
         <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
+
+        {showSweetStacks && (
+          <>
+            <div className="mb-4">
+              <p className="font-medium mb-2 text-stackers-charcoal">Type (£6.50):</p>
+              <RadioGroup value={sweetStacksType} onValueChange={setSweetStacksType}>
+                {sweetStacksTypes.map((type) => (
+                  <div key={type} className="flex items-center space-x-2">
+                    <RadioGroupItem value={type} id={`${item.name}-${type}`} />
+                    <Label htmlFor={`${item.name}-${type}`} className="text-sm">{type}</Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </div>
+
+            <div className="mb-4">
+              <p className="font-medium mb-2 text-stackers-charcoal">Flavor:</p>
+              <RadioGroup value={sweetStacksFlavor} onValueChange={setSweetStacksFlavor}>
+                {sweetStacksFlavors.map((flavor) => {
+                  const flavorName = flavor.split(':')[0];
+                  return (
+                    <div key={flavor} className="flex items-start space-x-2 mb-2">
+                      <RadioGroupItem value={flavor} id={`${item.name}-${flavorName}`} className="mt-1" />
+                      <Label htmlFor={`${item.name}-${flavorName}`} className="text-xs leading-relaxed">{flavor}</Label>
+                    </div>
+                  );
+                })}
+              </RadioGroup>
+            </div>
+
+            <div className="mb-4">
+              <p className="font-medium mb-2 text-stackers-charcoal">Sweet Dips (£1.00 each):</p>
+              <div className="grid grid-cols-2 gap-2">
+                {sweetDipOptions.map((dip) => (
+                  <div key={dip} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`${item.name}-dip-${dip}`}
+                      checked={selectedSweetDips.includes(dip)}
+                      onCheckedChange={(checked) => handleSweetDipChange(dip, !!checked)}
+                    />
+                    <Label htmlFor={`${item.name}-dip-${dip}`} className="text-xs">{dip}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <p className="font-medium mb-2 text-stackers-charcoal">Toppings (£0.50 each):</p>
+              <div className="grid grid-cols-2 gap-2">
+                {toppingOptions.map((topping) => (
+                  <div key={topping} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`${item.name}-topping-${topping}`}
+                      checked={selectedToppings.includes(topping)}
+                      onCheckedChange={(checked) => handleToppingChange(topping, !!checked)}
+                    />
+                    <Label htmlFor={`${item.name}-topping-${topping}`} className="text-xs">{topping}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
 
         {showPizzaSize && (
           <div className="mb-4">
@@ -292,7 +427,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         <Button
           onClick={handleAddToBasket}
           className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold py-3"
-          disabled={category === 'Ice Creams' && selectedIceCreamFlavors.length !== iceCreamScoops}
+          disabled={(category === 'Ice Creams' && selectedIceCreamFlavors.length !== iceCreamScoops) || (showSweetStacks && !sweetStacksFlavor)}
         >
           Add to Order
         </Button>

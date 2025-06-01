@@ -187,6 +187,10 @@ const Checkout = () => {
     alert('Payment functionality would be integrated here with Apple Pay, Debit Card, Credit Card options');
   };
 
+  const shouldShowDescription = (category: string) => {
+    return ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Boxes', 'Meal Deals', 'Loaded Stackers\' Fries', 'Sweet Stacks'].includes(category);
+  };
+
   // Redirect if no items in basket
   if (!basketItems || basketItems.length === 0) {
     return (
@@ -208,308 +212,345 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <div 
+      className="min-h-screen bg-gray-50 relative"
+      style={{
+        backgroundImage: `url('/lovable-uploads/426be6e6-1553-496a-9104-16472d338479.png')`,
+        backgroundRepeat: 'repeat',
+        backgroundSize: '300px 300px',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Overlay to dim the background */}
+      <div className="absolute inset-0 bg-white/85 z-0"></div>
       
-      <div className="container mx-auto px-4 py-8">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate('/menu')}
-          className="mb-6 text-stackers-charcoal hover:bg-gray-200"
-        >
-          <ArrowLeft className="mr-2" size={20} />
-          Back to Menu
-        </Button>
+      <div className="relative z-10">
+        <Header />
+        
+        <div className="container mx-auto px-4 py-8">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/menu')}
+            className="mb-6 text-stackers-charcoal hover:bg-gray-200"
+          >
+            <ArrowLeft className="mr-2" size={20} />
+            Back to Menu
+          </Button>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Order Summary */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-stackers-charcoal mb-4 flex items-center">
-              <ShoppingBag className="mr-2" size={24} />
-              Order Summary
-            </h2>
-            
-            <div className="space-y-4">
-              {basketItems.map((item) => (
-                <div key={item.id} className="border-b pb-4">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-stackers-charcoal">{item.name}</h3>
-                      <p className="text-sm text-gray-600">{item.category}</p>
-                      
-                      {item.customizations && item.customizations.length > 0 && (
-                        <p className="text-xs text-gray-500 mt-1">
-                          Customizations: {item.customizations.join(', ')}
-                        </p>
-                      )}
-                      
-                      {item.sideSize && (
-                        <p className="text-xs text-gray-500 mt-1">
-                          Size: {item.sideSize}
-                        </p>
-                      )}
-                      
-                      {item.milkshakeSize && (
-                        <p className="text-xs text-gray-500 mt-1">
-                          Size: {item.milkshakeSize}, Flavor: {item.milkshakeFlavor}
-                        </p>
-                      )}
-                      
-                      {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
-                        <p className="text-xs text-gray-500 mt-1">
-                          {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavors: {item.iceCreamFlavors.join(', ')}
-                        </p>
-                      )}
-                      
-                      {item.comment && (
-                        <p className="text-xs text-gray-500 mt-1 italic">
-                          Note: {item.comment}
-                        </p>
-                      )}
-                    </div>
-                    <div className="text-right">
-                      <span className="font-bold text-stackers-yellow">{item.price}</span>
-                      <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Order Summary */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-2xl font-bold text-stackers-charcoal mb-4 flex items-center">
+                <ShoppingBag className="mr-2" size={24} />
+                Order Summary
+              </h2>
               
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Subtotal:</span>
-                  <span>£{calculateSubtotal().toFixed(2)}</span>
+              <div className="space-y-4">
+                {basketItems.map((item) => (
+                  <div key={item.id} className="border-b pb-4">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-stackers-charcoal">{item.name}</h3>
+                        <p className="text-sm text-gray-600">{item.category}</p>
+                        
+                        {shouldShowDescription(item.category) && item.description && (
+                          <p className="text-xs text-gray-500 mt-1 italic">
+                            {item.description}
+                          </p>
+                        )}
+                        
+                        {item.customizations && item.customizations.length > 0 && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Customizations: {item.customizations.join(', ')}
+                          </p>
+                        )}
+                        
+                        {item.sideSize && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Size: {item.sideSize}
+                          </p>
+                        )}
+                        
+                        {item.milkshakeSize && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Size: {item.milkshakeSize}, Flavor: {item.milkshakeFlavor}
+                          </p>
+                        )}
+                        
+                        {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavors: {item.iceCreamFlavors.join(', ')}
+                          </p>
+                        )}
+                        
+                        {item.sweetStacksType && item.sweetStacksFlavor && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            {item.sweetStacksType} - {item.sweetStacksFlavor.split(':')[0]}
+                          </p>
+                        )}
+                        
+                        {item.sweetDips && item.sweetDips.length > 0 && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Sweet Dips: {item.sweetDips.join(', ')}
+                          </p>
+                        )}
+                        
+                        {item.toppings && item.toppings.length > 0 && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Toppings: {item.toppings.join(', ')}
+                          </p>
+                        )}
+                        
+                        {item.comment && (
+                          <p className="text-xs text-gray-500 mt-1 italic">
+                            Note: {item.comment}
+                          </p>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <span className="font-bold text-stackers-yellow">{item.price}</span>
+                        <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Subtotal:</span>
+                    <span>£{calculateSubtotal().toFixed(2)}</span>
+                  </div>
+                  
+                  {calculateIceCreamDiscount() > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Ice Cream Discount:</span>
+                      <span>-£{calculateIceCreamDiscount().toFixed(2)}</span>
+                    </div>
+                  )}
+                  
+                  {couponDiscount > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Coupon Discount:</span>
+                      <span>-£{couponDiscount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  
+                  {giftCardValue > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Gift Card:</span>
+                      <span>-£{giftCardValue.toFixed(2)}</span>
+                    </div>
+                  )}
+                  
+                  <Separator />
+                  <div className="flex justify-between items-center text-xl font-bold">
+                    <span>Total:</span>
+                    <span className="text-stackers-yellow">£{calculateTotal().toFixed(2)}</span>
+                  </div>
                 </div>
-                
-                {calculateIceCreamDiscount() > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span>Ice Cream Discount:</span>
-                    <span>-£{calculateIceCreamDiscount().toFixed(2)}</span>
+              </div>
+
+              {/* Coupon and Gift Card Section */}
+              <div className="mt-6 space-y-4">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-semibold mb-3 flex items-center">
+                    <Tag className="mr-2" size={16} />
+                    Coupon Code
+                  </h3>
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Enter coupon code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value)}
+                      disabled={couponApplied}
+                    />
+                    <Button
+                      onClick={applyCoupon}
+                      disabled={!couponCode || couponApplied}
+                      variant="outline"
+                    >
+                      Apply
+                    </Button>
                   </div>
-                )}
-                
-                {couponDiscount > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span>Coupon Discount:</span>
-                    <span>-£{couponDiscount.toFixed(2)}</span>
+                </div>
+
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-semibold mb-3 flex items-center">
+                    <Gift className="mr-2" size={16} />
+                    Gift Card
+                  </h3>
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Enter gift card code"
+                      value={giftCardCode}
+                      onChange={(e) => setGiftCardCode(e.target.value)}
+                      disabled={giftCardApplied}
+                    />
+                    <Button
+                      onClick={applyGiftCard}
+                      disabled={!giftCardCode || giftCardApplied}
+                      variant="outline"
+                    >
+                      Apply
+                    </Button>
                   </div>
-                )}
-                
-                {giftCardValue > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span>Gift Card:</span>
-                    <span>-£{giftCardValue.toFixed(2)}</span>
-                  </div>
-                )}
-                
-                <Separator />
-                <div className="flex justify-between items-center text-xl font-bold">
-                  <span>Total:</span>
-                  <span className="text-stackers-yellow">£{calculateTotal().toFixed(2)}</span>
                 </div>
               </div>
             </div>
 
-            {/* Coupon and Gift Card Section */}
-            <div className="mt-6 space-y-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="font-semibold mb-3 flex items-center">
-                  <Tag className="mr-2" size={16} />
-                  Coupon Code
-                </h3>
-                <div className="flex gap-2">
+            {/* Order Details */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-2xl font-bold text-stackers-charcoal mb-6">Order Details</h2>
+              
+              {/* Order Type Selection */}
+              <div className="mb-6">
+                <Label className="text-lg font-semibold text-stackers-charcoal mb-3 block">
+                  Order Type
+                </Label>
+                <RadioGroup value={orderType} onValueChange={(value: 'collection' | 'delivery') => setOrderType(value)}>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="collection" id="collection" />
+                    <label htmlFor="collection" className="font-medium">Collection</label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="delivery" id="delivery" />
+                    <label htmlFor="delivery" className="font-medium">Delivery</label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* Customer Information */}
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="name" className="text-sm font-medium">Name *</Label>
                   <Input
-                    placeholder="Enter coupon code"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value)}
-                    disabled={couponApplied}
+                    id="name"
+                    type="text"
+                    value={customerInfo.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    placeholder="Enter your full name"
+                    className={errors.name ? 'border-red-500' : ''}
                   />
-                  <Button
-                    onClick={applyCoupon}
-                    disabled={!couponCode || couponApplied}
-                    variant="outline"
-                  >
-                    Apply
-                  </Button>
+                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                 </div>
-              </div>
 
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="font-semibold mb-3 flex items-center">
-                  <Gift className="mr-2" size={16} />
-                  Gift Card
-                </h3>
-                <div className="flex gap-2">
+                <div>
+                  <Label htmlFor="telephone" className="text-sm font-medium">Telephone *</Label>
                   <Input
-                    placeholder="Enter gift card code"
-                    value={giftCardCode}
-                    onChange={(e) => setGiftCardCode(e.target.value)}
-                    disabled={giftCardApplied}
+                    id="telephone"
+                    type="tel"
+                    value={customerInfo.telephone}
+                    onChange={(e) => handleInputChange('telephone', e.target.value)}
+                    placeholder="Enter your phone number"
+                    className={errors.telephone ? 'border-red-500' : ''}
                   />
-                  <Button
-                    onClick={applyGiftCard}
-                    disabled={!giftCardCode || giftCardApplied}
-                    variant="outline"
-                  >
-                    Apply
-                  </Button>
+                  {errors.telephone && <p className="text-red-500 text-sm mt-1">{errors.telephone}</p>}
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Order Details */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-stackers-charcoal mb-6">Order Details</h2>
-            
-            {/* Order Type Selection */}
-            <div className="mb-6">
-              <Label className="text-lg font-semibold text-stackers-charcoal mb-3 block">
-                Order Type
-              </Label>
-              <RadioGroup value={orderType} onValueChange={(value: 'collection' | 'delivery') => setOrderType(value)}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="collection" id="collection" />
-                  <label htmlFor="collection" className="font-medium">Collection</label>
+                <div>
+                  <Label htmlFor="email" className="text-sm font-medium">Email Address *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={customerInfo.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    placeholder="Enter your email address"
+                    className={errors.email ? 'border-red-500' : ''}
+                  />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="delivery" id="delivery" />
-                  <label htmlFor="delivery" className="font-medium">Delivery</label>
+
+                {orderType === 'delivery' && (
+                  <>
+                    <div>
+                      <Label htmlFor="houseNumber" className="text-sm font-medium">House Number/Name *</Label>
+                      <Input
+                        id="houseNumber"
+                        type="text"
+                        value={customerInfo.houseNumber}
+                        onChange={(e) => handleInputChange('houseNumber', e.target.value)}
+                        placeholder="House number or name"
+                        className={errors.houseNumber ? 'border-red-500' : ''}
+                      />
+                      {errors.houseNumber && <p className="text-red-500 text-sm mt-1">{errors.houseNumber}</p>}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="streetName" className="text-sm font-medium">Street Name *</Label>
+                      <Input
+                        id="streetName"
+                        type="text"
+                        value={customerInfo.streetName}
+                        onChange={(e) => handleInputChange('streetName', e.target.value)}
+                        placeholder="Street name"
+                        className={errors.streetName ? 'border-red-500' : ''}
+                      />
+                      {errors.streetName && <p className="text-red-500 text-sm mt-1">{errors.streetName}</p>}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="streetName2" className="text-sm font-medium">Street Name 2 (Optional)</Label>
+                      <Input
+                        id="streetName2"
+                        type="text"
+                        value={customerInfo.streetName2}
+                        onChange={(e) => handleInputChange('streetName2', e.target.value)}
+                        placeholder="Additional address line (optional)"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="city" className="text-sm font-medium">City *</Label>
+                      <Input
+                        id="city"
+                        type="text"
+                        value={customerInfo.city}
+                        onChange={(e) => handleInputChange('city', e.target.value)}
+                        placeholder="City"
+                        className={errors.city ? 'border-red-500' : ''}
+                      />
+                      {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="postcode" className="text-sm font-medium">Postcode *</Label>
+                      <Input
+                        id="postcode"
+                        type="text"
+                        value={customerInfo.postcode}
+                        onChange={(e) => handleInputChange('postcode', e.target.value.toUpperCase())}
+                        placeholder="Postcode"
+                        className={errors.postcode ? 'border-red-500' : ''}
+                      />
+                      {errors.postcode && <p className="text-red-500 text-sm mt-1">{errors.postcode}</p>}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Payment Button */}
+              <div className="mt-8">
+                <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                  <div className="flex justify-between items-center text-lg font-bold">
+                    <span>Order Total:</span>
+                    <span className="text-stackers-yellow">£{calculateTotal().toFixed(2)}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {orderType === 'collection' ? 'Ready for collection in 15-20 minutes' : 'Delivery within 30-45 minutes'}
+                  </p>
                 </div>
-              </RadioGroup>
-            </div>
-
-            {/* Customer Information */}
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="name" className="text-sm font-medium">Name *</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  value={customerInfo.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  placeholder="Enter your full name"
-                  className={errors.name ? 'border-red-500' : ''}
-                />
-                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-              </div>
-
-              <div>
-                <Label htmlFor="telephone" className="text-sm font-medium">Telephone *</Label>
-                <Input
-                  id="telephone"
-                  type="tel"
-                  value={customerInfo.telephone}
-                  onChange={(e) => handleInputChange('telephone', e.target.value)}
-                  placeholder="Enter your phone number"
-                  className={errors.telephone ? 'border-red-500' : ''}
-                />
-                {errors.telephone && <p className="text-red-500 text-sm mt-1">{errors.telephone}</p>}
-              </div>
-
-              <div>
-                <Label htmlFor="email" className="text-sm font-medium">Email Address *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={customerInfo.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  placeholder="Enter your email address"
-                  className={errors.email ? 'border-red-500' : ''}
-                />
-                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-              </div>
-
-              {orderType === 'delivery' && (
-                <>
-                  <div>
-                    <Label htmlFor="houseNumber" className="text-sm font-medium">House Number/Name *</Label>
-                    <Input
-                      id="houseNumber"
-                      type="text"
-                      value={customerInfo.houseNumber}
-                      onChange={(e) => handleInputChange('houseNumber', e.target.value)}
-                      placeholder="House number or name"
-                      className={errors.houseNumber ? 'border-red-500' : ''}
-                    />
-                    {errors.houseNumber && <p className="text-red-500 text-sm mt-1">{errors.houseNumber}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="streetName" className="text-sm font-medium">Street Name *</Label>
-                    <Input
-                      id="streetName"
-                      type="text"
-                      value={customerInfo.streetName}
-                      onChange={(e) => handleInputChange('streetName', e.target.value)}
-                      placeholder="Street name"
-                      className={errors.streetName ? 'border-red-500' : ''}
-                    />
-                    {errors.streetName && <p className="text-red-500 text-sm mt-1">{errors.streetName}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="streetName2" className="text-sm font-medium">Street Name 2 (Optional)</Label>
-                    <Input
-                      id="streetName2"
-                      type="text"
-                      value={customerInfo.streetName2}
-                      onChange={(e) => handleInputChange('streetName2', e.target.value)}
-                      placeholder="Additional address line (optional)"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="city" className="text-sm font-medium">City *</Label>
-                    <Input
-                      id="city"
-                      type="text"
-                      value={customerInfo.city}
-                      onChange={(e) => handleInputChange('city', e.target.value)}
-                      placeholder="City"
-                      className={errors.city ? 'border-red-500' : ''}
-                    />
-                    {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="postcode" className="text-sm font-medium">Postcode *</Label>
-                    <Input
-                      id="postcode"
-                      type="text"
-                      value={customerInfo.postcode}
-                      onChange={(e) => handleInputChange('postcode', e.target.value.toUpperCase())}
-                      placeholder="Postcode"
-                      className={errors.postcode ? 'border-red-500' : ''}
-                    />
-                    {errors.postcode && <p className="text-red-500 text-sm mt-1">{errors.postcode}</p>}
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Payment Button */}
-            <div className="mt-8">
-              <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                <div className="flex justify-between items-center text-lg font-bold">
-                  <span>Order Total:</span>
-                  <span className="text-stackers-yellow">£{calculateTotal().toFixed(2)}</span>
-                </div>
-                <p className="text-sm text-gray-600 mt-1">
-                  {orderType === 'collection' ? 'Ready for collection in 15-20 minutes' : 'Delivery within 30-45 minutes'}
+                
+                <Button 
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold py-3 text-lg"
+                  onClick={handlePayment}
+                >
+                  Pay Now - £{calculateTotal().toFixed(2)}
+                </Button>
+                
+                <p className="text-xs text-gray-500 text-center mt-2">
+                  Secure payment with Apple Pay, Debit Card, or Credit Card
                 </p>
               </div>
-              
-              <Button 
-                className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold py-3 text-lg"
-                onClick={handlePayment}
-              >
-                Pay Now - £{calculateTotal().toFixed(2)}
-              </Button>
-              
-              <p className="text-xs text-gray-500 text-center mt-2">
-                Secure payment with Apple Pay, Debit Card, or Credit Card
-              </p>
             </div>
           </div>
         </div>
