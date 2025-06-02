@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { BasketItem } from '@/components/Basket';
+import { ArrowLeft } from 'lucide-react';
 
 interface CustomerDetails {
   name: string;
@@ -82,7 +83,7 @@ const Checkout = () => {
   };
 
   const shouldShowDescription = (category: string) => {
-    return ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Boxes', 'Meal Deals', 'Loaded Stackers\' Fries', 'Sweet Stacks'].includes(category);
+    return ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Boxes', 'Meal Deals', 'Loaded Stackers\' Fries', 'Sweet Stacks', 'Pizzas', 'Kids'].includes(category);
   };
 
   const validateForm = (): boolean => {
@@ -158,6 +159,13 @@ const Checkout = () => {
       <Header />
       
       <div className="container mx-auto px-4 py-8">
+        <div className="mb-6">
+          <Link to="/menu" className="inline-flex items-center text-stackers-yellow hover:text-yellow-600 transition-colors">
+            <ArrowLeft size={20} className="mr-2" />
+            Back to Menu
+          </Link>
+        </div>
+        
         <h1 className="text-3xl font-bold text-stackers-charcoal mb-8">Checkout</h1>
         
         <div className="grid lg:grid-cols-2 gap-8">
@@ -207,6 +215,24 @@ const Checkout = () => {
                       </p>
                     )}
 
+                    {item.fantaFlavor && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Flavour: {item.fantaFlavor}
+                      </p>
+                    )}
+
+                    {item.pepsiFlavor && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Flavour: {item.pepsiFlavor}
+                      </p>
+                    )}
+
+                    {item.cokeFlavor && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Flavour: {item.cokeFlavor}
+                      </p>
+                    )}
+
                     {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
                       <p className="text-xs text-gray-500 mt-1">
                         {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavours: {formatIceCreamFlavors(item.iceCreamFlavors)}
@@ -234,6 +260,18 @@ const Checkout = () => {
                     {item.drizzleOnTop && (
                       <p className="text-xs text-gray-500 mt-1">
                         Drizzle on top
+                      </p>
+                    )}
+
+                    {item.milkshakeComment && (
+                      <p className="text-xs text-gray-500 mt-1 italic">
+                        Milkshake Note: {item.milkshakeComment}
+                      </p>
+                    )}
+
+                    {item.saucesAndDips && item.saucesAndDips.length > 0 && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Sauces & Dips: {item.saucesAndDips.join(', ')}
                       </p>
                     )}
 

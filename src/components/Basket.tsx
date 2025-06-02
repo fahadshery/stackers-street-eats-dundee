@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { X, ShoppingCart, Trash2 } from 'lucide-react';
@@ -14,6 +13,7 @@ export interface BasketItem {
   comment?: string;
   milkshakeSize?: 'regular' | 'large';
   milkshakeFlavor?: string;
+  milkshakeComment?: string;
   iceCreamFlavors?: string[];
   iceCreamScoops?: number;
   sweetStacksType?: string;
@@ -23,6 +23,10 @@ export interface BasketItem {
   drizzleOnTop?: boolean;
   drinkSize?: '330ml' | '1.5L';
   rubiconFlavor?: string;
+  fantaFlavor?: string;
+  pepsiFlavor?: string;
+  cokeFlavor?: string;
+  saucesAndDips?: string[];
   quantity: number;
 }
 
@@ -53,7 +57,7 @@ const Basket: React.FC<BasketProps> = ({
   };
 
   const shouldShowDescription = (category: string) => {
-    return ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Boxes', 'Meal Deals', 'Loaded Stackers\' Fries', 'Sweet Stacks'].includes(category);
+    return ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Boxes', 'Meal Deals', 'Loaded Stackers\' Fries', 'Sweet Stacks', 'Pizzas', 'Kids'].includes(category);
   };
 
   const getItemDisplayName = (item: BasketItem) => {
@@ -158,6 +162,24 @@ const Basket: React.FC<BasketProps> = ({
                         </p>
                       )}
 
+                      {item.fantaFlavor && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Flavour: {item.fantaFlavor}
+                        </p>
+                      )}
+
+                      {item.pepsiFlavor && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Flavour: {item.pepsiFlavor}
+                        </p>
+                      )}
+
+                      {item.cokeFlavor && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Flavour: {item.cokeFlavor}
+                        </p>
+                      )}
+
                       {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
                         <p className="text-xs text-gray-500 mt-1">
                           {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavours: {formatIceCreamFlavors(item.iceCreamFlavors)}
@@ -185,6 +207,18 @@ const Basket: React.FC<BasketProps> = ({
                       {item.drizzleOnTop && (
                         <p className="text-xs text-gray-500 mt-1">
                           Drizzle on top
+                        </p>
+                      )}
+
+                      {item.milkshakeComment && (
+                        <p className="text-xs text-gray-500 mt-1 italic">
+                          Milkshake Note: {item.milkshakeComment}
+                        </p>
+                      )}
+
+                      {item.saucesAndDips && item.saucesAndDips.length > 0 && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Sauces & Dips: {item.saucesAndDips.join(', ')}
                         </p>
                       )}
 

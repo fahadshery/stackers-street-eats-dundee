@@ -1,4 +1,3 @@
-
 export interface MenuItem {
   name: string;
   price: string;
@@ -438,4 +437,72 @@ export const pizzaCustomisations = [
 
 export const rubiconFlavours = [
   'Mango', 'Passionfruit'
+];
+
+export const fantaFlavours = [
+  'Orange', 'Lemon', 'Fruit Twist', 'Grapefruit'
+];
+
+export const pepsiFlavours = [
+  'Pepsi', 'Max', 'Diet'
+];
+
+export const cokeFlavours = [
+  'Coke', 'Zero', 'Diet'
+];
+
+export const saucesAndDipsItems: MenuItem[] = [
+  {
+    name: 'Garlic Mayo',
+    price: '£0.70',
+    description: 'Creamy garlic mayonnaise.',
+    image: 'https://images.unsplash.com/photo-1573308866828-8ad1f8e8c7cd?w=400&h=300&fit=crop',
+    category: 'Sauces & Dips'
+  },
+  {
+    name: 'Classic Mayo',
+    price: '£0.70',
+    description: 'Traditional mayonnaise.',
+    image: 'https://images.unsplash.com/photo-1573308866828-8ad1f8e8c7cd?w=400&h=300&fit=crop',
+    category: 'Sauces & Dips'
+  },
+  {
+    name: 'Sweet Chilli',
+    price: '£0.70',
+    description: 'Sweet and spicy chilli sauce.',
+    image: 'https://images.unsplash.com/photo-1573308866828-8ad1f8e8c7cd?w=400&h=300&fit=crop',
+    category: 'Sauces & Dips'
+  },
+  {
+    name: 'BBQ Sauce',
+    price: '£0.70',
+    description: 'Smoky barbecue sauce.',
+    image: 'https://images.unsplash.com/photo-1573308866828-8ad1f8e8c7cd?w=400&h=300&fit=crop',
+    category: 'Sauces & Dips'
+  },
+  {
+    name: 'Chilli Sauce',
+    price: '£0.70',
+    description: 'Hot chilli sauce.',
+    image: 'https://images.unsplash.com/photo-1573308866828-8ad1f8e8c7cd?w=400&h=300&fit=crop',
+    category: 'Sauces & Dips'
+  },
+  {
+    name: 'Tomato Ketchup',
+    price: '£0.70',
+    description: 'Classic tomato ketchup.',
+    image: 'https://images.unsplash.com/photo-1573308866828-8ad1f8e8c7cd?w=400&h=300&fit=crop',
+    category: 'Sauces & Dips'
+  },
+  {
+    name: 'Burger Sauce',
+    price: '£0.70',
+    description: 'Special burger sauce.',
+    image: 'https://images.unsplash.com/photo-1573308866828-8ad1f8e8c7cd?w=400&h=300&fit=crop',
+    category: 'Sauces & Dips'
+  }
+];
+
+export const saucesAndDipsList = [
+  'Garlic Mayo', 'Classic Mayo', 'Sweet Chilli', 'BBQ Sauce', 'Chilli Sauce', 'Tomato Ketchup', 'Burger Sauce'
 ];

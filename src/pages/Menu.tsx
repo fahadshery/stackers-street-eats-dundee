@@ -23,6 +23,7 @@ import {
   mealDealsItems,
   boxesItems,
   loadedFriesItems,
+  saucesAndDipsItems,
   pizzaCustomisations,
   MenuItem
 } from '@/data/menuData';
@@ -49,6 +50,7 @@ const Menu = () => {
   const iceCreamRef = useRef<HTMLElement>(null);
   const milkshakesRef = useRef<HTMLElement>(null);
   const drinksRef = useRef<HTMLElement>(null);
+  const saucesAndDipsRef = useRef<HTMLElement>(null);
 
   // Load basket from localStorage on component mount
   useEffect(() => {
@@ -81,7 +83,8 @@ const Menu = () => {
         { ref: sweetStacksRef, id: 'sweet-stacks' },
         { ref: iceCreamRef, id: 'ice-creams' },
         { ref: milkshakesRef, id: 'milkshakes' },
-        { ref: drinksRef, id: 'drinks' }
+        { ref: drinksRef, id: 'drinks' },
+        { ref: saucesAndDipsRef, id: 'sauces-and-dips' }
       ];
 
       const scrollPosition = window.scrollY + 200;
@@ -119,7 +122,8 @@ const Menu = () => {
       'sweet-stacks': sweetStacksRef,
       'ice-creams': iceCreamRef,
       milkshakes: milkshakesRef,
-      drinks: drinksRef
+      drinks: drinksRef,
+      'sauces-and-dips': saucesAndDipsRef
     };
 
     const targetRef = sectionRefs[sectionId];
@@ -150,7 +154,12 @@ const Menu = () => {
     toppings?: string[],
     drizzleOnTop?: boolean,
     drinkSize?: '330ml' | '1.5L',
-    rubiconFlavor?: string
+    rubiconFlavor?: string,
+    milkshakeComment?: string,
+    fantaFlavor?: string,
+    pepsiFlavor?: string,
+    cokeFlavor?: string,
+    saucesAndDips?: string[]
   ) => {
     let basePrice = parseFloat(item.price.replace('£', ''));
     let itemName = item.name;
@@ -244,6 +253,14 @@ const Menu = () => {
       }
     }
 
+    // Handle Sauces & Dips pricing
+    if (item.category === 'Sauces & Dips') {
+      basePrice = saucesAndDips ? saucesAndDips.length * 0.70 : 0;
+      if (saucesAndDips && saucesAndDips.length > 0) {
+        itemName = `Sauces & Dips (${saucesAndDips.length})`;
+      }
+    }
+
     const basketItem: Omit<BasketItem, 'id' | 'quantity'> = {
       name: itemName,
       price: `£${basePrice.toFixed(2)}`,
@@ -254,6 +271,7 @@ const Menu = () => {
       sideSize,
       milkshakeSize,
       milkshakeFlavor,
+      milkshakeComment,
       iceCreamFlavors,
       iceCreamScoops,
       sweetStacksType,
@@ -262,7 +280,11 @@ const Menu = () => {
       toppings,
       drizzleOnTop,
       drinkSize,
-      rubiconFlavor
+      rubiconFlavor,
+      fantaFlavor,
+      pepsiFlavor,
+      cokeFlavor,
+      saucesAndDips
     };
 
     const existingItemIndex = basketItems.findIndex(
@@ -273,6 +295,7 @@ const Menu = () => {
         basketItem.sideSize === sideSize &&
         basketItem.milkshakeSize === milkshakeSize &&
         basketItem.milkshakeFlavor === milkshakeFlavor &&
+        basketItem.milkshakeComment === milkshakeComment &&
         JSON.stringify(basketItem.iceCreamFlavors) === JSON.stringify(iceCreamFlavors) &&
         basketItem.iceCreamScoops === iceCreamScoops &&
         basketItem.sweetStacksType === sweetStacksType &&
@@ -281,7 +304,11 @@ const Menu = () => {
         JSON.stringify(basketItem.toppings) === JSON.stringify(toppings) &&
         basketItem.drizzleOnTop === drizzleOnTop &&
         basketItem.drinkSize === drinkSize &&
-        basketItem.rubiconFlavor === rubiconFlavor
+        basketItem.rubiconFlavor === rubiconFlavor &&
+        basketItem.fantaFlavor === fantaFlavor &&
+        basketItem.pepsiFlavor === pepsiFlavor &&
+        basketItem.cokeFlavor === cokeFlavor &&
+        JSON.stringify(basketItem.saucesAndDips) === JSON.stringify(saucesAndDips)
     );
 
     if (existingItemIndex > -1) {
@@ -540,6 +567,20 @@ const Menu = () => {
                   key={item.name}
                   item={item}
                   category="Drinks"
+                  showSpecialInstructions={false}
+                  onAddToBasket={addToBasket}
+                />
+              ))}
+            </div>
+          </MenuSection>
+
+          <MenuSection id="sauces-and-dips" label="Sauces & Dips" sectionRef={saucesAndDipsRef} isActive={activeSection === 'sauces-and-dips'}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {saucesAndDipsItems.map((item) => (
+                <MenuItemCard
+                  key={item.name}
+                  item={item}
+                  category="Sauces & Dips"
                   showSpecialInstructions={false}
                   onAddToBasket={addToBasket}
                 />
