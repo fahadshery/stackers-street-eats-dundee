@@ -1,3 +1,4 @@
+
 export interface MenuItem {
   name: string;
   price: string;
@@ -603,7 +604,7 @@ export const boxesItems: MenuItem[] = [
   {
     name: 'Date Night Box',
     price: '£13.99',
-    description: 'Perfect for two to share — whether it's burgers and banter or a Sunday strip. Includes: 🍔 2 x Zing Stack Burgers,🍗 3 Gold Fried Strips, 🍟 1 x Regular Fries, 🥤 2 x Cans of Juice, Stackers Garlic Dip, ❤️ takeaway for a cosy night in.',
+    description: 'Perfect for two to share - whether it is burgers and banter or a Sunday strip. Includes: 2 x Zing Stack Burgers, 3 Gold Fried Strips, 1 x Regular Fries, 2 x Cans of Juice, Stackers Garlic Dip, takeaway for a cosy night in.',
     image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
     category: 'Boxes'
   }
@@ -619,16 +620,45 @@ export const loadedFriesItems: MenuItem[] = [
   }
 ];
 
-export const pizzaCustomizations = ['Extra Cheese', 'Extra Pepperoni', 'Mushrooms', 'Olives', 'Peppers', 'Pineapple', 'Ham'];
+export const pizzaCustomisations = ['Extra Cheese', 'Extra Pepperoni', 'Mushrooms', 'Olives', 'Peppers', 'Pineapple', 'Ham'];
 
-export const milkshakeflavours = [
+export const milkshakeFlavours = [
   'Oreo', 'Biscoff', 'Strawberry', 'Kinder Bueno', 'White Kinder Bueno',
   'Malteaser', 'Galaxy Caramel', 'Galaxy', 'Milky bar', 'Banana',
   'Ferrero Rocher', 'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'
 ];
 
-export const iceCreamflavours = [
+export const iceCreamFlavours = [
   'Vanilla', 'Strawberry', 'Scottish Tablet', 'Blue Bubblegum', 'Belgian Chocolate',
   'White Bueno', 'Cookies & Cream', 'Raspberry Ripple', 'Chocolate Fudge Brownie',
   'Honeycomb', 'Mint'
+];
+
+export const sweetStacksFlavours = [
+  'Banoffee Bliss: Fresh banana slices, drizzled in warm Nutella and rich toffee sauce, finished with a sprinkle of crunchy chopped nuts.',
+  'Biscoff Dream: Loaded with Biscoff pieces, drizzled in luscious Biscoff and Belgian chocolate sauce, then topped with a dusting of Biscoff crumbs and delicate white chocolate curls.',
+  'Bueno Bash: Indulgent Kinder Bueno pieces, drizzled with creamy white and milk chocolate sauces, and finished with rich chocolate shavings.',
+  'Cookies & Cream Craze: Chunky Oreo pieces, drizzled in smooth milk chocolate sauce.',
+  'Stackers\' Royal Delight: Juicy strawberries topped with Ferrero Rocher OR Raffaello, generously drizzled with warm Belgian chocolate OR silky Nutella.'
+];
+
+export const sweetDips = [
+  'Belgian Chocolate', 'Nutella', 'Biscoff', 'Pistachio', 'White Chocolate', 
+  'Milk Chocolate', 'Mango', 'Strawberry', 'Raspberry', 'Toffee', 'Caramel', 'Mint', 'Bubblegum'
+];
+
+export const sweetToppings = [
+  'Mini Marshmallows', 'Fudge Cube', 'White Chocolate Flakes', 'Crushed Oreo', 
+  'Malteaser', 'Crispy M&Ms', 'Nuts'
+];
+
+export const cheesecakeFlavours = [
+  'Strawberry', 'Biscoff', 'Oreo', 'Kinder', 'Chocolate', 'Banoffee pie'
+];
+
+export const stackersSpecials = [
+  { name: 'Waffle on a Stick', price: 4.99, description: 'Crispy waffle on a stick, perfect for on-the-go indulgence with your choice of toppings.' },
+  { name: 'Dubai Kunafa', price: 6.50, description: 'Traditional Middle Eastern dessert with crispy pastry, sweet cheese filling, and aromatic syrup.' },
+  { name: 'Churros (5)', price: 5.50, description: 'Five golden-fried Spanish churros, crispy outside and soft inside, dusted with cinnamon sugar.' },
+  { name: 'Mini Pancakes (10)', price: 6.50, description: 'Ten fluffy mini pancakes, perfect for sharing or indulging, served with your choice of toppings.' }
 ];
