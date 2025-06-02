@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { MenuItem } from '@/data/menuData';
-import { milkshakeFlavours, iceCreamFlavours } from '@/data/menuData';
+import { milkshakeFlavours, iceCreamFlavours, rubiconFlavours } from '@/data/menuData';
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -32,7 +32,9 @@ interface MenuItemCardProps {
     sweetStacksFlavor?: string,
     sweetDips?: string[],
     toppings?: string[],
-    drizzleOnTop?: boolean
+    drizzleOnTop?: boolean,
+    drinkSize?: string,
+    rubiconFlavor?: string
   ) => void;
 }
 
@@ -88,6 +90,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [iceCreamScoops, setIceCreamScoops] = useState<1 | 2 | 3>(1);
   const [selectedIceCreamFlavors, setSelectedIceCreamFlavors] = useState<string[]>([]);
   const [drizzleOnTop, setDrizzleOnTop] = useState(false);
+  const [drinkSize, setDrinkSize] = useState<'330ml' | '1.5L'>('330ml');
+  const [rubiconFlavor, setRubiconFlavor] = useState<string>('Mango');
 
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
@@ -204,7 +208,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       finalSweetStacksFlavor || undefined,
       showSweetStacks && selectedSweetDips.length > 0 ? selectedSweetDips : undefined,
       showSweetStacks && selectedToppings.length > 0 ? selectedToppings : undefined,
-      drizzleOnTop
+      drizzleOnTop,
+      category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta', 'Rubicon'].includes(item.name) ? drinkSize : undefined,
+      item.name === 'Rubicon' ? rubiconFlavor : undefined
     );
 
     // Reset form
@@ -223,6 +229,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setCheesecakeFlavor('Strawberry');
     setStackersSpecialItem('Waffle on a Stick');
     setDrizzleOnTop(false);
+    setDrinkSize('330ml');
+    setRubiconFlavor('Mango');
   };
 
   const displayPrice = () => {
@@ -244,6 +252,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       if (iceCreamScoops === 1) basePrice = 2.50;
       else if (iceCreamScoops === 2) basePrice = 3.75;
       else if (iceCreamScoops === 3) basePrice = 4.75;
+    }
+
+    // Drinks pricing based on size
+    if (category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta', 'Rubicon'].includes(item.name)) {
+      basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
     }
 
     // Sweet Stacks pricing
@@ -318,6 +331,49 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
         )}
 
+        {/* Drinks size selection for specific items */}
+        {category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta'].includes(item.name) && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
+            <RadioGroup value={drinkSize} onValueChange={(value: string) => setDrinkSize(value as '330ml' | '1.5L')}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="330ml" id={`${item.name}-330ml`} />
+                <Label htmlFor={`${item.name}-330ml`} className="text-sm">330ml Can (£1.25)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="1.5L" id={`${item.name}-1.5L`} />
+                <Label htmlFor={`${item.name}-1.5L`} className="text-sm">1.5L (£2.99)</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        )}
+
+        {/* Rubicon flavor and size selection */}
+        {item.name === 'Rubicon' && (
+          <>
+            <div className="mb-4">
+              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
+              <RadioGroup value={rubiconFlavor} onValueChange={setRubiconFlavor}>
+                {rubiconFlavours.map((flavor) => (
+                  <div key={flavor} className="flex items-center space-x-2">
+                    <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
+                    <Label htmlFor={`${item.name}-${flavor}`} className="text-sm">{flavor}</Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </div>
+            <div className="mb-4">
+              <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
+              <RadioGroup value="330ml" onValueChange={() => {}}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="330ml" id={`${item.name}-330ml-only`} />
+                  <Label htmlFor={`${item.name}-330ml-only`} className="text-sm">330ml Can (£1.25)</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </>
+        )}
+
         {/* Sweet Stacks customization sections */}
         {showSweetStacks && (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && (
           <>
@@ -375,7 +431,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                   checked={drizzleOnTop}
                   onCheckedChange={(checked) => setDrizzleOnTop(!!checked)}
                 />
-                <Label htmlFor={`${item.name}-drizzle`} className="text-sm font-medium">
+                <Label htmlFor={`${item.name}-drizzle`} className="text-sm font-bold">
                   Drizzle on top
                 </Label>
               </div>

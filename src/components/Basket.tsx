@@ -20,6 +20,9 @@ export interface BasketItem {
   sweetStacksFlavor?: string;
   sweetDips?: string[];
   toppings?: string[];
+  drizzleOnTop?: boolean;
+  drinkSize?: '330ml' | '1.5L';
+  rubiconFlavor?: string;
   quantity: number;
 }
 
@@ -54,6 +57,11 @@ const Basket: React.FC<BasketProps> = ({
   };
 
   const getItemDisplayName = (item: BasketItem) => {
+    // For milkshakes, show flavor + "Milkshake"
+    if (item.category === 'Milkshakes' && item.milkshakeFlavor) {
+      return `${item.milkshakeFlavor} Milkshake`;
+    }
+    
     if (item.category === 'Sweet Stacks') {
       // For Sweet Stacks, don't include the description in the heading
       return item.name;
@@ -134,7 +142,19 @@ const Basket: React.FC<BasketProps> = ({
 
                       {item.milkshakeSize && (
                         <p className="text-xs text-gray-500 mt-1">
-                          Size: {item.milkshakeSize}, Flavour: {item.milkshakeFlavor}
+                          Size: {item.milkshakeSize}
+                        </p>
+                      )}
+
+                      {item.drinkSize && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Size: {item.drinkSize}
+                        </p>
+                      )}
+
+                      {item.rubiconFlavor && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Flavour: {item.rubiconFlavor}
                         </p>
                       )}
 
@@ -159,6 +179,12 @@ const Basket: React.FC<BasketProps> = ({
                       {item.toppings && item.toppings.length > 0 && (
                         <p className="text-xs text-gray-500 mt-1">
                           Toppings: {item.toppings.join(', ')}
+                        </p>
+                      )}
+
+                      {item.drizzleOnTop && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Drizzle on top
                         </p>
                       )}
 

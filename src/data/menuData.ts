@@ -258,55 +258,55 @@ export const sidesItems: MenuItem[] = [
 
 export const drinkItems: MenuItem[] = [
   {
-    name: 'Coca-Cola 330ml',
-    price: '£1.00',
-    description: 'Classic Coca-Cola, refreshing and crisp.',
+    name: 'Irn Bru',
+    price: '£1.25',
+    description: 'Scotland\'s other national drink, sweet and tangy.',
     image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
   {
-    name: 'Diet Coke 330ml',
-    price: '£1.00',
-    description: 'Light and refreshing Diet Coke with zero sugar.',
+    name: 'Pepsi',
+    price: '£1.25',
+    description: 'Classic Pepsi cola, refreshing and crisp.',
     image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
   {
-    name: 'Orange Juice 330ml',
-    price: '£1.50',
-    description: 'Fresh and tangy orange juice.',
+    name: 'Coke',
+    price: '£1.25',
+    description: 'Classic Coca-Cola, the original cola.',
+    image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=300&fit=crop',
+    category: 'Drinks'
+  },
+  {
+    name: 'Sprite',
+    price: '£1.25',
+    description: 'Crisp lemon-lime soda, light and refreshing.',
+    image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=300&fit=crop',
+    category: 'Drinks'
+  },
+  {
+    name: 'Fanta',
+    price: '£1.25',
+    description: 'Orange flavoured soda, sweet and fruity.',
     image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
   {
-    name: 'Apple Juice 330ml',
-    price: '£1.50',
-    description: 'Sweet and crisp apple juice.',
+    name: 'Rubicon',
+    price: '£1.25',
+    description: 'Exotic fruit drink available in tropical flavours.',
     image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400&h=300&fit=crop',
-    category: 'Drinks'
-  },
-  {
-    name: 'Water 500ml',
-    price: '£1.00',
-    description: 'Pure, refreshing bottled water.',
-    image: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400&h=300&fit=crop',
     category: 'Drinks'
   }
 ];
 
 export const milkshakeItems: MenuItem[] = [
   {
-    name: 'Oreo Milkshake',
+    name: 'Milkshakes',
     price: '£4.20',
-    description: 'Creamy milkshake blended with Oreo cookies.',
+    description: 'Creamy milkshakes available in various flavours.',
     image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop',
-    category: 'Milkshakes'
-  },
-  {
-    name: 'Strawberry Milkshake',
-    price: '£4.20',
-    description: 'Fresh strawberry milkshake with whipped cream.',
-    image: 'https://images.unsplash.com/photo-1553787499-6d43a9e82c17?w=400&h=300&fit=crop',
     category: 'Milkshakes'
   }
 ];
@@ -434,4 +434,8 @@ export const iceCreamFlavours = [
 
 export const pizzaCustomisations = [
   'Extra Cheese', 'Pepperoni', 'Mushrooms', 'Bell Peppers', 'Onions', 'Olives', 'Ham', 'Chicken', 'Jalapeños'
+];
+
+export const rubiconFlavours = [
+  'Mango', 'Passionfruit'
 ];

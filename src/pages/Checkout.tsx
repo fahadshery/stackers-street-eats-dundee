@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -192,7 +191,19 @@ const Checkout = () => {
 
                     {item.milkshakeSize && (
                       <p className="text-xs text-gray-500 mt-1">
-                        Size: {item.milkshakeSize}, Flavour: {item.milkshakeFlavor}
+                        Size: {item.milkshakeSize}
+                      </p>
+                    )}
+
+                    {item.drinkSize && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Size: {item.drinkSize}
+                      </p>
+                    )}
+
+                    {item.rubiconFlavor && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Flavour: {item.rubiconFlavor}
                       </p>
                     )}
 
@@ -217,6 +228,12 @@ const Checkout = () => {
                     {item.toppings && item.toppings.length > 0 && (
                       <p className="text-xs text-gray-500 mt-1">
                         Toppings: {item.toppings.join(', ')}
+                      </p>
+                    )}
+
+                    {item.drizzleOnTop && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Drizzle on top
                       </p>
                     )}
 

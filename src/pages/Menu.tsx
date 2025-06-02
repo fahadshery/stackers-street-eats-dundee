@@ -147,7 +147,10 @@ const Menu = () => {
     sweetStacksType?: string,
     sweetStacksFlavor?: string,
     sweetDips?: string[],
-    toppings?: string[]
+    toppings?: string[],
+    drizzleOnTop?: boolean,
+    drinkSize?: '330ml' | '1.5L',
+    rubiconFlavor?: string
   ) => {
     let basePrice = parseFloat(item.price.replace('£', ''));
     let itemName = item.name;
@@ -163,9 +166,18 @@ const Menu = () => {
       basePrice += 1.00;
     }
 
-    // Handle milkshake pricing
+    // Handle milkshake pricing and naming
     if (item.category === 'Milkshakes') {
       basePrice = milkshakeSize === 'regular' ? 4.20 : 5.00;
+      // For basket display, show flavor + "Milkshake"
+      if (milkshakeFlavor) {
+        itemName = `${milkshakeFlavor} Milkshake`;
+      }
+    }
+
+    // Handle drinks pricing
+    if (item.category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta', 'Rubicon'].includes(item.name)) {
+      basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
     }
 
     // Handle ice cream pricing
@@ -247,7 +259,10 @@ const Menu = () => {
       sweetStacksType,
       sweetStacksFlavor,
       sweetDips,
-      toppings
+      toppings,
+      drizzleOnTop,
+      drinkSize,
+      rubiconFlavor
     };
 
     const existingItemIndex = basketItems.findIndex(
@@ -263,7 +278,10 @@ const Menu = () => {
         basketItem.sweetStacksType === sweetStacksType &&
         basketItem.sweetStacksFlavor === sweetStacksFlavor &&
         JSON.stringify(basketItem.sweetDips) === JSON.stringify(sweetDips) &&
-        JSON.stringify(basketItem.toppings) === JSON.stringify(toppings)
+        JSON.stringify(basketItem.toppings) === JSON.stringify(toppings) &&
+        basketItem.drizzleOnTop === drizzleOnTop &&
+        basketItem.drinkSize === drinkSize &&
+        basketItem.rubiconFlavor === rubiconFlavor
     );
 
     if (existingItemIndex > -1) {
