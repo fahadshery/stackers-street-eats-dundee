@@ -61,6 +61,17 @@ const Basket: React.FC<BasketProps> = ({
     return item.name;
   };
 
+  const formatIceCreamFlavors = (flavors: string[]) => {
+    const flavorCounts = flavors.reduce((acc, flavor) => {
+      acc[flavor] = (acc[flavor] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return Object.entries(flavorCounts)
+      .map(([flavor, count]) => count > 1 ? `${flavor} (${count})` : flavor)
+      .join(', ');
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -111,7 +122,7 @@ const Basket: React.FC<BasketProps> = ({
 
                       {item.customizations && item.customizations.length > 0 && (
                         <p className="text-xs text-gray-500 mt-1">
-                          Customizations: {item.customizations.join(', ')}
+                          Customisations: {item.customizations.join(', ')}
                         </p>
                       )}
 
@@ -129,7 +140,7 @@ const Basket: React.FC<BasketProps> = ({
 
                       {item.iceCreamFlavors && item.iceCreamFlavors.length > 0 && item.iceCreamScoops && (
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavours: {item.iceCreamFlavors.join(', ')}
+                          {item.iceCreamScoops} {item.iceCreamScoops === 1 ? 'Scoop' : 'Scoops'}, Flavours: {formatIceCreamFlavors(item.iceCreamFlavors)}
                         </p>
                       )}
 

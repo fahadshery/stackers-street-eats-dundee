@@ -104,9 +104,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   };
 
   const handleIceCreamFlavorChange = (flavor: string, checked: boolean) => {
-    if (checked && selectedIceCreamFlavors.length < iceCreamScoops) {
+    if (checked) {
       setSelectedIceCreamFlavors(prev => [...prev, flavor]);
-    } else if (!checked) {
+    } else {
       setSelectedIceCreamFlavors(prev => prev.filter(f => f !== flavor));
     }
   };
@@ -249,6 +249,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     return false;
   };
 
+  // Check if we should show special instructions (only for Sweet Stacks and Ice Cream)
+  const shouldShowSpecialInstructions = category === 'Sweet Stacks' || category === 'Ice Creams';
+
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <div className="aspect-video bg-gray-200 overflow-hidden">
@@ -261,7 +264,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       <div className="p-6">
         <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
         <p className="text-gray-600 text-sm mb-4 leading-relaxed">{item.description}</p>
-        <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
+        
+        {/* Only show price and Add to Order button if item has a price */}
+        {item.price && (
+          <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
+        )}
 
         {showSweetStacks && (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && (
           <>
@@ -366,7 +373,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         {showCustomizations && customizations.length > 0 && (
           <div className="mb-4">
             <p className="font-medium mb-2 text-stackers-charcoal">
-              Customizations {showPizzaSize && `(${pizzaSize === '10"' ? '£1.00' : '£1.50'} each):`}
+              Customisations {showPizzaSize && `(${pizzaSize === '10"' ? '£1.00' : '£1.50'} each):`}
             </p>
             <div className="space-y-2">
               {customizations.map((customization) => (
@@ -439,10 +446,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               <RadioGroup value={iceCreamScoops.toString()} onValueChange={(value) => {
                 const scoops = parseInt(value) as 1 | 2 | 3;
                 setIceCreamScoops(scoops);
-                // Reset selected flavors if new scoop count is less than current selections
-                if (selectedIceCreamFlavors.length > scoops) {
-                  setSelectedIceCreamFlavors(selectedIceCreamFlavors.slice(0, scoops));
-                }
+                // Reset selected flavors when scoop count changes
+                setSelectedIceCreamFlavors([]);
               }}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="1" id={`${item.name}-1-scoop`} />
@@ -462,6 +467,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               <p className="font-medium mb-2 text-stackers-charcoal">
                 Choose {iceCreamScoops} flavour{iceCreamScoops > 1 ? 's' : ''} ({selectedIceCreamFlavors.length}/{iceCreamScoops} selected):
               </p>
+              <p className="text-xs text-gray-500 mb-2">You can select the same flavour multiple times</p>
               <div className="grid grid-cols-2 gap-2">
                 {iceCreamflavours.map((flavor) => (
                   <div key={flavor} className="flex items-center space-x-2">
@@ -471,7 +477,10 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                       onCheckedChange={(checked) => handleIceCreamFlavorChange(flavor, !!checked)}
                       disabled={!selectedIceCreamFlavors.includes(flavor) && selectedIceCreamFlavors.length >= iceCreamScoops}
                     />
-                    <Label htmlFor={`${item.name}-ice-${flavor}`} className="text-xs">{flavor}</Label>
+                    <Label htmlFor={`${item.name}-ice-${flavor}`} className="text-xs">
+                      {flavor} {selectedIceCreamFlavors.filter(f => f === flavor).length > 0 && 
+                        `(${selectedIceCreamFlavors.filter(f => f === flavor).length})`}
+                    </Label>
                   </div>
                 ))}
               </div>
@@ -494,7 +503,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         )}
 
-        {showSpecialInstructions && (
+        {shouldShowSpecialInstructions && (
           <div className="mb-4">
             <Label className="text-sm font-medium mb-2 block">Special instructions:</Label>
             <textarea
@@ -507,13 +516,16 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         )}
 
-        <Button
-          onClick={handleAddToBasket}
-          className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold py-3"
-          disabled={isButtonDisabled()}
-        >
-          Add to Order
-        </Button>
+        {/* Only show Add to Order button if item has a price */}
+        {item.price && (
+          <Button
+            onClick={handleAddToBasket}
+            className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold py-3"
+            disabled={isButtonDisabled()}
+          >
+            Add to Order
+          </Button>
+        )}
       </div>
     </div>
   );
