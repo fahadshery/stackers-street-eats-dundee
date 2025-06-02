@@ -23,7 +23,7 @@ import {
   mealDealsItems,
   boxesItems,
   loadedFriesItems,
-  pizzaCustomizations,
+  pizzaCustomisations,
   MenuItem
 } from '@/data/menuData';
 
@@ -393,7 +393,7 @@ const Menu = () => {
                   category="Pizzas"
                   showMealOption={true}
                   showCustomizations={true}
-                  customizations={pizzaCustomizations}
+                  customizations={pizzaCustomisations}
                   showPizzaSize={true}
                   onAddToBasket={addToBasket}
                 />

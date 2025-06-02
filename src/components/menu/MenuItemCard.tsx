@@ -4,7 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { MenuItem } from '@/data/menuData';
-import { milkshakeflavours, iceCreamflavours } from '@/data/menuData';
+import { milkshakeFlavours, iceCreamFlavours } from '@/data/menuData';
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -427,7 +427,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
               <RadioGroup value={milkshakeFlavor} onValueChange={setMilkshakeFlavor}>
                 <div className="grid grid-cols-2 gap-2">
-                  {milkshakeflavours.map((flavor) => (
+                  {milkshakeFlavours.map((flavor) => (
                     <div key={flavor} className="flex items-center space-x-2">
                       <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
                       <Label htmlFor={`${item.name}-${flavor}`} className="text-xs">{flavor}</Label>
@@ -469,7 +469,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               </p>
               <p className="text-xs text-gray-500 mb-2">You can select the same flavour multiple times</p>
               <div className="grid grid-cols-2 gap-2">
-                {iceCreamflavours.map((flavor) => (
+                {iceCreamFlavours.map((flavor) => (
                   <div key={flavor} className="flex items-center space-x-2">
                     <Checkbox
                       id={`${item.name}-ice-${flavor}`}
