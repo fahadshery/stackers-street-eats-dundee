@@ -422,3 +422,15 @@ export const loadedFriesItems: MenuItem[] = [
     category: 'Loaded Stackers\' Fries'
   }
 ];
+
+export const milkshakeFlavours = [
+  'Oreo', 'Strawberry', 'Chocolate', 'Vanilla', 'Banana', 'Bubblegum'
+];
+
+export const iceCreamFlavours = [
+  'Vanilla', 'Chocolate', 'Strawberry', 'Mint Chocolate Chip', 'Cookies & Cream', 'Pistachio'
+];
+
+export const pizzaCustomisations = [
+  'Extra Cheese', 'Pepperoni', 'Mushrooms', 'Bell Peppers', 'Onions', 'Olives', 'Ham', 'Chicken', 'Jalapeños'
+];
