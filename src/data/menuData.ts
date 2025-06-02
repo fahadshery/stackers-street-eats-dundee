@@ -1,3 +1,4 @@
+
 export interface MenuItem {
   name: string;
   price: string;
@@ -296,16 +297,16 @@ export const drinkItems: MenuItem[] = [
 export const milkshakeItems: MenuItem[] = [
   {
     name: 'Oreo Milkshake',
-    price: '',
+    price: '£4.20',
     description: 'Creamy milkshake blended with Oreo cookies.',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop',
     category: 'Milkshakes'
   },
   {
     name: 'Strawberry Milkshake',
-    price: '',
+    price: '£4.20',
     description: 'Fresh strawberry milkshake with whipped cream.',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1553787499-6d43a9e82c17?w=400&h=300&fit=crop',
     category: 'Milkshakes'
   }
 ];
@@ -313,9 +314,9 @@ export const milkshakeItems: MenuItem[] = [
 export const iceCreamItems: MenuItem[] = [
   {
     name: 'Ice Cream',
-    price: '',
+    price: '£2.50',
     description: 'Choose your scoops and flavours.',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop',
     category: 'Ice Creams'
   }
 ];
@@ -323,35 +324,35 @@ export const iceCreamItems: MenuItem[] = [
 export const sweetStacksItems: MenuItem[] = [
   {
     name: 'Waffle',
-    price: '',
+    price: '£6.50',
     description: 'Crispy, golden waffles made fresh to order — the perfect canvas for your favourite flavours and toppings.',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
     name: 'Crepe',
-    price: '',
+    price: '£6.50',
     description: 'Delicate, thin crepes crafted to perfection — light, airy, and ready for your sweetest dreams.',
-    image: 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
     name: 'Cookie Dough Delight',
-    price: '',
+    price: '£6.50',
     description: 'Warm, gooey cookie dough served fresh — because life is too short for fully baked cookies.',
     image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
     name: 'Cheesecake Slices',
-    price: '',
+    price: '£3.99',
     description: 'Rich, creamy cheesecake slices available in multiple flavours — the perfect ending to any meal.',
     image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
   {
     name: 'Stackers\' Specials',
-    price: '',
+    price: '£4.99',
     description: 'Our signature dessert creations that change regularly — ask about today\'s special sweet treats.',
     image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'

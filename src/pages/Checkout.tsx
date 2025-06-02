@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -11,7 +12,11 @@ interface CustomerDetails {
   name: string;
   email: string;
   phone: string;
-  address: string;
+  houseNumber: string;
+  streetName: string;
+  streetName2: string;
+  city: string;
+  postcode: string;
 }
 
 const formatIceCreamFlavors = (flavors: string[]) => {
@@ -25,6 +30,21 @@ const formatIceCreamFlavors = (flavors: string[]) => {
     .join(', ');
 };
 
+const validateUKPhone = (phone: string): boolean => {
+  const ukPhoneRegex = /^(?:(?:\(?(?:0(?:0|11)\)?[\s-]?\(?|\+)44\)?[\s-]?(?:\(?0\)?[\s-]?)?)|(?:\(?0))(?:(?:\d{5}\)?[\s-]?\d{4,5})|(?:\d{4}\)?[\s-]?(?:\d{5}|\d{3}[\s-]?\d{3}))|(?:\d{3}\)?[\s-]?\d{3}[\s-]?\d{3,4})|(?:\d{2}\)?[\s-]?\d{4}[\s-]?\d{4}))(?:[\s-]?(?:x|ext\.?|\#)\d{3,4})?$/;
+  return ukPhoneRegex.test(phone.replace(/\s/g, ''));
+};
+
+const validateUKPostcode = (postcode: string): boolean => {
+  const ukPostcodeRegex = /^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i;
+  return ukPostcodeRegex.test(postcode.trim());
+};
+
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 const Checkout = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,10 +53,15 @@ const Checkout = () => {
     name: '',
     email: '',
     phone: '',
-    address: ''
+    houseNumber: '',
+    streetName: '',
+    streetName2: '',
+    city: '',
+    postcode: ''
   });
   const [orderType, setOrderType] = useState<'collection' | 'delivery'>('collection');
   const [specialRequests, setSpecialRequests] = useState('');
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
 
   useEffect(() => {
     if (location.state && location.state.basketItems) {
@@ -61,17 +86,54 @@ const Checkout = () => {
     return ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Boxes', 'Meal Deals', 'Loaded Stackers\' Fries', 'Sweet Stacks'].includes(category);
   };
 
+  const validateForm = (): boolean => {
+    const newErrors: {[key: string]: string} = {};
+
+    // Name validation
+    if (!customerDetails.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+
+    // Email validation
+    if (!customerDetails.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!validateEmail(customerDetails.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Phone validation
+    if (!customerDetails.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!validateUKPhone(customerDetails.phone)) {
+      newErrors.phone = 'Please enter a valid UK phone number';
+    }
+
+    // Delivery address validation
+    if (orderType === 'delivery') {
+      if (!customerDetails.houseNumber.trim()) {
+        newErrors.houseNumber = 'House name/number is required';
+      }
+      if (!customerDetails.streetName.trim()) {
+        newErrors.streetName = 'Street name is required';
+      }
+      if (!customerDetails.city.trim()) {
+        newErrors.city = 'City is required';
+      }
+      if (!customerDetails.postcode.trim()) {
+        newErrors.postcode = 'Postcode is required';
+      } else if (!validateUKPostcode(customerDetails.postcode)) {
+        newErrors.postcode = 'Please enter a valid UK postcode';
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic form validation
-    if (!customerDetails.name || !customerDetails.email || !customerDetails.phone) {
-      alert('Please fill out all required fields.');
-      return;
-    }
-
-    if (orderType === 'delivery' && !customerDetails.address) {
-      alert('Please provide a delivery address.');
+    if (!validateForm()) {
       return;
     }
 
@@ -189,8 +251,9 @@ const Checkout = () => {
                   id="name"
                   value={customerDetails.name}
                   onChange={(e) => setCustomerDetails({...customerDetails, name: e.target.value})}
-                  required
+                  className={errors.name ? 'border-red-500' : ''}
                 />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
               
               <div>
@@ -200,19 +263,22 @@ const Checkout = () => {
                   type="email"
                   value={customerDetails.email}
                   onChange={(e) => setCustomerDetails({...customerDetails, email: e.target.value})}
-                  required
+                  className={errors.email ? 'border-red-500' : ''}
                 />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
               
               <div>
-                <Label htmlFor="phone">Phone Number *</Label>
+                <Label htmlFor="phone">UK Phone Number *</Label>
                 <Input
                   id="phone"
                   type="tel"
                   value={customerDetails.phone}
                   onChange={(e) => setCustomerDetails({...customerDetails, phone: e.target.value})}
-                  required
+                  placeholder="e.g. 07700 900123 or +44 7700 900123"
+                  className={errors.phone ? 'border-red-500' : ''}
                 />
+                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
               </div>
 
               <div>
@@ -230,16 +296,65 @@ const Checkout = () => {
               </div>
 
               {orderType === 'delivery' && (
-                <div>
-                  <Label htmlFor="address">Delivery Address *</Label>
-                  <Input
-                    id="address"
-                    value={customerDetails.address}
-                    onChange={(e) => setCustomerDetails({...customerDetails, address: e.target.value})}
-                    placeholder="Enter your full delivery address"
-                    required
-                  />
-                </div>
+                <>
+                  <div>
+                    <Label htmlFor="houseNumber">House Name / Number *</Label>
+                    <Input
+                      id="houseNumber"
+                      value={customerDetails.houseNumber}
+                      onChange={(e) => setCustomerDetails({...customerDetails, houseNumber: e.target.value})}
+                      placeholder="e.g. 123 or Apartment 4B"
+                      className={errors.houseNumber ? 'border-red-500' : ''}
+                    />
+                    {errors.houseNumber && <p className="text-red-500 text-sm mt-1">{errors.houseNumber}</p>}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="streetName">Street Name *</Label>
+                    <Input
+                      id="streetName"
+                      value={customerDetails.streetName}
+                      onChange={(e) => setCustomerDetails({...customerDetails, streetName: e.target.value})}
+                      placeholder="e.g. High Street"
+                      className={errors.streetName ? 'border-red-500' : ''}
+                    />
+                    {errors.streetName && <p className="text-red-500 text-sm mt-1">{errors.streetName}</p>}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="streetName2">Street Name 2 (Optional)</Label>
+                    <Input
+                      id="streetName2"
+                      value={customerDetails.streetName2}
+                      onChange={(e) => setCustomerDetails({...customerDetails, streetName2: e.target.value})}
+                      placeholder="e.g. Near the park"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="city">City *</Label>
+                    <Input
+                      id="city"
+                      value={customerDetails.city}
+                      onChange={(e) => setCustomerDetails({...customerDetails, city: e.target.value})}
+                      placeholder="e.g. London"
+                      className={errors.city ? 'border-red-500' : ''}
+                    />
+                    {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="postcode">UK Postcode *</Label>
+                    <Input
+                      id="postcode"
+                      value={customerDetails.postcode}
+                      onChange={(e) => setCustomerDetails({...customerDetails, postcode: e.target.value.toUpperCase()})}
+                      placeholder="e.g. SW1A 1AA"
+                      className={errors.postcode ? 'border-red-500' : ''}
+                    />
+                    {errors.postcode && <p className="text-red-500 text-sm mt-1">{errors.postcode}</p>}
+                  </div>
+                </>
               )}
 
               <div>
@@ -259,7 +374,7 @@ const Checkout = () => {
                 className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold py-3"
                 disabled={basketItems.length === 0}
               >
-                Place Order
+                Pay Now - £{calculateTotal()}
               </Button>
             </form>
           </div>
