@@ -30,7 +30,7 @@ const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeSection, onScroll
   ];
 
   return (
-    <div className="sticky top-16 bg-white shadow-md z-40 border-b">
+    <div className="sticky top-16 bg-white shadow-md z-40">
       <div className="container mx-auto px-4">
         {/* First line */}
         <div className="flex flex-wrap justify-center py-2 space-x-2">
@@ -50,8 +50,8 @@ const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeSection, onScroll
           ))}
         </div>
         
-        {/* Second line */}
-        <div className="flex flex-wrap justify-center py-2 space-x-2 border-t border-gray-200">
+        {/* Second line - removed border-t */}
+        <div className="flex flex-wrap justify-center py-2 space-x-2">
           {sectionsLine2.map((section) => (
             <Button
               key={section.id}

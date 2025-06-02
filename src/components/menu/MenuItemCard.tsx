@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Textarea } from '@/components/ui/textarea';
 import { MenuItem } from '@/data/menuData';
 import { milkshakeFlavours, iceCreamFlavours } from '@/data/menuData';
 
@@ -30,7 +31,8 @@ interface MenuItemCardProps {
     sweetStacksType?: string,
     sweetStacksFlavor?: string,
     sweetDips?: string[],
-    toppings?: string[]
+    toppings?: string[],
+    drizzleOnTop?: boolean
   ) => void;
 }
 
@@ -85,6 +87,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [pizzaSize, setPizzaSize] = useState<'10"' | '12"'>('10"');
   const [iceCreamScoops, setIceCreamScoops] = useState<1 | 2 | 3>(1);
   const [selectedIceCreamFlavors, setSelectedIceCreamFlavors] = useState<string[]>([]);
+  const [drizzleOnTop, setDrizzleOnTop] = useState(false);
 
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
@@ -127,6 +130,46 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     }
   };
 
+  const renderIceCreamFlavorCheckboxes = () => {
+    const checkboxes = [];
+    
+    for (let i = 0; i < iceCreamScoops; i++) {
+      checkboxes.push(
+        <div key={`scoop-${i}`} className="mb-4">
+          <p className="font-medium mb-2 text-stackers-charcoal">
+            Scoop {i + 1} Flavour:
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {iceCreamFlavours.map((flavor) => (
+              <div key={`${flavor}-${i}`} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`${item.name}-ice-${flavor}-${i}`}
+                  checked={selectedIceCreamFlavors[i] === flavor}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      const newFlavors = [...selectedIceCreamFlavors];
+                      newFlavors[i] = flavor;
+                      setSelectedIceCreamFlavors(newFlavors);
+                    } else {
+                      const newFlavors = [...selectedIceCreamFlavors];
+                      newFlavors[i] = '';
+                      setSelectedIceCreamFlavors(newFlavors);
+                    }
+                  }}
+                />
+                <Label htmlFor={`${item.name}-ice-${flavor}-${i}`} className="text-xs">
+                  {flavor}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    return checkboxes;
+  };
+
   const handleAddToBasket = () => {
     let finalSweetStacksType = '';
     let finalSweetStacksFlavor = sweetStacksFlavor;
@@ -160,7 +203,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       finalSweetStacksType || undefined,
       finalSweetStacksFlavor || undefined,
       showSweetStacks && selectedSweetDips.length > 0 ? selectedSweetDips : undefined,
-      showSweetStacks && selectedToppings.length > 0 ? selectedToppings : undefined
+      showSweetStacks && selectedToppings.length > 0 ? selectedToppings : undefined,
+      drizzleOnTop
     );
 
     // Reset form
@@ -178,6 +222,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setSelectedToppings([]);
     setCheesecakeFlavor('Strawberry');
     setStackersSpecialItem('Waffle on a Stick');
+    setDrizzleOnTop(false);
   };
 
   const displayPrice = () => {
@@ -249,8 +294,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     return false;
   };
 
-  // Check if we should show special instructions (only for Sweet Stacks and Ice Cream)
-  const shouldShowSpecialInstructions = category === 'Sweet Stacks' || category === 'Ice Creams';
+  // Determine which categories should show customer instructions
+  const shouldShowCustomerInstructions = ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Pizzas', 'Sweet Stacks', 'Ice Creams'].includes(category);
+  
+  // Special logic for Sweet Stacks - don't show for Cheesecake Slices
+  const shouldShowSweetStacksInstructions = category === 'Sweet Stacks' && item.name !== 'Cheesecake Slices';
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -270,6 +318,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
         )}
 
+        {/* Sweet Stacks customization sections */}
         {showSweetStacks && (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && (
           <>
             <div className="mb-4">
@@ -316,6 +365,19 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                     <Label htmlFor={`${item.name}-topping-${topping}`} className="text-xs">{topping}</Label>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id={`${item.name}-drizzle`}
+                  checked={drizzleOnTop}
+                  onCheckedChange={(checked) => setDrizzleOnTop(!!checked)}
+                />
+                <Label htmlFor={`${item.name}-drizzle`} className="text-sm font-medium">
+                  Drizzle on top
+                </Label>
               </div>
             </div>
           </>
@@ -463,28 +525,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                 </div>
               </RadioGroup>
             </div>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">
-                Choose {iceCreamScoops} flavour{iceCreamScoops > 1 ? 's' : ''} ({selectedIceCreamFlavors.length}/{iceCreamScoops} selected):
-              </p>
-              <p className="text-xs text-gray-500 mb-2">You can select the same flavour multiple times</p>
-              <div className="grid grid-cols-2 gap-2">
-                {iceCreamFlavours.map((flavor) => (
-                  <div key={flavor} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`${item.name}-ice-${flavor}`}
-                      checked={selectedIceCreamFlavors.includes(flavor)}
-                      onCheckedChange={(checked) => handleIceCreamFlavorChange(flavor, !!checked)}
-                      disabled={!selectedIceCreamFlavors.includes(flavor) && selectedIceCreamFlavors.length >= iceCreamScoops}
-                    />
-                    <Label htmlFor={`${item.name}-ice-${flavor}`} className="text-xs">
-                      {flavor} {selectedIceCreamFlavors.filter(f => f === flavor).length > 0 && 
-                        `(${selectedIceCreamFlavors.filter(f => f === flavor).length})`}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
+            
+            {renderIceCreamFlavorCheckboxes()}
           </>
         )}
 
@@ -503,15 +545,16 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         )}
 
-        {shouldShowSpecialInstructions && (
+        {/* Customer Instructions - Updated logic */}
+        {shouldShowCustomerInstructions && (category !== 'Sweet Stacks' || shouldShowSweetStacksInstructions) && (
           <div className="mb-4">
-            <Label className="text-sm font-medium mb-2 block">Special instructions:</Label>
-            <textarea
+            <Label className="text-sm font-medium mb-2 block">Customer instructions:</Label>
+            <Textarea
               placeholder="Any special requests..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-md p-2 resize-none text-sm"
+              className="w-full resize-none text-sm"
             />
           </div>
         )}

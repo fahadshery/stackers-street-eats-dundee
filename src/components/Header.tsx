@@ -34,11 +34,11 @@ const Header = () => {
               onClick={() => navigate('/')}
               style={{ cursor: 'pointer' }}
             />
-            {/* Mobile Logo */}
+            {/* Mobile Logo - Made bigger */}
             <img 
               src="/lovable-uploads/cd6add94-33ad-480b-81fd-35ac59fe407b.png" 
               alt="STACKERS" 
-              className="h-8 w-auto md:hidden"
+              className="h-12 w-auto md:hidden"
               onClick={() => navigate('/')}
               style={{ cursor: 'pointer' }}
             />
