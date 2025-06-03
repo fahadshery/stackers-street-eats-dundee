@@ -368,8 +368,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
         )}
 
-        {/* Drinks size selection for specific items */}
-        {category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta'].includes(item.name) && (
+        {/* Drinks size selection for specific items - removed duplicates */}
+        {category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name) && (
           <div className="mb-4">
             <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
             <RadioGroup value={drinkSize} onValueChange={(value: string) => setDrinkSize(value as '330ml' | '1.5L')}>
