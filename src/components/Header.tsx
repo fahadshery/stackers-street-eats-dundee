@@ -18,9 +18,16 @@ const Header = () => {
               className="h-12 w-auto md:h-10 object-contain hidden md:block"
             />
             <img
-              src="/lovable-uploads/f87fb888-ed7f-4dbf-bce7-947e058e8ac9.png"
-              alt="Stackers Logo"
-              className="h-12 md:h-14 w-auto object-contain md:hidden"
+              src="/lovable-uploads/cd6add94-33ad-480b-81fd-35ac59fe407b.png"
+              alt="STACKERS"
+              className="h-16 w-auto md:hidden"
+              onClick={() => navigate('/')}
+              style={{ cursor: 'pointer' }}
+
+            // <img
+            //   src="/lovable-uploads/f87fb888-ed7f-4dbf-bce7-947e058e8ac9.png"
+            //   alt="Stackers Logo"
+            //   className="h-12 md:h-14 w-auto object-contain md:hidden"
             />
           </Link>
 
