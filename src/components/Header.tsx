@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -12,18 +13,21 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
-              src="/lovable-uploads/cd6add94-33ad-480b-81fd-35ac59fe407b.png" 
+              src="/lovable-uploads/9e5edac6-4204-4c23-9c01-706901d1d6f9.png" 
               alt="Stackers Logo" 
-              className="h-14 w-auto md:h-16 object-contain"
+              className="h-14 w-auto md:h-20 object-contain"
             />
           </Link>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="hover:text-gray-300 transition-colors">Home</Link>
-            <Link to="/menu" className="hover:text-gray-300 transition-colors">Menu</Link>
-            <Link to="/about" className="hover:text-gray-300 transition-colors">About</Link>
-            <Link to="/contact" className="hover:text-gray-300 transition-colors">Contact</Link>
+          {/* Navigation - Center aligned */}
+          <nav className="hidden md:flex items-center justify-center flex-1">
+            <div className="flex items-center space-x-6">
+              <Link to="/" className="hover:text-stackers-yellow transition-colors">Home</Link>
+              <Link to="/menu" className="hover:text-stackers-yellow transition-colors">Menu</Link>
+              <Link to="/gift-cards" className="hover:text-stackers-yellow transition-colors">Gift Cards</Link>
+              <Link to="/about" className="hover:text-stackers-yellow transition-colors">About</Link>
+              <Link to="/contact" className="hover:text-stackers-yellow transition-colors">Contact</Link>
+            </div>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -37,10 +41,11 @@ const Header = () => {
       {isMenuOpen && (
         <div className="bg-stackers-charcoal md:hidden absolute top-full left-0 w-full shadow-md">
           <nav className="px-4 py-3 flex flex-col space-y-3">
-            <Link to="/" className="hover:text-gray-300 transition-colors block" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            <Link to="/menu" className="hover:text-gray-300 transition-colors block" onClick={() => setIsMenuOpen(false)}>Menu</Link>
-            <Link to="/about" className="hover:text-gray-300 transition-colors block" onClick={() => setIsMenuOpen(false)}>About</Link>
-            <Link to="/contact" className="hover:text-gray-300 transition-colors block" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+            <Link to="/" className="hover:text-stackers-yellow transition-colors block" onClick={() => setIsMenuOpen(false)}>Home</Link>
+            <Link to="/menu" className="hover:text-stackers-yellow transition-colors block" onClick={() => setIsMenuOpen(false)}>Menu</Link>
+            <Link to="/gift-cards" className="hover:text-stackers-yellow transition-colors block" onClick={() => setIsMenuOpen(false)}>Gift Cards</Link>
+            <Link to="/about" className="hover:text-stackers-yellow transition-colors block" onClick={() => setIsMenuOpen(false)}>About</Link>
+            <Link to="/contact" className="hover:text-stackers-yellow transition-colors block" onClick={() => setIsMenuOpen(false)}>Contact</Link>
           </nav>
         </div>
       )}

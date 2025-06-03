@@ -1,5 +1,7 @@
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-stackers-charcoal text-white py-12">
       <div className="container mx-auto px-4">
@@ -53,7 +55,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Stackers Dundee. All rights reserved. | Built with ❤️ in Scotland</p>
+          <p>&copy; {currentYear} Stackers Dundee. All rights reserved. | Built with ❤️ in Scotland</p>
         </div>
       </div>
     </footer>
