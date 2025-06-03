@@ -23,28 +23,28 @@ const Header = () => {
   return (
     <header className="bg-stackers-charcoal text-white sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 md:justify-center md:relative">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center md:absolute md:left-0">
             {/* Desktop Logo */}
             <img
-              src="/lovable-uploads/1c302daa-0169-4d63-bc70-bbcfba050a32.png"
+              src="/lovable-uploads/9e5edac6-4204-4c23-9c01-706901d1d6f9.png"
               alt="STACKERS"
-              className="h-12 w-auto hidden md:block"
+              className="h-10 w-auto hidden md:block"
               onClick={() => navigate('/')}
               style={{ cursor: 'pointer' }}
             />
-            {/* Mobile Logo - Made even bigger */}
+            {/* Mobile Logo */}
             <img
-              src="/lovable-uploads/cd6add94-33ad-480b-81fd-35ac59fe407b.png"
+              src="/lovable-uploads/f87fb888-ed7f-4dbf-bce7-947e058e8ac9.png"
               alt="STACKERS"
-              className="h-16 w-auto md:hidden"
+              className="h-12 w-auto md:hidden"
               onClick={() => navigate('/')}
               style={{ cursor: 'pointer' }}
             />
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Centered */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <a
@@ -57,11 +57,21 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Button - Desktop positioned absolutely right, Mobile centered */}
+          <div className="hidden md:block md:absolute md:right-0">
             <Button
               onClick={handleOrderNow}
               className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-6 py-2 transition-all duration-200 hover:scale-105"
+            >
+              01382 624 786
+            </Button>
+          </div>
+
+          {/* Mobile CTA Button - Centered */}
+          <div className="md:hidden flex-1 flex justify-center">
+            <Button
+              onClick={handleOrderNow}
+              className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-4 py-2 transition-all duration-200 text-sm"
             >
               01382 624 786
             </Button>
@@ -89,13 +99,6 @@ const Header = () => {
                 >
                   {item.name}
                 </a>
-                <div className="px-4 pt-2">
-                <Button
-                  onClick={handleOrderNow}
-                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold py-2 transition-all duration-200"
-                >
-                  ORDER NOW
-                </Button>
               ))}
               <div className="px-4 pt-2">
                 <Button
