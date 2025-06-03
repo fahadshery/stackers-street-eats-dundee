@@ -420,7 +420,7 @@ export const drinkItems: MenuItem[] = [
   {
     name: 'Irn Bru',
     price: '£1.25',
-    description: 'Scotland\'s 🏴󠁧󠁢󠁳󠁣󠁴󠁿 other national drink, sweet and tangy.',
+    description: 'Scotland\'s 🏴 other national drink, sweet and tangy.',
     image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
@@ -599,7 +599,7 @@ export const loadedFriesItems: MenuItem[] = [
 ];
 
 export const milkshakeFlavours = [
-  'Oreo', 'Biscoff', 'Strawberry', 'Kinder Buneo', 'White Kinder Bueno', 'Malteaser', 'Galaxy Caramel', 'Milky bar', 'Banana', 'Ferrero Rocher', 'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'.
+  'Oreo', 'Biscoff', 'Strawberry', 'Kinder Buneo', 'White Kinder Bueno', 'Malteaser', 'Galaxy Caramel', 'Milky bar', 'Banana', 'Ferrero Rocher', 'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'
 ];
 
 export const iceCreamFlavours = [
