@@ -63,7 +63,7 @@ const Header = () => {
               onClick={handleOrderNow}
               className="bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold px-6 py-2 transition-all duration-200 hover:scale-105"
             >
-              ORDER NOW
+              01382 624 786
             </Button>
           </div>
 
