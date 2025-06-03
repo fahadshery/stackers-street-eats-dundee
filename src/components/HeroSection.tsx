@@ -56,7 +56,7 @@ const HeroSection = () => {
 
           {/* Location Tag */}
           <div className="mt-12 inline-flex items-center bg-stackers-red/20 border border-stackers-red rounded-full px-6 py-2">
-            <span className="text-stackers-red font-medium">📍 Serving Dundee, Scotland</span>
+            <span className="text-stackers-red font-medium">📍 Serving Dundee, Scotland 🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
           </div>
         </div>
       </div>

@@ -127,23 +127,44 @@ export const friedGoldItems: MenuItem[] = [
 
 export const chickenBurgerItems: MenuItem[] = [
   {
-    name: 'Classic Chicken Burger',
-    price: '£5.99',
-    description: 'Juicy grilled chicken breast with lettuce, tomato, and mayo on a toasted bun.',
+    name: 'Chicken Stack Classic',
+    price: '£6.45',
+    description: 'Succulent chicken coated in a seasoned breading, stacked in a soft seeded bun, layered with melted cheese, fresh lettuce, onions, creamy mayo. A true Stackers favourite.',
     image: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   },
   {
-    name: 'Spicy Chicken Burger',
-    price: '£6.49',
-    description: 'Crispy chicken fillet with spicy sauce, lettuce, and pickles.',
+    name: 'Zing Stack',
+    price: '£7.45',
+    description: 'Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn’t your thing!',
     image: 'https://images.unsplash.com/photo-1612197529270-0a3a3a1a3a3a?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   },
   {
-    name: 'BBQ Chicken Burger',
-    price: '£6.99',
-    description: 'Grilled chicken with BBQ sauce, cheese, and onion rings.',
+    name: 'Peri-Peri Chicken Stack',
+    price: '£7.45',
+    description: 'Tender grilled peri-peri chicken, melted cheese, peri mayo, crisp lettuce, and fresh onions all stacked in a soft bun for the perfect bite. Grilled to perfection, stacked for satisfaction.',
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
+    category: 'Chicken Burgers'
+  },
+  {
+    name: 'Stack Veg Titan 🌱',
+    price: '£8',
+    description: 'Grilled halloumi, cheese, golden hash brown, fresh veggie patty, onion rings, mayo, red onions, and fresh lettuce. Crunchy. Cheesy. Legendary.',
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
+    category: 'Chicken Burgers'
+  },
+  {
+    name: 'Firebird Stack 🌶🌶🌶',
+    price: '£8.45',
+    description: 'Crispy fried chicken meets melted cheese, our signature fire-cracker hot sauce, creamy mayo, topped with fresh lettuce, onions and fiery jalapeños for a kick. All nestled in a toasted bun. Packed with spice and crunch.',
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
+    category: 'Chicken Burgers'
+  },
+  {
+    name: 'Halloumi Chicken Stack 🌶',
+    price: '£8.99',
+    description: 'Golden crispy fried chicken layered with melted cheese, flame grilled halloumi, tangy Algerian sauce, creamy mayo, fresh lettuce, zesty onions, fiery jalapeños, then crowned with crunchy nachos for the ultimate texture explosion. Engineered for serious taste seekers.',
     image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
     category: 'Chicken Burgers'
   }
@@ -151,23 +172,44 @@ export const chickenBurgerItems: MenuItem[] = [
 
 export const smashBurgerItems: MenuItem[] = [
   {
-    name: 'Classic Smash Burger',
-    price: '£5.99',
-    description: 'Double smashed beef patties with cheese, lettuce, tomato, and special sauce.',
+    name: 'Stack Classic',
+    price: '£6.45',
+    description: 'Premium quality Angus beef, melted cheese, our secret sauce, mayo, onions, gherkins, and fresh lettuce on a soft bun. Simple. Juicy. Iconic.',
     image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
   },
   {
-    name: 'Bacon Smash Burger',
-    price: '£6.99',
-    description: 'Smash burger topped with crispy bacon and melted cheese.',
+    name: 'BBQ Stack',
+    price: '£7.45',
+    description: 'Tender Angus beef, melted cheese, BBQ sauce, onions, and fresh lettuce on a soft bun. Smoky, juicy, and irresistible!',
     image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
   },
   {
-    name: 'Mushroom Swiss Smash Burger',
-    price: '£7.49',
-    description: 'Smash burger with sautéed mushrooms and Swiss cheese.',
+    name: 'Double Stack',
+    price: '£8.45',
+    description: 'Signature Angus beef stacked with cheese, secret sauce, mayo, onions, gherkins, and lettuce in a toasted bun. Twice the beef, double the flavour.',
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
+    category: 'Smash Burgers'
+  },
+  {
+    name: 'Stackzilla',
+    price: '£10.45',
+    description: 'A towering Angus beef with melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Massive. Meaty. Unstoppable.',
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
+    category: 'Smash Burgers'
+  },
+  {
+    name: 'Fire Stack 🌶',
+    price: '£10.45',
+    description: 'Juicy Angus beef stacked with turkey rashers, crispy hash brown, fiery jalapeños, melted cheese, secret sauce, mayo, onions, gherkins, and lettuce. Crunchy. Spicy. Loaded.',
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
+    category: 'Smash Burgers'
+  },
+  {
+    name: 'Stack Titan',
+    price: '£10.45',
+    description: 'Premium Angus beef, secret seasoning, cheddar, mozzarella, hash brown, two crispy onion rings, turkey rashers, jalapeños, mayo, red onions, gherkins, lettuce, and our secret sauce in a toasted bun. The ultimate flavour stack.',
     image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
     category: 'Smash Burgers'
   }
@@ -176,22 +218,57 @@ export const smashBurgerItems: MenuItem[] = [
 export const pizzaItems: MenuItem[] = [
   {
     name: 'Margherita',
-    price: '£7.99',
-    description: 'Classic pizza with tomato sauce, mozzarella, and fresh basil.',
+    price: '£5.95',
+    description: 'Classic pizza with tomato sauce, and mozzarella',
     image: 'https://images.unsplash.com/photo-1548365328-9b7a7a7a7a7a?w=400&h=300&fit=crop',
     category: 'Pizzas'
   },
   {
-    name: 'Pepperoni',
-    price: '£8.99',
-    description: 'Tomato sauce, mozzarella, and pepperoni slices.',
+    name: 'Pepperoni Feast',
+    price: '£6.95',
+    description: 'Tomato sauce, and pepperoni slices. Double pepperoni and cheese.',
     image: 'https://images.unsplash.com/photo-1548365328-9b7a7a7a7a7a?w=400&h=300&fit=crop',
     category: 'Pizzas'
   },
   {
-    name: 'Veggie',
-    price: '£8.49',
-    description: 'Tomato sauce, mozzarella, bell peppers, onions, mushrooms, and olives.',
+    name: 'Meat Feast',
+    price: '£7.45',
+    description: 'Chicken, ham, meatballs, and pepperoni.',
+    image: 'https://images.unsplash.com/photo-1548365328-9b7a7a7a7a7a?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'BBQ Sizzlers',
+    price: '£7.45',
+    description: 'BBQ sauce base, topped with pepperoni, chicken, and cheese.',
+    image: 'https://images.unsplash.com/photo-1548365328-9b7a7a7a7a7a?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'Veggie Sizzler 🌱',
+    price: '£7.45',
+    description: 'Tomato, mushrooms, peppers, onions, sweetcorn & jalapeños.',
+    image: 'https://images.unsplash.com/photo-1548365328-9b7a7a7a7a7a?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'Spicy Meatballs 🌶',
+    price: '£8.45',
+    description: 'Meatballs in a peri-peri sauce with onions and jalapeños.',
+    image: 'https://images.unsplash.com/photo-1548365328-9b7a7a7a7a7a?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'Peri-Peri Chicken',
+    price: '£8.45',
+    description: 'Freshly grilled peri-peri chicken, peppers, jalapeños & red onions.',
+    image: 'https://images.unsplash.com/photo-1548365328-9b7a7a7a7a7a?w=400&h=300&fit=crop',
+    category: 'Pizzas'
+  },
+  {
+    name: 'Stackers Special',
+    price: '£8.95',
+    description: 'Pepperoni, meatballs, peri-peri chicken, onions, peppers, and peri-peri sauce.',
     image: 'https://images.unsplash.com/photo-1548365328-9b7a7a7a7a7a?w=400&h=300&fit=crop',
     category: 'Pizzas'
   }
@@ -199,23 +276,44 @@ export const pizzaItems: MenuItem[] = [
 
 export const wrapItems: MenuItem[] = [
   {
-    name: 'Chicken Caesar Wrap',
-    price: '£5.99',
-    description: 'Grilled chicken, romaine lettuce, parmesan, and Caesar dressing wrapped in a soft tortilla.',
+    name: 'Chicken Stack Wrap',
+    price: '£6.45',
+    description: 'Crispy fried chicken with your choice of fresh lettuce, onions, creamy mayo, and our signature secret sauce.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Wraps'
   },
   {
-    name: 'Falafel Wrap',
-    price: '£5.49',
-    description: 'Crispy falafel balls with hummus, lettuce, tomato, and tahini sauce.',
+    name: 'BBQ Blaze Wrap',
+    price: '£6.45',
+    description: 'Bold BBQ flavour meets crispy fried chicken, layered with your choice of jalapeños, lettuce, onions, and creamy mayo.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Wraps'
   },
   {
-    name: 'BBQ Chicken Wrap',
-    price: '£6.49',
-    description: 'Grilled chicken with BBQ sauce, lettuce, and cheese wrapped in a tortilla.',
+    name: 'Grilled Chicken Wrap',
+    price: '£6.45',
+    description: 'Juicy grilled chicken with your choice of fresh lettuce, onions, and smooth mayo, all wrapped for a lighter, satisfying bite.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Wraps'
+  },
+  {
+    name: 'Peri-Peri Chicken Wrap 🌶',
+    price: '£6.45',
+    description: 'Succulent grilled peri-peri chicken with your choice of lettuce, onions, and smooth mayo.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Wraps'
+  },
+  {
+    name: 'Fire-cracker Wrap 🌶🌶🌶',
+    price: '£6.99',
+    description: 'Crunchy and crispy fried chicken strips with our signature fire-cracker hot sauce with optional fresh lettuce, & jalapeños.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Wraps'
+  },
+  {
+    name: 'Grilloumi Stack Wrap 🌱',
+    price: '£7.45',
+    description: 'Grilled halloumi, stacked with lettuce, onions, and mayo. A melt-in-your-mouth vegetarian delight.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Wraps'
   }
@@ -223,15 +321,43 @@ export const wrapItems: MenuItem[] = [
 
 export const kidsItems: MenuItem[] = [
   {
-    name: 'Kids Chicken Nuggets',
-    price: '£3.99',
-    description: 'Crispy chicken nuggets served with fries and a drink.',
+    name: 'Chicken Nuggets (4) and a drink',
+    price: '£3.49',
+    description: 'Crispy chicken nuggets and a fruitshoot.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Kids'
   },
   {
-    name: 'Kids Mini Burger',
-    price: '£4.49',
+    name: 'Chicken Nuggets (2), Mozzarella sticks (2), Fries',
+    price: '£3.99',
+    description: 'Crispy chicken nuggets with mozzarella sticks and fries. Comes with fruitshoot.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Kids'
+  },
+  {
+    name: 'Chicken nuggets (4) & chips and fruitshoot',
+    price: '£4.95',
+    description: 'Golden chicken nuggets (4) served with crispy chips — the perfect mini meal for little Stackers!',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Kids'
+  },
+  {
+    name: 'Gold strips (4) with chips and fruitshoot',
+    price: '£5.50',
+    description: 'Four crispy, tender chicken strips served with a side of golden fries — a tasty treat for young Stackers!',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Kids'
+  },
+  {
+    name: 'Chicken Burger Meal',
+    price: '£6.49',
+    description: 'A mini crispy chicken burger with optional lettuce and mayo, served with golden fries — perfect for little hands and big smiles!',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Kids'
+  },
+  {
+    name: 'Mini Smash Beef Burger Meal',
+    price: '£7.49',
     description: 'Mini beef burger with cheese, served with fries and a drink.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Kids'
@@ -240,16 +366,51 @@ export const kidsItems: MenuItem[] = [
 
 export const sidesItems: MenuItem[] = [
   {
-    name: 'Fries',
-    price: '£2.50',
-    description: 'Crispy golden fries, perfect as a side.',
+    name: 'Coleslaw',
+    price: '£1.50',
+    description: 'A refreshing, creamy blend of shredded cabbage, carrots, and a tangy dressing — the perfect cool companion to any Stackers meal.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Sides'
   },
   {
-    name: 'Onion Rings',
+    name: 'Chips / Fries',
+    price: '£2.25',
+    description: 'Golden, crispy fries served hot and perfectly seasoned — the ultimate classic side to stack up your meal.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Sides'
+  },
+  {
+    name: 'Peri-Peri Chips',
+    price: '£2.75',
+    description: 'Crispy golden fries tossed in our fiery peri-peri seasoning — bold, zesty, and packed with flavour for those who like a little heat on the side.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Sides'
+  },
+  {
+    name: 'Curly Fries',
     price: '£3.00',
-    description: 'Crispy battered onion rings.',
+    description: 'Twisted, crispy, and irresistibly fun — our seasoned curly fries bring bold flavour and crunch to every bite. A side with serious taste!',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Sides'
+  },
+  {
+    name: 'Cheesy Chips',
+    price: '£3.95',
+    description: 'Golden fries smothered in rich, melted cheese for the ultimate gooey, savoury indulgence. A comfort food classic done the Stackers way.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Sides'
+  },
+  {
+    name: 'Peri-Peri Curly Fries',
+    price: '£4.00',
+    description: 'Crispy, seasoned curly fries tossed in fiery Peri-Peri spice—bold, twisty, and packed with flavour in every bite.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Sides'
+  },
+  {
+    name: 'Peri-Peri Cheesy Chips',
+    price: '£4.45',
+    description: 'Golden fries dusted in zesty Peri-Peri seasoning, smothered in melted cheese for a spicy, gooey, irresistible sidekick to any meal.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Sides'
   }
@@ -259,7 +420,7 @@ export const drinkItems: MenuItem[] = [
   {
     name: 'Irn Bru',
     price: '£1.25',
-    description: 'Scotland\'s other national drink, sweet and tangy.',
+    description: 'Scotland\'s 🏴󠁧󠁢󠁳󠁣󠁴󠁿 other national drink, sweet and tangy.',
     image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=300&fit=crop',
     category: 'Drinks'
   },
@@ -304,7 +465,7 @@ export const milkshakeItems: MenuItem[] = [
   {
     name: 'Milkshakes',
     price: '£4.20',
-    description: 'Creamy milkshakes available in various flavours.',
+    description: 'Thick, creamy, and blended to perfection. Our milkshakes come in a variety of irresistible flavours. Whether you are craving classic chocolate, fruity strawberry, or indulgent Biscoff, we have got the perfect shake to sip and savour.',
     image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop',
     category: 'Milkshakes'
   }
@@ -314,7 +475,7 @@ export const iceCreamItems: MenuItem[] = [
   {
     name: 'Ice Cream',
     price: '£2.50',
-    description: 'Choose your scoops and flavours.',
+    description: 'Scoop into pure indulgence with our premium-quality ice cream—crafted for rich flavour and smooth texture. Choose from a variety of delicious flavours to finish your meal on a sweet, satisfying note.',
     image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop',
     category: 'Ice Creams'
   }
@@ -338,7 +499,7 @@ export const sweetStacksItems: MenuItem[] = [
   {
     name: 'Cookie Dough Delight',
     price: '£6.50',
-    description: 'Warm, gooey cookie dough served fresh — because life is too short for fully baked cookies.',
+    description: 'Warm, gooey cookie dough served fresh — because life is too short to bake cookies at home.',
     image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop',
     category: 'Sweet Stacks'
   },
@@ -361,15 +522,15 @@ export const sweetStacksItems: MenuItem[] = [
 export const mealDealsItems: MenuItem[] = [
   {
     name: 'Party Platter',
-    price: '£16.20',
-    description: '10% Student and Blue Card Holders discount. Family feast for sharing! Includes: 🍗 4 x Gold Fried Chicken, 🍟 2 x Regular Fries, 🥤 4 x Cans of Juice, 🍴 Stackers Garlic Dip',
+    price: '£24.99',
+    description: 'Includes: 🍔 Zing Stack burger, 🌯 Chicken Stack wrap OR Fire-Cracker wrap, 🍗 4 x Fried Gold Chicken, 🍗 4 x Spicy Chicken Wings, 🍟 2 x Regular Fries, 🥤 1 x 1.5L Juice, 🍴 Stackers Garlic Dip, 🍴 Stackers Chilli Dip, 10% Student and Blue Card Holders discount. Family feast for sharing! ',
     image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   },
   {
     name: 'Mighty Tower',
-    price: '£18.90',
-    description: '10% Student and Blue Card Holders discount. The ultimate stack for big appetites! Includes: 🍔 2 x Stackzilla Burgers, 🍟 2 x Regular Fries, 🥤 2 x Cans of Juice, 🍴 Stackers Garlic Dip',
+    price: '34.99',
+    description: 'Includes: 🍔 Zing Stack burger, 🍔 Peri-Peri Chicken Stack burger, 🌯 Chicken Stack wrap, 🌯 Peri-Peri Chicken wrap, 🍗 6 x Fried Gold Chicken, 🍗 6 x Spicy Hot Wings, 🍗 6 x Fried Gold Chicken Strips, 🍟 2 x Regular Fries, 🥤 1 x 1.5L Juice, 2 x 🍴 Stackers Garlic Dips, 2 x 🍴 Stackers Chilli Dips',
     image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   },
@@ -383,7 +544,7 @@ export const mealDealsItems: MenuItem[] = [
   {
     name: 'Blue Card Holders',
     price: '',
-    description: '10% off on all menu items for NHS workers and emergency services. Thank you for your service.',
+    description: '10% off on all menu items for Police, Teachers, NHS workers,  emergency services & other blue card holders. Thank you for your service.',
     image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop',
     category: 'Meal Deals'
   }
@@ -392,15 +553,29 @@ export const mealDealsItems: MenuItem[] = [
 export const boxesItems: MenuItem[] = [
   {
     name: 'Chicken Box',
-    price: '£7.99',
-    description: 'Box with 3 pieces of fried chicken, fries, and a drink.',
+    price: '£4.99',
+    description: 'Box with 🍗 2 pieces of fried chicken, 🍟 fries, and a can of juice.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Boxes'
   },
   {
-    name: 'Burger Box',
+    name: 'Zing Stack Burger Box',
     price: '£8.99',
-    description: 'Box with a burger, fries, and a drink.',
+    description: 'Box with a 🍔 Zing Stack burger, 🍟 fries, and a can of juice.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Boxes'
+  },
+  {
+    name: 'Solo Supreme',
+    price: '£10.99',
+    description: '🍗 4 x Fried Gold Chicken, 🍗 4 x Fried Gold Strips, 🍟 Fries, 🍴 Stackers Garlic Dip and a can of juice.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+    category: 'Boxes'
+  },
+  {
+    name: 'Family Feast Bucket',
+    price: '£15.45',
+    description: '🍗 4 x Fried Gold Chicken, 🍔 2 Chicken Stack Classic burgers, 🍟 Fries, 🍴 Stackers Garlic Dip, 2 cans of juice.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Boxes'
   }
@@ -415,24 +590,24 @@ export const loadedFriesItems: MenuItem[] = [
     category: 'Loaded Stackers\' Fries'
   },
   {
-    name: 'Chili Loaded Fries',
-    price: '£5.49',
-    description: 'Fries topped with chili con carne and cheese.',
+    name: 'Loaded Stackers\' Fries',
+    price: '£7.50',
+    description: 'Chunks of peri-peri chicken, crispy chicken bites, cheesy sauce and jalapeños.',
     image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
     category: 'Loaded Stackers\' Fries'
   }
 ];
 
 export const milkshakeFlavours = [
-  'Oreo', 'Strawberry', 'Chocolate', 'Vanilla', 'Banana', 'Bubblegum'
+  'Oreo', 'Biscoff', 'Strawberry', 'Kinder Buneo', 'White Kinder Bueno', 'Malteaser', 'Galaxy Caramel', 'Milky bar', 'Banana', 'Ferrero Rocher', 'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'.
 ];
 
 export const iceCreamFlavours = [
-  'Vanilla', 'Chocolate', 'Strawberry', 'Mint Chocolate Chip', 'Cookies & Cream', 'Pistachio'
+  'Vanilla', 'Strawberry', 'Scottish Tablet', 'Blue Bubblegum', 'Belgian Chocolate', 'White Bueno', 'Cookies & Cream', 'Raspberry Ripple', 'Chocolate Fudge Brownie', 'Honeycomb', 'Mint'
 ];
 
 export const pizzaCustomisations = [
-  'Extra Cheese', 'Pepperoni', 'Mushrooms', 'Bell Peppers', 'Onions', 'Olives', 'Ham', 'Chicken', 'Jalapeños'
+  'Extra Cheese', 'Pepperoni', 'Mushrooms', 'Bell Peppers', 'Onions', 'Olives', 'Ham', 'Chicken', 'Jalapeños', 'Pineapple', 'Tomato', 'Sweetcorn', 'Peri-Peri Chicken', 'Meatballs'
 ];
 
 export const rubiconFlavours = [
