@@ -12,15 +12,15 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img 
-              src="/lovable-uploads/9e5edac6-4204-4c23-9c01-706901d1d6f9.png" 
-              alt="Stackers Logo" 
-              className="h-12 w-auto md:h-16 object-contain hidden md:block"
+            <img
+              src="/lovable-uploads/9e5edac6-4204-4c23-9c01-706901d1d6f9.png"
+              alt="Stackers Logo"
+              className="h-12 w-auto md:h-14 object-contain hidden md:block"
             />
-            <img 
-              src="/lovable-uploads/f87fb888-ed7f-4dbf-bce7-947e058e8ac9.png" 
-              alt="Stackers Logo" 
-              className="h-12 w-auto object-contain md:hidden"
+            <img
+              src="/lovable-uploads/f87fb888-ed7f-4dbf-bce7-947e058e8ac9.png"
+              alt="Stackers Logo"
+              className="h-14 w-auto object-contain md:hidden"
             />
           </Link>
 
