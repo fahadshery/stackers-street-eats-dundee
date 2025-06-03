@@ -38,7 +38,7 @@ const Header = () => {
             <img
               src="/lovable-uploads/f87fb888-ed7f-4dbf-bce7-947e058e8ac9.png"
               alt="STACKERS"
-              className="h-12 w-auto md:hidden"
+              className="h-14 w-auto md:hidden"
               onClick={() => navigate('/')}
               style={{ cursor: 'pointer' }}
             />
