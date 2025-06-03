@@ -89,6 +89,13 @@ const Header = () => {
                 >
                   {item.name}
                 </a>
+                <div className="px-4 pt-2">
+                <Button
+                  onClick={handleOrderNow}
+                  className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-500 font-bold py-2 transition-all duration-200"
+                >
+                  ORDER NOW
+                </Button>
               ))}
               <div className="px-4 pt-2">
                 <Button
