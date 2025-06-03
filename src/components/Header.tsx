@@ -20,7 +20,7 @@ const Header = () => {
             <img
               src="/lovable-uploads/f87fb888-ed7f-4dbf-bce7-947e058e8ac9.png"
               alt="Stackers Logo"
-              className="h-18 w-auto object-contain md:hidden"
+              className="h-12 md:h14 w-auto object-contain md:hidden"
             />
           </Link>
 
