@@ -78,7 +78,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [milkshakeSize, setMilkshakeSize] = useState<'regular' | 'large'>('regular');
   const [milkshakeFlavor, setMilkshakeFlavor] = useState('');
   const [milkshakeComment, setMilkshakeComment] = useState('');
-  const [pizzaSize, setPizzaSize] = useState('10"');
+  const [pizzaSize, setPizzaSize] = useState('10&quot;');
   const [iceCreamScoops, setIceCreamScoops] = useState(1);
   const [iceCreamFlavors, setIceCreamFlavors] = useState<string[]>([]);
   const [sweetStacksType, setSweetStacksType] = useState('');
@@ -108,7 +108,13 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         setIceCreamFlavors([...iceCreamFlavors, flavor]);
       }
     } else {
-      setIceCreamFlavors(iceCreamFlavors.filter(f => f !== flavor));
+      // Remove only the first occurrence of the flavor
+      const index = iceCreamFlavors.indexOf(flavor);
+      if (index > -1) {
+        const newFlavors = [...iceCreamFlavors];
+        newFlavors.splice(index, 1);
+        setIceCreamFlavors(newFlavors);
+      }
     }
   };
 
@@ -186,11 +192,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
     // Handle pizza pricing
     if (showPizzaSize) {
-      if (pizzaSize === '12"') {
+      if (pizzaSize === '12&quot;') {
         basePrice += 3.00;
       }
       if (selectedCustomizations.length > 0) {
-        const customizationCost = pizzaSize === '10"' ? 1.00 : 1.50;
+        const customizationCost = pizzaSize === '10&quot;' ? 1.00 : 1.50;
         basePrice += selectedCustomizations.length * customizationCost;
       }
     }
@@ -206,42 +212,42 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const handleAddToBasket = () => {
     // Validation for required fields
     if (category === 'Milkshakes' && !milkshakeFlavor) {
-      alert('Please select a milkshake flavor');
+      alert('Please select a milkshake flavour');
       return;
     }
 
     if (category === 'Sweet Stacks' && (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && !sweetStacksFlavor) {
-      alert('Please select a flavor');
+      alert('Please select a flavour');
       return;
     }
 
     if (category === 'Sweet Stacks' && item.name === 'Cheesecake Slices' && !sweetStacksFlavor) {
-      alert('Please select a cheesecake flavor');
+      alert('Please select a cheesecake flavour');
       return;
     }
 
     if (category === 'Ice Creams' && iceCreamFlavors.length < iceCreamScoops) {
-      alert(`Please select ${iceCreamScoops} ice cream flavor${iceCreamScoops > 1 ? 's' : ''}`);
+      alert(`Please select ${iceCreamScoops} ice cream flavour${iceCreamScoops > 1 ? 's' : ''}`);
       return;
     }
 
     if (item.name === 'Rubicon' && !rubiconFlavor) {
-      alert('Please select a Rubicon flavor');
+      alert('Please select a Rubicon flavour');
       return;
     }
 
     if (item.name === 'Fanta' && !fantaFlavor) {
-      alert('Please select a Fanta flavor');
+      alert('Please select a Fanta flavour');
       return;
     }
 
     if (item.name === 'Pepsi' && !pepsiFlavor) {
-      alert('Please select a Pepsi flavor');
+      alert('Please select a Pepsi flavour');
       return;
     }
 
     if (item.name === 'Coke' && !cokeFlavor) {
-      alert('Please select a Coke flavor');
+      alert('Please select a Coke flavour');
       return;
     }
 
@@ -284,7 +290,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setMilkshakeSize('regular');
     setMilkshakeFlavor('');
     setMilkshakeComment('');
-    setPizzaSize('10"');
+    setPizzaSize('10&quot;');
     setIceCreamScoops(1);
     setIceCreamFlavors([]);
     setSweetStacksType('');
@@ -301,6 +307,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setChickenBreastQuantity('1pc');
   };
 
+  // Don't show "Add to Basket" button for Student Deals
+  const isStudentDealsCategory = category === 'Student Deals' || category === 'Blue Card Holders';
+
   return (
     <Card className="h-full flex flex-col">
       <CardHeader>
@@ -315,9 +324,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         <CardDescription className="text-sm text-gray-600">
           {item.description}
         </CardDescription>
-        <div className="text-xl font-bold text-stackers-yellow">
-          £{calculatePrice()}
-        </div>
+        {!isStudentDealsCategory && (
+          <div className="text-xl font-bold text-stackers-yellow">
+            £{calculatePrice()}
+          </div>
+        )}
       </CardHeader>
 
       <CardContent className="flex-1">
@@ -360,7 +371,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             </div>
 
             <div>
-              <Label className="text-sm font-medium mb-2 block">Flavor *</Label>
+              <Label className="text-sm font-medium mb-2 block">Flavour *</Label>
               <RadioGroup value={milkshakeFlavor} onValueChange={setMilkshakeFlavor}>
                 {milkshakeFlavors.map((flavor) => (
                   <div key={flavor} className="flex items-center space-x-2">
@@ -390,7 +401,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             {(item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && (
               <>
                 <div>
-                  <Label className="text-sm font-medium mb-2 block">Flavor *</Label>
+                  <Label className="text-sm font-medium mb-2 block">Flavour *</Label>
                   <RadioGroup value={sweetStacksFlavor} onValueChange={(value) => {
                     setSweetStacksFlavor(value);
                     setSweetStacksType(item.name);
@@ -453,7 +464,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
             {item.name === 'Cheesecake Slices' && (
               <div>
-                <Label className="text-sm font-medium mb-2 block">Flavor *</Label>
+                <Label className="text-sm font-medium mb-2 block">Flavour *</Label>
                 <RadioGroup value={sweetStacksFlavor} onValueChange={setSweetStacksFlavor}>
                   {cheesecakeFlavors.map((flavor) => (
                     <div key={flavor} className="flex items-center space-x-2">
@@ -467,7 +478,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         )}
 
-        {/* Ice Cream Options */}
+        {/* Ice Cream Options - Updated to allow duplicate flavours */}
         {category === 'Ice Creams' && (
           <div className="space-y-4">
             <div>
@@ -475,7 +486,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               <RadioGroup value={iceCreamScoops.toString()} onValueChange={(value) => {
                 const scoops = parseInt(value);
                 setIceCreamScoops(scoops);
-                // Reset flavors if reducing scoops
+                // Reset flavours if reducing scoops
                 if (scoops < iceCreamFlavors.length) {
                   setIceCreamFlavors(iceCreamFlavors.slice(0, scoops));
                 }
@@ -497,20 +508,28 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
             <div>
               <Label className="text-sm font-medium mb-2 block">
-                Flavors * (Select {iceCreamScoops} flavor{iceCreamScoops > 1 ? 's' : ''})
+                Flavours * (Select {iceCreamScoops} flavour{iceCreamScoops > 1 ? 's' : ''})
               </Label>
-              <div className="space-y-2 max-h-40 overflow-y-auto">
-                {['Vanilla', 'Chocolate', 'Strawberry', 'Mint Chocolate Chip', 'Cookies & Cream', 'Pistachio'].map((flavor) => (
-                  <div key={flavor} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`ice-cream-${flavor}`}
-                      checked={iceCreamFlavors.includes(flavor)}
-                      onCheckedChange={(checked) => handleIceCreamFlavorChange(flavor, checked as boolean)}
-                      disabled={!iceCreamFlavors.includes(flavor) && iceCreamFlavors.length >= iceCreamScoops}
-                    />
-                    <Label htmlFor={`ice-cream-${flavor}`}>{flavor}</Label>
-                  </div>
-                ))}
+              <div className="space-y-2">
+                {['Vanilla', 'Chocolate', 'Strawberry', 'Mint Chocolate Chip', 'Cookies & Cream', 'Pistachio'].map((flavor) => {
+                  const flavorCount = iceCreamFlavors.filter(f => f === flavor).length;
+                  const canSelect = iceCreamFlavors.length < iceCreamScoops;
+                  const isSelected = flavorCount > 0;
+                  
+                  return (
+                    <div key={flavor} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`ice-cream-${flavor}`}
+                        checked={isSelected}
+                        onCheckedChange={(checked) => handleIceCreamFlavorChange(flavor, checked as boolean)}
+                        disabled={!isSelected && !canSelect}
+                      />
+                      <Label htmlFor={`ice-cream-${flavor}`}>
+                        {flavor} {flavorCount > 1 && `(${flavorCount})`}
+                      </Label>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -533,10 +552,10 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               </RadioGroup>
             </div>
 
-            {/* Flavor selection for specific drinks */}
+            {/* Flavour selection for specific drinks */}
             {item.name === 'Rubicon' && (
               <div>
-                <Label className="text-sm font-medium mb-2 block">Flavor *</Label>
+                <Label className="text-sm font-medium mb-2 block">Flavour *</Label>
                 <RadioGroup value={rubiconFlavor} onValueChange={setRubiconFlavor}>
                   {rubiconFlavours.map((flavor) => (
                     <div key={flavor} className="flex items-center space-x-2">
@@ -550,7 +569,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
             {item.name === 'Fanta' && (
               <div>
-                <Label className="text-sm font-medium mb-2 block">Flavor *</Label>
+                <Label className="text-sm font-medium mb-2 block">Flavour *</Label>
                 <RadioGroup value={fantaFlavor} onValueChange={setFantaFlavor}>
                   {fantaFlavours.map((flavor) => (
                     <div key={flavor} className="flex items-center space-x-2">
@@ -564,7 +583,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
             {item.name === 'Pepsi' && (
               <div>
-                <Label className="text-sm font-medium mb-2 block">Flavor *</Label>
+                <Label className="text-sm font-medium mb-2 block">Flavour *</Label>
                 <RadioGroup value={pepsiFlavor} onValueChange={setPepsiFlavor}>
                   {pepsiFlavors.map((flavor) => (
                     <div key={flavor} className="flex items-center space-x-2">
@@ -578,7 +597,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
             {item.name === 'Coke' && (
               <div>
-                <Label className="text-sm font-medium mb-2 block">Flavor *</Label>
+                <Label className="text-sm font-medium mb-2 block">Flavour *</Label>
                 <RadioGroup value={cokeFlavor} onValueChange={setCokeFlavor}>
                   {cokeFlavours.map((flavor) => (
                     <div key={flavor} className="flex items-center space-x-2">
@@ -628,13 +647,13 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         )}
 
-        {/* Pizza Customizations */}
+        {/* Pizza Customisations - Removed scrollable and fixed pricing label */}
         {showCustomizations && customizations.length > 0 && (
           <div className="mb-4">
             <Label className="text-sm font-medium mb-2 block">
               Extra Toppings ({pizzaSize === '10&quot;' ? '£1.00' : '£1.50'} each)
             </Label>
-            <div className="space-y-2 max-h-32 overflow-y-auto">
+            <div className="space-y-2">
               {customizations.map((customization) => (
                 <div key={customization} className="flex items-center space-x-2">
                   <Checkbox
@@ -697,15 +716,17 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         )}
       </CardContent>
 
-      <CardFooter>
-        <Button
-          onClick={handleAddToBasket}
-          className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Add to Basket - £{calculatePrice()}
-        </Button>
-      </CardFooter>
+      {!isStudentDealsCategory && (
+        <CardFooter>
+          <Button
+            onClick={handleAddToBasket}
+            className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add to Basket - £{calculatePrice()}
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };
