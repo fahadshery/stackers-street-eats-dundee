@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -618,12 +617,12 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             <Label className="text-sm font-medium mb-2 block">Pizza Size</Label>
             <RadioGroup value={pizzaSize} onValueChange={setPizzaSize}>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="10\"" id="10-inch" />
-                <Label htmlFor="10-inch">10" - Base Price</Label>
+                <RadioGroupItem value="10&quot;" id="10-inch" />
+                <Label htmlFor="10-inch">10&quot; - Base Price</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="12\"" id="12-inch" />
-                <Label htmlFor="12-inch">12" - +£3.00</Label>
+                <RadioGroupItem value="12&quot;" id="12-inch" />
+                <Label htmlFor="12-inch">12&quot; - +£3.00</Label>
               </div>
             </RadioGroup>
           </div>
@@ -633,7 +632,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         {showCustomizations && customizations.length > 0 && (
           <div className="mb-4">
             <Label className="text-sm font-medium mb-2 block">
-              Extra Toppings ({pizzaSize === '10"' ? '£1.00' : '£1.50'} each)
+              Extra Toppings ({pizzaSize === '10&quot;' ? '£1.00' : '£1.50'} each)
             </Label>
             <div className="space-y-2 max-h-32 overflow-y-auto">
               {customizations.map((customization) => (
