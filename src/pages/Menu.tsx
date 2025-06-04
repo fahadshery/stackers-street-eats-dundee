@@ -185,7 +185,7 @@ const Menu = () => {
 
     // Handle milkshake pricing and naming
     if (item.category === 'Milkshakes') {
-      basePrice = milkshakeSize === 'regular' ? 4.20 : 5.00;
+      basePrice = milkshakeSize === 'regular' ? 4.75 : 5.00;
       // For basket display, show flavor + "Milkshake"
       if (milkshakeFlavor) {
         itemName = `${milkshakeFlavor} Milkshake`;

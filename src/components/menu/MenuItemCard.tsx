@@ -11,6 +11,14 @@ import {
   RadioGroup,
   RadioGroupItem
 } from "@/components/ui/radio-group"
+import { 
+  sweetStacksFlavors, 
+  cheesecakeFlavors, 
+  milkshakeFlavors, 
+  pepsiFlavors,
+  sweetDips,
+  toppings
+} from '@/data/menuData';
 
 export interface MenuItem {
   name: string;
@@ -74,7 +82,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [sideSize, setSideSize] = useState<'regular' | 'large'>('regular');
   const [milkshakeSize, setMilkshakeSize] = useState<'regular' | 'large'>('regular');
   const [milkshakeFlavor, setMilkshakeFlavor] = useState('');
-  const [pizzaSize, setPizzaSize] = useState('');
+  const [pizzaSize, setPizzaSize] = useState('10"');
   const [iceCreamScoops, setIceCreamScoops] = useState<number>(1);
   const [selectedIceCreamFlavors, setSelectedIceCreamFlavors] = useState<string[]>([]);
   const [selectedCustomizations, setSelectedCustomizations] = useState<string[]>([]);
@@ -232,6 +240,51 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       else if (chickenBreastQuantity === '3pc') basePrice = 4.50;
     }
 
+    // Handle milkshake pricing
+    if (category === 'Milkshakes') {
+      basePrice = milkshakeSize === 'regular' ? 4.75 : 5.00;
+    }
+
+    // Handle drinks pricing
+    if (category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta', 'Rubicon'].includes(item.name)) {
+      basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
+    }
+
+    // Handle pizza pricing
+    if (showPizzaSize && pizzaSize === '12"') {
+      basePrice += 3.00;
+    }
+
+    // Handle pizza customizations
+    if (showCustomizations && selectedCustomizations.length > 0) {
+      const customizationCost = pizzaSize === '10"' ? 1.00 : 1.50;
+      basePrice += selectedCustomizations.length * customizationCost;
+    }
+
+    // Handle Sweet Stacks pricing
+    if (item.category === 'Sweet Stacks') {
+      if (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') {
+        basePrice = 6.50;
+        
+        // Add sweet dips pricing
+        if (selectedSweetDips.length > 0) {
+          basePrice += selectedSweetDips.length * 1.00;
+        }
+
+        // Add toppings pricing
+        if (selectedToppings.length > 0) {
+          basePrice += selectedToppings.length * 0.50;
+        }
+      } else if (item.name === 'Cheesecake Slices') {
+        basePrice = 3.99;
+      }
+    }
+
+    // Handle Sauces & Dips pricing
+    if (category === 'Sauces & Dips') {
+      basePrice = selectedSaucesAndDips.length * 0.70;
+    }
+
     return `£${basePrice.toFixed(2)}`;
   };
 
@@ -241,7 +294,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setSideSize('regular');
     setMilkshakeSize('regular');
     setMilkshakeFlavor('');
-    setPizzaSize('');
+    setPizzaSize('10"');
     setIceCreamScoops(1);
     setSelectedIceCreamFlavors([]);
     setSelectedCustomizations([]);
@@ -315,43 +368,57 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         </div>
       )}
 
+      {showPizzaSize && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
+          <RadioGroup defaultValue="10"" className="flex gap-4" onValueChange={handlePizzaSizeChange}>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="10"" id="pizza-10" />
+              <label htmlFor="pizza-10" className="text-sm font-medium">10"</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="12"" id="pizza-12" />
+              <label htmlFor="pizza-12" className="text-sm font-medium">12" (+£3.00)</label>
+            </div>
+          </RadioGroup>
+        </div>
+      )}
+
       {showCustomizations && customizations && customizations.length > 0 && (
         <div className="mb-4">
-          <h4 className="font-semibold text-gray-700 mb-2">Customizations</h4>
-          {customizations.map((customization) => (
-            <label key={customization} className="inline-flex items-center mr-4">
-              <input
-                type="checkbox"
-                className="form-checkbox h-5 w-5 text-stackers-yellow"
-                value={customization}
-                checked={selectedCustomizations.includes(customization)}
-                onChange={() => handleCustomizationChange(customization)}
-              />
-              <span className="ml-2 text-gray-700">{customization}</span>
-            </label>
-          ))}
+          <h4 className="font-semibold text-gray-700 mb-2">
+            Customizations ({pizzaSize === '10"' ? '£1.00' : '£1.50'} each)
+          </h4>
+          <div className="grid grid-cols-2 gap-2">
+            {customizations.map((customization) => (
+              <label key={customization} className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5 text-stackers-yellow"
+                  value={customization}
+                  checked={selectedCustomizations.includes(customization)}
+                  onChange={() => handleCustomizationChange(customization)}
+                />
+                <span className="ml-2 text-gray-700 text-sm">{customization}</span>
+              </label>
+            ))}
+          </div>
         </div>
       )}
 
       {showSizeOptions && (
         <div className="mb-4">
           <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
-          <div className="flex items-center">
-            <button
-              className={`px-4 py-2 rounded-full text-sm font-semibold ${sideSize === 'regular' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              onClick={() => handleSideSizeChange('regular')}
-            >
-              Regular
-            </button>
-            <button
-              className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${sideSize === 'large' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              onClick={() => handleSideSizeChange('large')}
-            >
-              Large (+£1.00)
-            </button>
-          </div>
+          <RadioGroup defaultValue="regular" className="flex gap-4" onValueChange={handleSideSizeChange}>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="regular" id="side-regular" />
+              <label htmlFor="side-regular" className="text-sm font-medium">Regular</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="large" id="side-large" />
+              <label htmlFor="side-large" className="text-sm font-medium">Large (+£1.00)</label>
+            </div>
+          </RadioGroup>
         </div>
       )}
 
@@ -359,33 +426,30 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         <>
           <div className="mb-4">
             <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
-            <div className="flex items-center">
-              <button
-                className={`px-4 py-2 rounded-full text-sm font-semibold ${milkshakeSize === 'regular' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                onClick={() => handleMilkshakeSizeChange('regular')}
-              >
-                Regular
-              </button>
-              <button
-                className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${milkshakeSize === 'large' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                onClick={() => handleMilkshakeSizeChange('large')}
-              >
-                Large
-              </button>
-            </div>
+            <RadioGroup defaultValue="regular" className="flex gap-4" onValueChange={handleMilkshakeSizeChange}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="regular" id="milkshake-regular" />
+                <label htmlFor="milkshake-regular" className="text-sm font-medium">Regular (£4.75)</label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="large" id="milkshake-large" />
+                <label htmlFor="milkshake-large" className="text-sm font-medium">Large (£5.00)</label>
+              </div>
+            </RadioGroup>
           </div>
 
           <div className="mb-4">
             <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
-            <input
-              type="text"
-              placeholder="Enter milkshake flavor"
-              className="w-full border border-gray-300 rounded-md p-2"
-              value={milkshakeFlavor}
-              onChange={(e) => handleMilkshakeFlavorChange(e.target.value)}
-            />
+            <RadioGroup onValueChange={handleMilkshakeFlavorChange}>
+              <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto">
+                {milkshakeFlavors.map((flavor) => (
+                  <div key={flavor} className="flex items-center space-x-2">
+                    <RadioGroupItem value={flavor} id={`milkshake-${flavor}`} />
+                    <label htmlFor={`milkshake-${flavor}`} className="text-sm font-medium">{flavor}</label>
+                  </div>
+                ))}
+              </div>
+            </RadioGroup>
           </div>
 
           <div className="mb-4">
@@ -401,55 +465,24 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         </>
       )}
 
-      {showPizzaSize && (
-        <div className="mb-4">
-          <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
-          <div className="flex items-center">
-            <button
-              className={`px-4 py-2 rounded-full text-sm font-semibold ${pizzaSize === '10"' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              onClick={() => handlePizzaSizeChange('10"')}
-            >
-              10"
-            </button>
-            <button
-              className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${pizzaSize === '12"' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              onClick={() => handlePizzaSizeChange('12"')}
-            >
-              12" (+£3.00)
-            </button>
-          </div>
-        </div>
-      )}
-
       {category === 'Ice Creams' && (
         <>
           <div className="mb-4">
             <h4 className="font-semibold text-gray-700 mb-2">Number of Scoops</h4>
-            <div className="flex items-center">
-              <button
-                className={`px-4 py-2 rounded-full text-sm font-semibold ${iceCreamScoops === 1 ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                onClick={() => handleIceCreamScoopsChange(1)}
-              >
-                1 Scoop
-              </button>
-              <button
-                className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${iceCreamScoops === 2 ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                onClick={() => handleIceCreamScoopsChange(2)}
-              >
-                2 Scoops
-              </button>
-              <button
-                className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${iceCreamScoops === 3 ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                onClick={() => handleIceCreamScoopsChange(3)}
-              >
-                3 Scoops
-              </button>
-            </div>
+            <RadioGroup defaultValue="1" className="flex gap-4" onValueChange={(value) => handleIceCreamScoopsChange(parseInt(value))}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="1" id="scoop-1" />
+                <label htmlFor="scoop-1" className="text-sm font-medium">1 Scoop (£2.50)</label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="2" id="scoop-2" />
+                <label htmlFor="scoop-2" className="text-sm font-medium">2 Scoops (£3.75)</label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="3" id="scoop-3" />
+                <label htmlFor="scoop-3" className="text-sm font-medium">3 Scoops (£4.75)</label>
+              </div>
+            </RadioGroup>
           </div>
 
           <div className="mb-4">
@@ -476,19 +509,22 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             <>
               <div className="mb-4">
                 <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
-                <input
-                  type="text"
-                  placeholder="Enter flavor"
-                  className="w-full border border-gray-300 rounded-md p-2"
-                  value={waffleFlavor}
-                  onChange={(e) => handleWaffleFlavorChange(e.target.value)}
-                />
+                <RadioGroup onValueChange={handleWaffleFlavorChange}>
+                  {sweetStacksFlavors.map((flavor) => (
+                    <div key={flavor.name} className="flex items-start space-x-2 mb-2">
+                      <RadioGroupItem value={`${flavor.name}: ${flavor.description}`} id={`flavor-${flavor.name}`} className="mt-1" />
+                      <label htmlFor={`flavor-${flavor.name}`} className="text-sm">
+                        <span className="font-medium">{flavor.name}:</span> {flavor.description}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
               </div>
 
               <div className="mb-4">
-                <h4 className="font-semibold text-gray-700 mb-2">Sweet Dips</h4>
-                {['Chocolate', 'Caramel', 'Strawberry', 'Nutella'].map((dip) => (
-                  <label key={dip} className="inline-flex items-center mr-4">
+                <h4 className="font-semibold text-gray-700 mb-2">Sweet Dips (£1.00 each)</h4>
+                {sweetDips.map((dip) => (
+                  <label key={dip} className="inline-flex items-center mr-4 mb-2">
                     <input
                       type="checkbox"
                       className="form-checkbox h-5 w-5 text-stackers-yellow"
@@ -502,9 +538,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               </div>
 
               <div className="mb-4">
-                <h4 className="font-semibold text-gray-700 mb-2">Toppings</h4>
-                {['Sprinkles', 'Oreo Crumbs', 'Marshmallows', 'Chocolate Chips'].map((topping) => (
-                  <label key={topping} className="inline-flex items-center mr-4">
+                <h4 className="font-semibold text-gray-700 mb-2">Toppings (£0.50 each)</h4>
+                {toppings.map((topping) => (
+                  <label key={topping} className="inline-flex items-center mr-4 mb-2">
                     <input
                       type="checkbox"
                       className="form-checkbox h-5 w-5 text-stackers-yellow"
@@ -525,35 +561,43 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                     checked={drizzleOnTop}
                     onChange={handleDrizzleOnChange}
                   />
-                  <span className="ml-2 text-gray-700">Drizzle on top</span>
+                  <span className="ml-2 text-gray-700 font-semibold">Drizzle on top</span>
                 </label>
               </div>
             </>
           ) : item.name === 'Cheesecake Slices' ? (
             <div className="mb-4">
-              <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
-              <input
-                type="text"
-                placeholder="Enter cheesecake flavor"
-                className="w-full border border-gray-300 rounded-md p-2"
-                value={cheesecakeFlavor}
-                onChange={(e) => handleCheesecakeFlavorChange(e.target.value)}
-              />
+              <h4 className="font-semibold text-gray-700 mb-2">Flavor (£3.99)</h4>
+              <RadioGroup onValueChange={handleCheesecakeFlavorChange}>
+                {cheesecakeFlavors.map((flavor) => (
+                  <div key={flavor} className="flex items-center space-x-2">
+                    <RadioGroupItem value={flavor} id={`cheesecake-${flavor}`} />
+                    <label htmlFor={`cheesecake-${flavor}`} className="text-sm font-medium">{flavor}</label>
+                  </div>
+                ))}
+              </RadioGroup>
             </div>
           ) : item.name === 'Stackers\' Specials' ? (
             <div className="mb-4">
               <h4 className="font-semibold text-gray-700 mb-2">Select Special</h4>
-              <Select onValueChange={handleStackersSpecialItemChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select a special" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Waffle on a Stick">Waffle on a Stick</SelectItem>
-                  <SelectItem value="Dubai Kunafa">Dubai Kunafa</SelectItem>
-                  <SelectItem value="Churros (5)">Churros (5)</SelectItem>
-                  <SelectItem value="Mini Pancakes (10)">Mini Pancakes (10)</SelectItem>
-                </SelectContent>
-              </Select>
+              <RadioGroup onValueChange={handleStackersSpecialItemChange}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Waffle on a Stick" id="special-waffle" />
+                  <label htmlFor="special-waffle" className="text-sm font-medium">Waffle on a Stick (£4.99)</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Dubai Kunafa" id="special-kunafa" />
+                  <label htmlFor="special-kunafa" className="text-sm font-medium">Dubai Kunafa (£6.50)</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Churros (5)" id="special-churros" />
+                  <label htmlFor="special-churros" className="text-sm font-medium">Churros (5) (£5.50)</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Mini Pancakes (10)" id="special-pancakes" />
+                  <label htmlFor="special-pancakes" className="text-sm font-medium">Mini Pancakes (10) (£6.50)</label>
+                </div>
+              </RadioGroup>
             </div>
           ) : null}
         </>
@@ -562,22 +606,30 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       {category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta', 'Rubicon'].includes(item.name) && (
         <div className="mb-4">
           <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
-          <div className="flex items-center">
-            <button
-              className={`px-4 py-2 rounded-full text-sm font-semibold ${drinkSize === '330ml' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              onClick={() => handleDrinkSizeChange('330ml')}
-            >
-              330ml
-            </button>
-            <button
-              className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${drinkSize === '1.5L' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              onClick={() => handleDrinkSizeChange('1.5L')}
-            >
-              1.5L
-            </button>
-          </div>
+          <RadioGroup defaultValue="330ml" className="flex gap-4" onValueChange={handleDrinkSizeChange}>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="330ml" id="drink-330ml" />
+              <label htmlFor="drink-330ml" className="text-sm font-medium">330ml (£1.25)</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="1.5L" id="drink-1.5L" />
+              <label htmlFor="drink-1.5L" className="text-sm font-medium">1.5L (£2.99)</label>
+            </div>
+          </RadioGroup>
+        </div>
+      )}
+
+      {item.name === 'Pepsi' && category === 'Drinks' && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
+          <RadioGroup onValueChange={handlePepsiFlavorChange}>
+            {pepsiFlavors.map((flavor) => (
+              <div key={flavor} className="flex items-center space-x-2">
+                <RadioGroupItem value={flavor} id={`pepsi-${flavor}`} />
+                <label htmlFor={`pepsi-${flavor}`} className="text-sm font-medium">{flavor}</label>
+              </div>
+            ))}
+          </RadioGroup>
         </div>
       )}
 
@@ -607,19 +659,6 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         </div>
       )}
 
-      {item.name === 'Pepsi' && category === 'Drinks' && (
-        <div className="mb-4">
-          <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
-          <input
-            type="text"
-            placeholder="Enter Pepsi flavor"
-            className="w-full border border-gray-300 rounded-md p-2"
-            value={pepsiFlavor}
-            onChange={(e) => handlePepsiFlavorChange(e.target.value)}
-          />
-        </div>
-      )}
-
       {item.name === 'Coke' && category === 'Drinks' && (
         <div className="mb-4">
           <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
@@ -635,9 +674,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
       {category === 'Sauces & Dips' && (
         <div className="mb-4">
-          <h4 className="font-semibold text-gray-700 mb-2">Select Sauces & Dips</h4>
+          <h4 className="font-semibold text-gray-700 mb-2">Select Sauces & Dips (£0.70 each)</h4>
           {['Ketchup', 'BBQ', 'Sweet Chilli', 'Mayo'].map((sauce) => (
-            <label key={sauce} className="inline-flex items-center mr-4">
+            <label key={sauce} className="inline-flex items-center mr-4 mb-2">
               <input
                 type="checkbox"
                 className="form-checkbox h-5 w-5 text-stackers-yellow"
@@ -654,18 +693,18 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       {item.name === 'Chicken Breasts' && category === 'Fried Gold' && (
         <div className="mb-4">
           <h4 className="font-semibold text-gray-700 mb-2">Quantity</h4>
-          <RadioGroup defaultValue="1pc" className="flex gap-2" onValueChange={handleChickenBreastQuantityChange}>
+          <RadioGroup defaultValue="1pc" className="flex gap-4" onValueChange={handleChickenBreastQuantityChange}>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="1pc" id="r1" />
-              <label htmlFor="r1" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">1 pc</label>
+              <RadioGroupItem value="1pc" id="chicken-1pc" />
+              <label htmlFor="chicken-1pc" className="text-sm font-medium">1 pc (£2.50)</label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="2pc" id="r2" />
-              <label htmlFor="r2" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">2 pc</label>
+              <RadioGroupItem value="2pc" id="chicken-2pc" />
+              <label htmlFor="chicken-2pc" className="text-sm font-medium">2 pc (£3.50)</label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="3pc" id="r3" />
-              <label htmlFor="r3" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">3 pc</label>
+              <RadioGroupItem value="3pc" id="chicken-3pc" />
+              <label htmlFor="chicken-3pc" className="text-sm font-medium">3 pc (£4.50)</label>
             </div>
           </RadioGroup>
         </div>

@@ -1,4 +1,3 @@
-
 export interface MenuItem {
   name: string;
   price: string;
@@ -471,9 +470,9 @@ export const drinkItems: MenuItem[] = [
 export const milkshakeItems: MenuItem[] = [
   {
     name: 'Milkshakes',
-    price: '£4.20',
-    description: 'Thick, creamy, and blended to perfection. Our milkshakes come in a variety of irresistible flavours. Whether you are craving classic chocolate, fruity strawberry, or indulgent Biscoff, we have got the perfect shake to sip and savour.',
-    image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop',
+    price: '£4.75',
+    description: 'Thick and creamy milkshakes made with premium ice cream',
+    image: '/lovable-uploads/f87fb888-ed7f-4dbf-bce7-947e058e8ac9.png',
     category: 'Milkshakes'
   }
 ];
@@ -605,32 +604,98 @@ export const loadedFriesItems: MenuItem[] = [
   }
 ];
 
-export const milkshakeFlavours = [
-  'Oreo', 'Biscoff', 'Strawberry', 'Kinder Buneo', 'White Kinder Bueno', 'Malteaser', 'Galaxy Caramel', 'Milky bar', 'Banana', 'Ferrero Rocher', 'Mango', 'Twix', 'Mars bar', 'Snickers', 'Milky way', 'Crunchie'
+export const sweetStacksFlavors = [
+  {
+    name: 'Banoffee Bliss',
+    description: 'Fresh banana slices, drizzled in warm Nutella and rich toffee sauce, finished with a sprinkle of crunchy chopped nuts.'
+  },
+  {
+    name: 'Biscoff Dream',
+    description: 'Loaded with Biscoff pieces, drizzled in luscious Biscoff and Belgian chocolate sauce, then topped with a dusting of Biscoff crumbs and delicate white chocolate curls.'
+  },
+  {
+    name: 'Bueno Bash',
+    description: 'Indulgent Kinder Bueno pieces, drizzled with creamy white and milk chocolate sauces, and finished with rich chocolate shavings.'
+  },
+  {
+    name: 'Cookies & Cream Craze',
+    description: 'Chunky Oreo pieces, drizzled in smooth milk chocolate sauce.'
+  },
+  {
+    name: 'Stackers\' Royal Delight',
+    description: 'Juicy strawberries topped with Ferrero Rocher OR Raffaello, generously drizzled with warm Belgian chocolate OR silky Nutella.'
+  }
 ];
 
-export const iceCreamFlavours = [
-  'Vanilla', 'Strawberry', 'Scottish Tablet', 'Blue Bubblegum', 'Belgian Chocolate', 'White Bueno', 'Cookies & Cream', 'Raspberry Ripple', 'Chocolate Fudge Brownie', 'Honeycomb', 'Mint'
+export const cheesecakeFlavors = [
+  'Strawberry',
+  'Biscoff', 
+  'Oreo',
+  'Kinder',
+  'Chocolate',
+  'Banoffee pie'
 ];
 
-export const pizzaCustomisations = [
-  'Extra Cheese', 'Pepperoni', 'Mushrooms', 'Bell Peppers', 'Onions', 'Olives', 'Ham', 'Chicken', 'Jalapeños', 'Pineapple', 'Tomato', 'Sweetcorn', 'Peri-Peri Chicken', 'Meatballs'
+export const milkshakeFlavors = [
+  'Oreo',
+  'Biscoff',
+  'Strawberry',
+  'Kinder Bueno / White Kinder Bueno',
+  'Maltesers',
+  'Galaxy Caramel / Galaxy',
+  'Milky bar',
+  'Banana',
+  'Ferrero Rocher',
+  'Mango',
+  'Twix',
+  'Mars bar',
+  'Snickers',
+  'Milky way',
+  'Crunchie'
+];
+
+export const pepsiFlavors = [
+  'Pepsi',
+  'Pepsi Max',
+  'Diet'
+];
+
+export const sweetDips = [
+  'Chocolate',
+  'Caramel', 
+  'Strawberry',
+  'Nutella'
+];
+
+export const toppings = [
+  'Sprinkles',
+  'Oreo Crumbs',
+  'Marshmallows',
+  'Chocolate Chips'
 ];
 
 export const rubiconFlavours = [
-  'Mango', 'Passionfruit'
+  'Mango',
+  'Passionfruit'
 ];
 
 export const fantaFlavours = [
-  'Orange', 'Lemon', 'Fruit Twist', 'Grapefruit'
+  'Orange',
+  'Lemon',
+  'Fruit Twist',
+  'Grapefruit'
 ];
 
-export const pepsiFlavours = [
-  'Pepsi', 'Max', 'Diet'
+export const pepsiFlavors = [
+  'Pepsi',
+  'Max',
+  'Diet'
 ];
 
 export const cokeFlavours = [
-  'Coke', 'Zero', 'Diet'
+  'Coke',
+  'Zero',
+  'Diet'
 ];
 
 export const saucesAndDipsItems: MenuItem[] = [
