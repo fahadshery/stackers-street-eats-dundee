@@ -654,12 +654,6 @@ export const milkshakeFlavors = [
   'Crunchie'
 ];
 
-export const pepsiFlavors = [
-  'Pepsi',
-  'Pepsi Max',
-  'Diet'
-];
-
 export const sweetDips = [
   'Chocolate',
   'Caramel', 
@@ -688,7 +682,7 @@ export const fantaFlavours = [
 
 export const pepsiFlavors = [
   'Pepsi',
-  'Max',
+  'Pepsi Max',
   'Diet'
 ];
 
@@ -710,4 +704,17 @@ export const saucesAndDipsItems: MenuItem[] = [
 
 export const saucesAndDipsList = [
   'Garlic Mayo', 'Classic Mayo', 'Sweet Chilli', 'BBQ Sauce', 'Chilli Sauce', 'Tomato Ketchup', 'Burger Sauce'
+];
+
+export const pizzaCustomisations = [
+  'Extra Cheese',
+  'Pepperoni',
+  'Chicken',
+  'Ham',
+  'Mushrooms',
+  'Peppers',
+  'Onions',
+  'Sweetcorn',
+  'Jalapeños',
+  'Meatballs'
 ];
