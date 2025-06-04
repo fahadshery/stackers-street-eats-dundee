@@ -1,3 +1,4 @@
+
 export interface MenuItem {
   name: string;
   price: string;
@@ -101,7 +102,6 @@ export const friedGoldItems: MenuItem[] = [
     image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
-
   {
     name: 'Strips (3pcs)',
     price: '£3.99',
@@ -120,6 +120,13 @@ export const friedGoldItems: MenuItem[] = [
     name: 'Strips (12pcs)',
     price: '£9.99',
     description: '12 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
+    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
+  },
+  {
+    name: 'Chicken Breasts',
+    price: '£2.50',
+    description: 'Tender, juicy chicken breasts with crispy golden coating. Hand breaded to perfection.',
     image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   }

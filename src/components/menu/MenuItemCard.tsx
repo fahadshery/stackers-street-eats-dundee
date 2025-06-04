@@ -112,6 +112,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [cheesecakeFlavor, setCheesecakeFlavor] = useState<string>('Strawberry');
   const [stackersSpecialItem, setStackersSpecialItem] = useState<string>('Waffle on a Stick');
 
+  // Chicken Breasts state
+  const [chickenBreastQuantity, setChickenBreastQuantity] = useState<'1pc' | '2pc' | '3pc'>('1pc');
+
   const handleCustomizationChange = (customization: string, checked: boolean) => {
     if (checked) {
       setSelectedCustomizations(prev => [...prev, customization]);
@@ -259,10 +262,18 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setPepsiFlavor('Pepsi');
     setCokeFlavor('Coke');
     setSelectedSaucesAndDips([]);
+    setChickenBreastQuantity('1pc');
   };
 
   const displayPrice = () => {
     let basePrice = parseFloat(item.price.replace('£', ''));
+
+    // Handle Chicken Breasts pricing
+    if (item.name === 'Chicken Breasts') {
+      if (chickenBreastQuantity === '1pc') basePrice = 2.50;
+      else if (chickenBreastQuantity === '2pc') basePrice = 3.50;
+      else if (chickenBreastQuantity === '3pc') basePrice = 4.50;
+    }
 
     if (isMeal) {
       basePrice += 2.50;
@@ -283,7 +294,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     }
 
     // Drinks pricing based on size
-    if (category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta'].includes(item.name)) {
+    if (category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name)) {
       basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
     }
 
@@ -366,6 +377,27 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         {/* Only show price and Add to Order button if item has a price */}
         {item.price && (
           <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
+        )}
+
+        {/* Chicken Breasts quantity selection */}
+        {item.name === 'Chicken Breasts' && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Quantity:</p>
+            <RadioGroup value={chickenBreastQuantity} onValueChange={(value: string) => setChickenBreastQuantity(value as '1pc' | '2pc' | '3pc')}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="1pc" id={`${item.name}-1pc`} />
+                <Label htmlFor={`${item.name}-1pc`} className="text-sm">1 pc (£2.50)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="2pc" id={`${item.name}-2pc`} />
+                <Label htmlFor={`${item.name}-2pc`} className="text-sm">2 pcs (£3.50)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="3pc" id={`${item.name}-3pc`} />
+                <Label htmlFor={`${item.name}-3pc`} className="text-sm">3 pcs (£4.50)</Label>
+              </div>
+            </RadioGroup>
+          </div>
         )}
 
         {/* Drinks size selection for specific items - removed duplicates */}
