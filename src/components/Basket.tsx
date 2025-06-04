@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { X, ShoppingCart, Trash2 } from 'lucide-react';
@@ -27,6 +28,7 @@ export interface BasketItem {
   pepsiFlavor?: string;
   cokeFlavor?: string;
   saucesAndDips?: string[];
+  chickenBreastQuantity?: '1pc' | '2pc' | '3pc';
   quantity: number;
 }
 
@@ -138,21 +140,29 @@ const Basket: React.FC<BasketProps> = ({
                         </p>
                       )}
 
-                      {item.sideSize && (
+                      {/* Only show Size for Sides, Milkshakes, and Drinks */}
+                      {item.category === 'Sides' && item.sideSize && item.sideSize !== 'regular' && (
                         <p className="text-xs text-gray-500 mt-1">
                           Size: {item.sideSize}
                         </p>
                       )}
 
-                      {item.milkshakeSize && (
+                      {item.category === 'Milkshakes' && item.milkshakeSize && (
                         <p className="text-xs text-gray-500 mt-1">
                           Size: {item.milkshakeSize}
                         </p>
                       )}
 
-                      {item.drinkSize && (
+                      {item.category === 'Drinks' && item.drinkSize && (
                         <p className="text-xs text-gray-500 mt-1">
                           Size: {item.drinkSize}
+                        </p>
+                      )}
+
+                      {/* Only show Chicken Breast quantity if not 1pc */}
+                      {item.chickenBreastQuantity && item.chickenBreastQuantity !== '1pc' && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Quantity: {item.chickenBreastQuantity}
                         </p>
                       )}
 
