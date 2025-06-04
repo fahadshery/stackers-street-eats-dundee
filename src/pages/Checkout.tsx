@@ -209,27 +209,9 @@ const Checkout = () => {
                       </p>
                     )}
 
-                    {item.rubiconFlavor && (
+                    {item.chickenBreastQuantity && (
                       <p className="text-xs text-gray-500 mt-1">
-                        Flavour: {item.rubiconFlavor}
-                      </p>
-                    )}
-
-                    {item.fantaFlavor && (
-                      <p className="text-xs text-gray-500 mt-1">
-                        Flavour: {item.fantaFlavor}
-                      </p>
-                    )}
-
-                    {item.pepsiFlavor && (
-                      <p className="text-xs text-gray-500 mt-1">
-                        Flavour: {item.pepsiFlavor}
-                      </p>
-                    )}
-
-                    {item.cokeFlavor && (
-                      <p className="text-xs text-gray-500 mt-1">
-                        Flavour: {item.cokeFlavor}
+                        Quantity: {item.chickenBreastQuantity}
                       </p>
                     )}
 

@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '@/components/ui/textarea';
-import { MenuItem } from '@/data/menuData';
-import { milkshakeFlavours, iceCreamFlavours, rubiconFlavours, fantaFlavours, pepsiFlavours, cokeFlavours, saucesAndDipsList } from '@/data/menuData';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
+import {
+  RadioGroup,
+  RadioGroupItem
+} from "@/components/ui/radio-group"
+
+export interface MenuItem {
+  name: string;
+  price: string;
+  description?: string;
+  image: string;
+  category: string;
+}
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -22,8 +35,8 @@ interface MenuItemCardProps {
     isMeal: boolean,
     customizations?: string[],
     comment?: string,
-    sideSize?: string,
-    milkshakeSize?: string,
+    sideSize?: 'regular' | 'large',
+    milkshakeSize?: 'regular' | 'large',
     milkshakeFlavor?: string,
     pizzaSize?: string,
     iceCreamScoops?: number,
@@ -33,45 +46,16 @@ interface MenuItemCardProps {
     sweetDips?: string[],
     toppings?: string[],
     drizzleOnTop?: boolean,
-    drinkSize?: string,
+    drinkSize?: '330ml' | '1.5L',
     rubiconFlavor?: string,
     milkshakeComment?: string,
     fantaFlavor?: string,
     pepsiFlavor?: string,
     cokeFlavor?: string,
-    saucesAndDips?: string[]
+    saucesAndDips?: string[],
+    chickenBreastQuantity?: '1pc' | '2pc' | '3pc'
   ) => void;
 }
-
-const sweetStacksFlavors = [
-  'Banoffee Bliss: Fresh banana slices, drizzled in warm Nutella and rich toffee sauce, finished with a sprinkle of crunchy chopped nuts.',
-  'Biscoff Dream: Loaded with Biscoff pieces, drizzled in luscious Biscoff and Belgian chocolate sauce, then topped with a dusting of Biscoff crumbs and delicate white chocolate curls.',
-  'Bueno Bash: Indulgent Kinder Bueno pieces, drizzled with creamy white and milk chocolate sauces, and finished with rich chocolate shavings.',
-  'Cookies & Cream Craze: Chunky Oreo pieces, drizzled in smooth milk chocolate sauce.',
-  'Stackers\' Royal Delight: Juicy strawberries topped with Ferrero Rocher OR Raffaello, generously drizzled with warm Belgian chocolate OR silky Nutella.'
-];
-
-const sweetDipOptions = [
-  'Belgian Chocolate', 'Nutella', 'Biscoff', 'Pistachio', 'White Chocolate',
-  'Milk Chocolate', 'Mango', 'Strawberry', 'Raspberry', 'Toffee',
-  'Caramel', 'Mint', 'Bubblegum'
-];
-
-const toppingOptions = [
-  'Mini Marshmallows', 'Fudge Cube', 'White Chocolate Flakes', 'Crushed Oreo',
-  'Malteaser', 'Crispy M&M\'s', 'Nuts'
-];
-
-const cheesecakeFlavors = [
-  'Strawberry', 'Biscoff', 'Oreo', 'Kinder', 'Chocolate', 'Banoffee pie'
-];
-
-const stackersSpecialItems = [
-  { name: 'Waffle on a Stick', price: 4.99, description: 'Crispy waffle on a stick, perfect for dipping and enjoying on the go.' },
-  { name: 'Dubai Kunafa', price: 6.50, description: 'Traditional Middle Eastern dessert with crispy pastry, sweet cheese filling, and fragrant syrup.' },
-  { name: 'Churros (5)', price: 5.50, description: 'Five golden churros dusted with cinnamon sugar, served warm and crispy.' },
-  { name: 'Mini Pancakes (10)', price: 6.50, description: 'Ten fluffy mini pancakes, perfect for sharing and customizing with your favorite toppings.' }
-];
 
 const MenuItemCard: React.FC<MenuItemCardProps> = ({
   item,
@@ -85,724 +69,624 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   showSweetStacks = false,
   onAddToBasket
 }) => {
-  const [selectedCustomizations, setSelectedCustomizations] = useState<string[]>([]);
   const [isMeal, setIsMeal] = useState(false);
   const [comment, setComment] = useState('');
   const [sideSize, setSideSize] = useState<'regular' | 'large'>('regular');
   const [milkshakeSize, setMilkshakeSize] = useState<'regular' | 'large'>('regular');
-  const [milkshakeFlavor, setMilkshakeFlavor] = useState('Oreo');
-  const [pizzaSize, setPizzaSize] = useState<'10"' | '12"'>('10"');
-  const [iceCreamScoops, setIceCreamScoops] = useState<1 | 2 | 3>(1);
+  const [milkshakeFlavor, setMilkshakeFlavor] = useState('');
+  const [pizzaSize, setPizzaSize] = useState('');
+  const [iceCreamScoops, setIceCreamScoops] = useState<number>(1);
   const [selectedIceCreamFlavors, setSelectedIceCreamFlavors] = useState<string[]>([]);
-  const [drizzleOnTop, setDrizzleOnTop] = useState(false);
-  const [drinkSize, setDrinkSize] = useState<'330ml' | '1.5L'>('330ml');
-  const [rubiconFlavor, setRubiconFlavor] = useState<string>('Mango');
-  const [milkshakeComment, setMilkshakeComment] = useState('');
-  const [fantaFlavor, setFantaFlavor] = useState<string>('Orange');
-  const [pepsiFlavor, setPepsiFlavor] = useState<string>('Pepsi');
-  const [cokeFlavor, setCokeFlavor] = useState<string>('Coke');
-  const [selectedSaucesAndDips, setSelectedSaucesAndDips] = useState<string[]>([]);
-
-  // Sweet Stacks states
-  const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
+  const [selectedCustomizations, setSelectedCustomizations] = useState<string[]>([]);
+  const [waffleFlavor, setWaffleFlavor] = useState('');
+  const [cheesecakeFlavor, setCheesecakeFlavor] = useState('');
+  const [stackersSpecialItem, setStackersSpecialItem] = useState('');
   const [selectedSweetDips, setSelectedSweetDips] = useState<string[]>([]);
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
-
-  // Cheesecake and Stackers' Specials states
-  const [cheesecakeFlavor, setCheesecakeFlavor] = useState<string>('Strawberry');
-  const [stackersSpecialItem, setStackersSpecialItem] = useState<string>('Waffle on a Stick');
-
-  // Chicken Breasts state
+  const [drizzleOnTop, setDrizzleOnTop] = useState(false);
+  const [drinkSize, setDrinkSize] = useState<'330ml' | '1.5L'>('330ml');
+  const [rubiconFlavor, setRubiconFlavor] = useState('');
+  const [milkshakeComment, setMilkshakeComment] = useState('');
+  const [fantaFlavor, setFantaFlavor] = useState('');
+  const [pepsiFlavor, setPepsiFlavor] = useState('');
+  const [cokeFlavor, setCokeFlavor] = useState('');
+  const [selectedSaucesAndDips, setSelectedSaucesAndDips] = useState<string[]>([]);
   const [chickenBreastQuantity, setChickenBreastQuantity] = useState<'1pc' | '2pc' | '3pc'>('1pc');
 
-  const handleCustomizationChange = (customization: string, checked: boolean) => {
-    if (checked) {
-      setSelectedCustomizations(prev => [...prev, customization]);
-    } else {
-      setSelectedCustomizations(prev => prev.filter(c => c !== customization));
-    }
+  const handleMealChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsMeal(event.target.checked);
   };
 
-  const handleIceCreamFlavorChange = (flavor: string, checked: boolean) => {
-    if (checked) {
-      setSelectedIceCreamFlavors(prev => [...prev, flavor]);
-    } else {
-      setSelectedIceCreamFlavors(prev => prev.filter(f => f !== flavor));
-    }
+  const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(event.target.value);
   };
 
-  const handleSweetDipChange = (dip: string, checked: boolean) => {
-    if (checked) {
-      setSelectedSweetDips(prev => [...prev, dip]);
-    } else {
-      setSelectedSweetDips(prev => prev.filter(d => d !== dip));
-    }
+  const handleSideSizeChange = (size: 'regular' | 'large') => {
+    setSideSize(size);
   };
 
-  const handleToppingChange = (topping: string, checked: boolean) => {
-    if (checked) {
-      setSelectedToppings(prev => [...prev, topping]);
-    } else {
-      setSelectedToppings(prev => prev.filter(t => t !== topping));
-    }
+  const handleMilkshakeSizeChange = (size: 'regular' | 'large') => {
+    setMilkshakeSize(size);
   };
 
-  const handleSaucesAndDipsChange = (sauce: string, checked: boolean) => {
-    if (checked) {
-      setSelectedSaucesAndDips(prev => [...prev, sauce]);
-    } else {
-      setSelectedSaucesAndDips(prev => prev.filter(s => s !== sauce));
-    }
+  const handleMilkshakeFlavorChange = (flavor: string) => {
+    setMilkshakeFlavor(flavor);
   };
 
-  const renderIceCreamFlavorCheckboxes = () => {
-    const checkboxes = [];
-    
-    for (let i = 0; i < iceCreamScoops; i++) {
-      checkboxes.push(
-        <div key={`scoop-${i}`} className="mb-4">
-          <p className="font-medium mb-2 text-stackers-charcoal">
-            Scoop {i + 1} Flavour:
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            {iceCreamFlavours.map((flavor) => (
-              <div key={`${flavor}-${i}`} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`${item.name}-ice-${flavor}-${i}`}
-                  checked={selectedIceCreamFlavors[i] === flavor}
-                  onCheckedChange={(checked) => {
-                    if (checked) {
-                      const newFlavors = [...selectedIceCreamFlavors];
-                      newFlavors[i] = flavor;
-                      setSelectedIceCreamFlavors(newFlavors);
-                    } else {
-                      const newFlavors = [...selectedIceCreamFlavors];
-                      newFlavors[i] = '';
-                      setSelectedIceCreamFlavors(newFlavors);
-                    }
-                  }}
-                />
-                <Label htmlFor={`${item.name}-ice-${flavor}-${i}`} className="text-xs">
-                  {flavor}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    }
-    
-    return checkboxes;
+  const handlePizzaSizeChange = (size: string) => {
+    setPizzaSize(size);
   };
 
-  const handleAddToBasket = () => {
-    let finalSweetStacksType = '';
-    let finalSweetStacksFlavor = sweetStacksFlavor;
+  const handleIceCreamScoopsChange = (scoops: number) => {
+    setIceCreamScoops(scoops);
+  };
 
-    // Handle different Sweet Stacks items
-    if (item.name === 'Waffle') {
-      finalSweetStacksType = 'Waffles';
-    } else if (item.name === 'Crepe') {
-      finalSweetStacksType = 'Crepes';
-    } else if (item.name === 'Cookie Dough Delight') {
-      finalSweetStacksType = 'Cookie Dough';
-    } else if (item.name === 'Cheesecake Slices') {
-      finalSweetStacksType = 'Cheesecake';
-      finalSweetStacksFlavor = cheesecakeFlavor;
-    } else if (item.name === 'Stackers\' Specials') {
-      finalSweetStacksType = 'Stackers\' Specials';
-      finalSweetStacksFlavor = stackersSpecialItem;
-    }
+  const handleIceCreamFlavorChange = (flavor: string) => {
+    setSelectedIceCreamFlavors((prevFlavors) => {
+      if (prevFlavors.includes(flavor)) {
+        return prevFlavors.filter((f) => f !== flavor);
+      } else {
+        return [...prevFlavors, flavor];
+      }
+    });
+  };
 
-    onAddToBasket(
-      item,
-      isMeal,
-      selectedCustomizations.length > 0 ? selectedCustomizations : undefined,
-      comment || undefined,
-      showSizeOptions ? sideSize : undefined,
-      category === 'Milkshakes' ? milkshakeSize : undefined,
-      category === 'Milkshakes' ? milkshakeFlavor : undefined,
-      showPizzaSize ? pizzaSize : undefined,
-      category === 'Ice Creams' ? iceCreamScoops : undefined,
-      category === 'Ice Creams' && selectedIceCreamFlavors.length > 0 ? selectedIceCreamFlavors : undefined,
-      finalSweetStacksType || undefined,
-      finalSweetStacksFlavor || undefined,
-      showSweetStacks && selectedSweetDips.length > 0 ? selectedSweetDips : undefined,
-      showSweetStacks && selectedToppings.length > 0 ? selectedToppings : undefined,
-      drizzleOnTop,
-      category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta', 'Rubicon'].includes(item.name) ? drinkSize : undefined,
-      item.name === 'Rubicon' ? rubiconFlavor : undefined,
-      category === 'Milkshakes' && milkshakeComment ? milkshakeComment : undefined,
-      item.name === 'Fanta' ? fantaFlavor : undefined,
-      item.name === 'Pepsi' ? pepsiFlavor : undefined,
-      item.name === 'Coke' ? cokeFlavor : undefined,
-      category === 'Sauces & Dips' && selectedSaucesAndDips.length > 0 ? selectedSaucesAndDips : undefined
-    );
+  const handleCustomizationChange = (customization: string) => {
+    setSelectedCustomizations((prevCustomizations) => {
+      if (prevCustomizations.includes(customization)) {
+        return prevCustomizations.filter((c) => c !== customization);
+      } else {
+        return [...prevCustomizations, customization];
+      }
+    });
+  };
 
-    // Reset form
-    setSelectedCustomizations([]);
-    setIsMeal(false);
-    setComment('');
-    setSideSize('regular');
-    setMilkshakeSize('regular');
-    setMilkshakeFlavor('Oreo');
-    setPizzaSize('10"');
-    setIceCreamScoops(1);
-    setSelectedIceCreamFlavors([]);
-    setSweetStacksFlavor('');
-    setSelectedSweetDips([]);
-    setSelectedToppings([]);
-    setCheesecakeFlavor('Strawberry');
-    setStackersSpecialItem('Waffle on a Stick');
-    setDrizzleOnTop(false);
-    setDrinkSize('330ml');
-    setRubiconFlavor('Mango');
-    setMilkshakeComment('');
-    setFantaFlavor('Orange');
-    setPepsiFlavor('Pepsi');
-    setCokeFlavor('Coke');
-    setSelectedSaucesAndDips([]);
-    setChickenBreastQuantity('1pc');
+  const handleWaffleFlavorChange = (flavor: string) => {
+    setWaffleFlavor(flavor);
+  };
+
+  const handleCheesecakeFlavorChange = (flavor: string) => {
+    setCheesecakeFlavor(flavor);
+  };
+
+  const handleStackersSpecialItemChange = (specialItem: string) => {
+    setStackersSpecialItem(specialItem);
+  };
+
+  const handleSweetDipChange = (dip: string) => {
+    setSelectedSweetDips((prevDips) => {
+      if (prevDips.includes(dip)) {
+        return prevDips.filter((d) => d !== dip);
+      } else {
+        return [...prevDips, dip];
+      }
+    });
+  };
+
+  const handleToppingChange = (topping: string) => {
+    setSelectedToppings((prevToppings) => {
+      if (prevToppings.includes(topping)) {
+        return prevToppings.filter((t) => t !== topping);
+      } else {
+        return [...prevToppings, topping];
+      }
+    });
+  };
+
+  const handleDrizzleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDrizzleOnTop(event.target.checked);
+  };
+
+  const handleDrinkSizeChange = (size: '330ml' | '1.5L') => {
+    setDrinkSize(size);
+  };
+
+  const handleRubiconFlavorChange = (flavor: string) => {
+    setRubiconFlavor(flavor);
+  };
+
+  const handleMilkshakeCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMilkshakeComment(event.target.value);
+  };
+
+  const handleFantaFlavorChange = (flavor: string) => {
+    setFantaFlavor(flavor);
+  };
+
+  const handlePepsiFlavorChange = (flavor: string) => {
+    setPepsiFlavor(flavor);
+  };
+
+  const handleCokeFlavorChange = (flavor: string) => {
+    setCokeFlavor(flavor);
+  };
+
+  const handleSaucesAndDipsChange = (sauce: string) => {
+    setSelectedSaucesAndDips((prevSauces) => {
+      if (prevSauces.includes(sauce)) {
+        return prevSauces.filter((s) => s !== sauce);
+      } else {
+        return [...prevSauces, sauce];
+      }
+    });
+  };
+
+  const handleChickenBreastQuantityChange = (quantity: '1pc' | '2pc' | '3pc') => {
+    setChickenBreastQuantity(quantity);
   };
 
   const displayPrice = () => {
     let basePrice = parseFloat(item.price.replace('£', ''));
 
-    // Handle Chicken Breasts pricing
+    if (isMeal) {
+      basePrice += 2.50;
+    }
+
+    if (sideSize === 'large') {
+      basePrice += 1.00;
+    }
+
     if (item.name === 'Chicken Breasts') {
       if (chickenBreastQuantity === '1pc') basePrice = 2.50;
       else if (chickenBreastQuantity === '2pc') basePrice = 3.50;
       else if (chickenBreastQuantity === '3pc') basePrice = 4.50;
     }
 
-    if (isMeal) {
-      basePrice += 2.50;
-    }
-
-    if (showSizeOptions && sideSize === 'large') {
-      basePrice += 1.00;
-    }
-
-    if (category === 'Milkshakes') {
-      basePrice = milkshakeSize === 'regular' ? 4.20 : 5.00;
-    }
-
-    if (category === 'Ice Creams') {
-      if (iceCreamScoops === 1) basePrice = 2.50;
-      else if (iceCreamScoops === 2) basePrice = 3.75;
-      else if (iceCreamScoops === 3) basePrice = 4.75;
-    }
-
-    // Drinks pricing based on size
-    if (category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name)) {
-      basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
-    }
-
-    // Sweet Stacks pricing
-    if (showSweetStacks) {
-      // Handle different Sweet Stacks items
-      if (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') {
-        basePrice = 6.50; // Base price for Waffles, Crepes, Cookie Dough
-      } else if (item.name === 'Cheesecake Slices') {
-        basePrice = 3.99; // Fixed price for cheesecake
-      } else if (item.name === 'Stackers\' Specials') {
-        const selectedItem = stackersSpecialItems.find(special => special.name === stackersSpecialItem);
-        basePrice = selectedItem ? selectedItem.price : 4.99;
-      }
-
-      // Add sweet dips and toppings pricing only for customizable items
-      if (item.name !== 'Cheesecake Slices' && item.name !== 'Stackers\' Specials') {
-        basePrice += selectedSweetDips.length * 1.00; // £1 per sweet dip
-        basePrice += selectedToppings.length * 0.50; // £0.50 per topping
-      }
-    }
-
-    // Pizza sizing and customization pricing
-    if (showPizzaSize) {
-      if (pizzaSize === '12"') {
-        basePrice += 3.00; // 12" is £3 extra
-      }
-
-      // Add customization costs
-      const customizationCost = pizzaSize === '10"' ? 1.00 : 1.50;
-      basePrice += selectedCustomizations.length * customizationCost;
-    }
-
-    // Sauces & Dips pricing
-    if (category === 'Sauces & Dips') {
-      basePrice = selectedSaucesAndDips.length * 0.70;
-    }
-
     return `£${basePrice.toFixed(2)}`;
   };
 
-  const isButtonDisabled = () => {
-    if (category === 'Ice Creams' && selectedIceCreamFlavors.length !== iceCreamScoops) {
-      return true;
-    }
-
-    if (showSweetStacks) {
-      // For customizable Sweet Stacks items, require flavor selection
-      if ((item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && !sweetStacksFlavor) {
-        return true;
-      }
-    }
-
-    if (category === 'Sauces & Dips' && selectedSaucesAndDips.length === 0) {
-      return true;
-    }
-
-    return false;
+  const resetForm = () => {
+    setIsMeal(false);
+    setComment('');
+    setSideSize('regular');
+    setMilkshakeSize('regular');
+    setMilkshakeFlavor('');
+    setPizzaSize('');
+    setIceCreamScoops(1);
+    setSelectedIceCreamFlavors([]);
+    setSelectedCustomizations([]);
+    setWaffleFlavor('');
+    setCheesecakeFlavor('');
+    setStackersSpecialItem('');
+    setSelectedSweetDips([]);
+    setSelectedToppings([]);
+    setDrizzleOnTop(false);
+    setDrinkSize('330ml');
+    setRubiconFlavor('');
+    setMilkshakeComment('');
+    setFantaFlavor('');
+    setPepsiFlavor('');
+    setCokeFlavor('');
+    setSelectedSaucesAndDips([]);
+    setChickenBreastQuantity('1pc');
   };
 
-  // Determine which categories should show customer instructions
-  const shouldShowCustomerInstructions = ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Pizzas', 'Sweet Stacks', 'Ice Creams'].includes(category);
-  
-  // Special logic for Sweet Stacks - don't show for Cheesecake Slices
-  const shouldShowSweetStacksInstructions = category === 'Sweet Stacks' && item.name !== 'Cheesecake Slices';
+  const handleAddToBasket = () => {
+    onAddToBasket(
+      item,
+      isMeal,
+      selectedCustomizations.length > 0 ? selectedCustomizations : undefined,
+      comment || undefined,
+      sideSize,
+      milkshakeSize,
+      milkshakeFlavor,
+      pizzaSize,
+      iceCreamScoops,
+      selectedIceCreamFlavors.length > 0 ? selectedIceCreamFlavors : undefined,
+      item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight' ? item.name : 
+      item.name === 'Cheesecake Slices' ? 'Cheesecake' :
+      item.name === 'Stackers\' Specials' ? 'Special' : undefined,
+      item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight' ? waffleFlavor :
+      item.name === 'Cheesecake Slices' ? cheesecakeFlavor :
+      item.name === 'Stackers\' Specials' ? stackersSpecialItem : undefined,
+      selectedSweetDips.length > 0 ? selectedSweetDips : undefined,
+      selectedToppings.length > 0 ? selectedToppings : undefined,
+      drizzleOnTop || undefined,
+      drinkSize,
+      rubiconFlavor,
+      milkshakeComment || undefined,
+      fantaFlavor,
+      pepsiFlavor,
+      cokeFlavor,
+      selectedSaucesAndDips.length > 0 ? selectedSaucesAndDips : undefined,
+      item.name === 'Chicken Breasts' ? chickenBreastQuantity : undefined
+    );
+    resetForm();
+  };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      <div className="aspect-video bg-gray-200 overflow-hidden">
-        <img
-          src={item.image}
-          alt={item.name}
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+      <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
-        <p className="text-gray-600 text-sm mb-4 leading-relaxed">{item.description}</p>
-        
-        {/* Only show price and Add to Order button if item has a price */}
-        {item.price && (
-          <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
-        )}
+        <h3 className="text-xl font-bold mb-2 text-stackers-charcoal">{item.name}</h3>
+        <p className="text-gray-600 mb-4">{item.description}</p>
 
-        {/* Chicken Breasts quantity selection */}
-        {item.name === 'Chicken Breasts' && (
-          <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Quantity:</p>
-            <RadioGroup value={chickenBreastQuantity} onValueChange={(value: string) => setChickenBreastQuantity(value as '1pc' | '2pc' | '3pc')}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1pc" id={`${item.name}-1pc`} />
-                <Label htmlFor={`${item.name}-1pc`} className="text-sm">1 pc (£2.50)</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="2pc" id={`${item.name}-2pc`} />
-                <Label htmlFor={`${item.name}-2pc`} className="text-sm">2 pcs (£3.50)</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="3pc" id={`${item.name}-3pc`} />
-                <Label htmlFor={`${item.name}-3pc`} className="text-sm">3 pcs (£4.50)</Label>
-              </div>
-            </RadioGroup>
-          </div>
-        )}
+      {showMealOption && (
+        <div className="mb-4">
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              className="form-checkbox h-5 w-5 text-stackers-yellow"
+              checked={isMeal}
+              onChange={handleMealChange}
+            />
+            <span className="ml-2 text-gray-700">Make it a Meal (+£2.50)</span>
+          </label>
+        </div>
+      )}
 
-        {/* Drinks size selection for specific items - removed duplicates */}
-        {category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name) && (
-          <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-            <RadioGroup value={drinkSize} onValueChange={(value: string) => setDrinkSize(value as '330ml' | '1.5L')}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="330ml" id={`${item.name}-330ml`} />
-                <Label htmlFor={`${item.name}-330ml`} className="text-sm">330ml Can (£1.25)</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1.5L" id={`${item.name}-1.5L`} />
-                <Label htmlFor={`${item.name}-1.5L`} className="text-sm">1.5L (£2.99)</Label>
-              </div>
-            </RadioGroup>
-          </div>
-        )}
-
-        {/* Fanta flavor and size selection */}
-        {item.name === 'Fanta' && (
-          <>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
-              <RadioGroup value={fantaFlavor} onValueChange={setFantaFlavor}>
-                {fantaFlavours.map((flavor) => (
-                  <div key={flavor} className="flex items-center space-x-2">
-                    <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
-                    <Label htmlFor={`${item.name}-${flavor}`} className="text-sm">{flavor}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-              <RadioGroup value={drinkSize} onValueChange={(value: string) => setDrinkSize(value as '330ml' | '1.5L')}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="330ml" id={`${item.name}-330ml`} />
-                  <Label htmlFor={`${item.name}-330ml`} className="text-sm">330ml Can (£1.25)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="1.5L" id={`${item.name}-1.5L`} />
-                  <Label htmlFor={`${item.name}-1.5L`} className="text-sm">1.5L (£2.99)</Label>
-                </div>
-              </RadioGroup>
-            </div>
-          </>
-        )}
-
-        {/* Pepsi flavor and size selection */}
-        {item.name === 'Pepsi' && (
-          <>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
-              <RadioGroup value={pepsiFlavor} onValueChange={setPepsiFlavor}>
-                {pepsiFlavours.map((flavor) => (
-                  <div key={flavor} className="flex items-center space-x-2">
-                    <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
-                    <Label htmlFor={`${item.name}-${flavor}`} className="text-sm">{flavor}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-              <RadioGroup value={drinkSize} onValueChange={(value: string) => setDrinkSize(value as '330ml' | '1.5L')}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="330ml" id={`${item.name}-330ml`} />
-                  <Label htmlFor={`${item.name}-330ml`} className="text-sm">330ml Can (£1.25)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="1.5L" id={`${item.name}-1.5L`} />
-                  <Label htmlFor={`${item.name}-1.5L`} className="text-sm">1.5L (£2.99)</Label>
-                </div>
-              </RadioGroup>
-            </div>
-          </>
-        )}
-
-        {/* Coke flavor and size selection */}
-        {item.name === 'Coke' && (
-          <>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
-              <RadioGroup value={cokeFlavor} onValueChange={setCokeFlavor}>
-                {cokeFlavours.map((flavor) => (
-                  <div key={flavor} className="flex items-center space-x-2">
-                    <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
-                    <Label htmlFor={`${item.name}-${flavor}`} className="text-sm">{flavor}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-              <RadioGroup value={drinkSize} onValueChange={(value: string) => setDrinkSize(value as '330ml' | '1.5L')}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="330ml" id={`${item.name}-330ml`} />
-                  <Label htmlFor={`${item.name}-330ml`} className="text-sm">330ml Can (£1.25)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="1.5L" id={`${item.name}-1.5L`} />
-                  <Label htmlFor={`${item.name}-1.5L`} className="text-sm">1.5L (£2.99)</Label>
-                </div>
-              </RadioGroup>
-            </div>
-          </>
-        )}
-
-        {/* Rubicon flavor and size selection */}
-        {item.name === 'Rubicon' && (
-          <>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
-              <RadioGroup value={rubiconFlavor} onValueChange={setRubiconFlavor}>
-                {rubiconFlavours.map((flavor) => (
-                  <div key={flavor} className="flex items-center space-x-2">
-                    <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
-                    <Label htmlFor={`${item.name}-${flavor}`} className="text-sm">{flavor}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-              <RadioGroup value="330ml" onValueChange={() => {}}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="330ml" id={`${item.name}-330ml-only`} />
-                  <Label htmlFor={`${item.name}-330ml-only`} className="text-sm">330ml Can (£1.25)</Label>
-                </div>
-              </RadioGroup>
-            </div>
-          </>
-        )}
-
-        {/* Sweet Stacks customization sections */}
-        {showSweetStacks && (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') && (
-          <>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
-              <RadioGroup value={sweetStacksFlavor} onValueChange={setSweetStacksFlavor}>
-                {sweetStacksFlavors.map((flavor) => {
-                  const flavorName = flavor.split(':')[0];
-                  return (
-                    <div key={flavor} className="flex items-start space-x-2 mb-2">
-                      <RadioGroupItem value={flavor} id={`${item.name}-${flavorName}`} className="mt-1" />
-                      <Label htmlFor={`${item.name}-${flavorName}`} className="text-xs leading-relaxed">{flavor}</Label>
-                    </div>
-                  );
-                })}
-              </RadioGroup>
-            </div>
-
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Sweet Dips (£1.00 each):</p>
-              <div className="grid grid-cols-2 gap-2">
-                {sweetDipOptions.map((dip) => (
-                  <div key={dip} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`${item.name}-dip-${dip}`}
-                      checked={selectedSweetDips.includes(dip)}
-                      onCheckedChange={(checked) => handleSweetDipChange(dip, !!checked)}
-                    />
-                    <Label htmlFor={`${item.name}-dip-${dip}`} className="text-xs">{dip}</Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Toppings (£0.50 each):</p>
-              <div className="grid grid-cols-2 gap-2">
-                {toppingOptions.map((topping) => (
-                  <div key={topping} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`${item.name}-topping-${topping}`}
-                      checked={selectedToppings.includes(topping)}
-                      onCheckedChange={(checked) => handleToppingChange(topping, !!checked)}
-                    />
-                    <Label htmlFor={`${item.name}-topping-${topping}`} className="text-xs">{topping}</Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={`${item.name}-drizzle`}
-                  checked={drizzleOnTop}
-                  onCheckedChange={(checked) => setDrizzleOnTop(!!checked)}
-                />
-                <Label htmlFor={`${item.name}-drizzle`} className="text-sm font-bold">
-                  Drizzle on top
-                </Label>
-              </div>
-            </div>
-          </>
-        )}
-
-        {showSweetStacks && item.name === 'Cheesecake Slices' && (
-          <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
-            <RadioGroup value={cheesecakeFlavor} onValueChange={setCheesecakeFlavor}>
-              {cheesecakeFlavors.map((flavor) => (
-                <div key={flavor} className="flex items-center space-x-2">
-                  <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
-                  <Label htmlFor={`${item.name}-${flavor}`} className="text-sm">{flavor}</Label>
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
-        )}
-
-        {showSweetStacks && item.name === 'Stackers\' Specials' && (
-          <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Choose your special:</p>
-            <RadioGroup value={stackersSpecialItem} onValueChange={setStackersSpecialItem}>
-              {stackersSpecialItems.map((special) => (
-                <div key={special.name} className="flex items-start space-x-2 mb-2">
-                  <RadioGroupItem value={special.name} id={`${item.name}-${special.name}`} className="mt-1" />
-                  <div className="flex-1">
-                    <Label htmlFor={`${item.name}-${special.name}`} className="text-sm font-medium">
-                      {special.name} - £{special.price.toFixed(2)}
-                    </Label>
-                    <p className="text-xs text-gray-500 mt-1">{special.description}</p>
-                  </div>
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
-        )}
-
-        {showPizzaSize && (
-          <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Pizza Size:</p>
-            <RadioGroup value={pizzaSize} onValueChange={(value: string) => setPizzaSize(value as '10"' | '12"')}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value='10"' id={`${item.name}-10inch`} />
-                <Label htmlFor={`${item.name}-10inch`} className="text-sm">10" (Standard)</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value='12"' id={`${item.name}-12inch`} />
-                <Label htmlFor={`${item.name}-12inch`} className="text-sm">12" (+£3.00)</Label>
-              </div>
-            </RadioGroup>
-          </div>
-        )}
-
-        {showCustomizations && customizations.length > 0 && (
-          <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">
-              Customisations {showPizzaSize && `(${pizzaSize === '10"' ? '£1.00' : '£1.50'} each):`}
-            </p>
-            <div className="space-y-2">
-              {customizations.map((customization) => (
-                <div key={customization} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`${item.name}-${customization}`}
-                    checked={selectedCustomizations.includes(customization)}
-                    onCheckedChange={(checked) => handleCustomizationChange(customization, !!checked)}
-                  />
-                  <Label htmlFor={`${item.name}-${customization}`} className="text-sm">
-                    {customization}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {showSizeOptions && (
-          <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-            <RadioGroup value={sideSize} onValueChange={(value: string) => setSideSize(value as 'regular' | 'large')}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="regular" id={`${item.name}-regular`} />
-                <Label htmlFor={`${item.name}-regular`} className="text-sm">Regular</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="large" id={`${item.name}-large`} />
-                <Label htmlFor={`${item.name}-large`} className="text-sm">Large (+£1.00)</Label>
-              </div>
-            </RadioGroup>
-          </div>
-        )}
-
-        {category === 'Milkshakes' && (
-          <>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-              <RadioGroup value={milkshakeSize} onValueChange={(value: string) => setMilkshakeSize(value as 'regular' | 'large')}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="regular" id={`${item.name}-regular-shake`} />
-                  <Label htmlFor={`${item.name}-regular-shake`} className="text-sm">Regular (£4.20)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="large" id={`${item.name}-large-shake`} />
-                  <Label htmlFor={`${item.name}-large-shake`} className="text-sm">Large (£5.00)</Label>
-                </div>
-              </RadioGroup>
-            </div>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
-              <RadioGroup value={milkshakeFlavor} onValueChange={setMilkshakeFlavor}>
-                <div className="grid grid-cols-2 gap-2">
-                  {milkshakeFlavours.map((flavor) => (
-                    <div key={flavor} className="flex items-center space-x-2">
-                      <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
-                      <Label htmlFor={`${item.name}-${flavor}`} className="text-xs">{flavor}</Label>
-                    </div>
-                  ))}
-                </div>
-              </RadioGroup>
-            </div>
-          </>
-        )}
-
-        {category === 'Ice Creams' && (
-          <>
-            <div className="mb-4">
-              <p className="font-medium mb-2 text-stackers-charcoal">Number of Scoops:</p>
-              <RadioGroup value={iceCreamScoops.toString()} onValueChange={(value) => {
-                const scoops = parseInt(value) as 1 | 2 | 3;
-                setIceCreamScoops(scoops);
-                // Reset selected flavors when scoop count changes
-                setSelectedIceCreamFlavors([]);
-              }}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="1" id={`${item.name}-1-scoop`} />
-                  <Label htmlFor={`${item.name}-1-scoop`} className="text-sm">1 Scoop (£2.50)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="2" id={`${item.name}-2-scoops`} />
-                  <Label htmlFor={`${item.name}-2-scoops`} className="text-sm">2 Scoops (£3.75)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="3" id={`${item.name}-3-scoops`} />
-                  <Label htmlFor={`${item.name}-3-scoops`} className="text-sm">3 Scoops (£4.75)</Label>
-                </div>
-              </RadioGroup>
-            </div>
-            
-            {renderIceCreamFlavorCheckboxes()}
-          </>
-        )}
-
-        {showMealOption && (
-          <div className="mb-4">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id={`${item.name}-meal`}
-                checked={isMeal}
-                onCheckedChange={(checked) => setIsMeal(!!checked)}
+      {showCustomizations && customizations && customizations.length > 0 && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Customizations</h4>
+          {customizations.map((customization) => (
+            <label key={customization} className="inline-flex items-center mr-4">
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-stackers-yellow"
+                value={customization}
+                checked={selectedCustomizations.includes(customization)}
+                onChange={() => handleCustomizationChange(customization)}
               />
-              <Label htmlFor={`${item.name}-meal`} className="text-sm font-medium">
-                Make it a meal +£2.50 (chips and a can of juice)
-              </Label>
+              <span className="ml-2 text-gray-700">{customization}</span>
+            </label>
+          ))}
+        </div>
+      )}
+
+      {showSizeOptions && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
+          <div className="flex items-center">
+            <button
+              className={`px-4 py-2 rounded-full text-sm font-semibold ${sideSize === 'regular' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              onClick={() => handleSideSizeChange('regular')}
+            >
+              Regular
+            </button>
+            <button
+              className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${sideSize === 'large' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              onClick={() => handleSideSizeChange('large')}
+            >
+              Large (+£1.00)
+            </button>
+          </div>
+        </div>
+      )}
+
+      {category === 'Milkshakes' && (
+        <>
+          <div className="mb-4">
+            <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
+            <div className="flex items-center">
+              <button
+                className={`px-4 py-2 rounded-full text-sm font-semibold ${milkshakeSize === 'regular' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                onClick={() => handleMilkshakeSizeChange('regular')}
+              >
+                Regular
+              </button>
+              <button
+                className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${milkshakeSize === 'large' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                onClick={() => handleMilkshakeSizeChange('large')}
+              >
+                Large
+              </button>
             </div>
           </div>
-        )}
 
-        {/* Sauces & Dips selection */}
-        {category === 'Sauces & Dips' && (
           <div className="mb-4">
-            <p className="font-medium mb-2 text-stackers-charcoal">Select Sauces & Dips (£0.70 each):</p>
-            <div className="grid grid-cols-1 gap-2">
-              {saucesAndDipsList.map((sauce) => (
-                <div key={sauce} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`${item.name}-sauce-${sauce}`}
-                    checked={selectedSaucesAndDips.includes(sauce)}
-                    onCheckedChange={(checked) => handleSaucesAndDipsChange(sauce, !!checked)}
-                  />
-                  <Label htmlFor={`${item.name}-sauce-${sauce}`} className="text-sm">{sauce}</Label>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Customer Instructions - Updated logic */}
-        {shouldShowCustomerInstructions && (category !== 'Sweet Stacks' || shouldShowSweetStacksInstructions) && category !== 'Milkshakes' && (
-          <div className="mb-4">
-            <Label className="text-sm font-medium mb-2 block">Customer instructions:</Label>
-            <Textarea
-              placeholder="Any special requests..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              rows={2}
-              className="w-full resize-none text-sm"
+            <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
+            <input
+              type="text"
+              placeholder="Enter milkshake flavor"
+              className="w-full border border-gray-300 rounded-md p-2"
+              value={milkshakeFlavor}
+              onChange={(e) => handleMilkshakeFlavorChange(e.target.value)}
             />
           </div>
-        )}
 
-        {/* Only show Add to Order button if item has a price */}
-        {item.price && (
-          <Button
-            onClick={handleAddToBasket}
-            className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-bold py-3"
-            disabled={isButtonDisabled()}
-          >
-            Add to Order
-          </Button>
-        )}
+          <div className="mb-4">
+            <h4 className="font-semibold text-gray-700 mb-2">Special Instructions</h4>
+            <textarea
+              placeholder="Any special instructions for your milkshake..."
+              className="w-full border border-gray-300 rounded-md p-2 resize-none"
+              rows={3}
+              value={milkshakeComment}
+              onChange={handleMilkshakeCommentChange}
+            />
+          </div>
+        </>
+      )}
+
+      {showPizzaSize && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
+          <div className="flex items-center">
+            <button
+              className={`px-4 py-2 rounded-full text-sm font-semibold ${pizzaSize === '10"' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              onClick={() => handlePizzaSizeChange('10"')}
+            >
+              10"
+            </button>
+            <button
+              className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${pizzaSize === '12"' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              onClick={() => handlePizzaSizeChange('12"')}
+            >
+              12" (+£3.00)
+            </button>
+          </div>
+        </div>
+      )}
+
+      {category === 'Ice Creams' && (
+        <>
+          <div className="mb-4">
+            <h4 className="font-semibold text-gray-700 mb-2">Number of Scoops</h4>
+            <div className="flex items-center">
+              <button
+                className={`px-4 py-2 rounded-full text-sm font-semibold ${iceCreamScoops === 1 ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                onClick={() => handleIceCreamScoopsChange(1)}
+              >
+                1 Scoop
+              </button>
+              <button
+                className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${iceCreamScoops === 2 ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                onClick={() => handleIceCreamScoopsChange(2)}
+              >
+                2 Scoops
+              </button>
+              <button
+                className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${iceCreamScoops === 3 ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                onClick={() => handleIceCreamScoopsChange(3)}
+              >
+                3 Scoops
+              </button>
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <h4 className="font-semibold text-gray-700 mb-2">Flavors</h4>
+            {['Vanilla', 'Chocolate', 'Strawberry', 'Mint Choc Chip'].map((flavor) => (
+              <label key={flavor} className="inline-flex items-center mr-4">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5 text-stackers-yellow"
+                  value={flavor}
+                  checked={selectedIceCreamFlavors.includes(flavor)}
+                  onChange={() => handleIceCreamFlavorChange(flavor)}
+                />
+                <span className="ml-2 text-gray-700">{flavor}</span>
+              </label>
+            ))}
+          </div>
+        </>
+      )}
+
+      {showSweetStacks && (
+        <>
+          {item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight' ? (
+            <>
+              <div className="mb-4">
+                <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
+                <input
+                  type="text"
+                  placeholder="Enter flavor"
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  value={waffleFlavor}
+                  onChange={(e) => handleWaffleFlavorChange(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-4">
+                <h4 className="font-semibold text-gray-700 mb-2">Sweet Dips</h4>
+                {['Chocolate', 'Caramel', 'Strawberry', 'Nutella'].map((dip) => (
+                  <label key={dip} className="inline-flex items-center mr-4">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-5 w-5 text-stackers-yellow"
+                      value={dip}
+                      checked={selectedSweetDips.includes(dip)}
+                      onChange={() => handleSweetDipChange(dip)}
+                    />
+                    <span className="ml-2 text-gray-700">{dip}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="mb-4">
+                <h4 className="font-semibold text-gray-700 mb-2">Toppings</h4>
+                {['Sprinkles', 'Oreo Crumbs', 'Marshmallows', 'Chocolate Chips'].map((topping) => (
+                  <label key={topping} className="inline-flex items-center mr-4">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-5 w-5 text-stackers-yellow"
+                      value={topping}
+                      checked={selectedToppings.includes(topping)}
+                      onChange={() => handleToppingChange(topping)}
+                    />
+                    <span className="ml-2 text-gray-700">{topping}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="mb-4">
+                <label className="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox h-5 w-5 text-stackers-yellow"
+                    checked={drizzleOnTop}
+                    onChange={handleDrizzleOnChange}
+                  />
+                  <span className="ml-2 text-gray-700">Drizzle on top</span>
+                </label>
+              </div>
+            </>
+          ) : item.name === 'Cheesecake Slices' ? (
+            <div className="mb-4">
+              <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
+              <input
+                type="text"
+                placeholder="Enter cheesecake flavor"
+                className="w-full border border-gray-300 rounded-md p-2"
+                value={cheesecakeFlavor}
+                onChange={(e) => handleCheesecakeFlavorChange(e.target.value)}
+              />
+            </div>
+          ) : item.name === 'Stackers\' Specials' ? (
+            <div className="mb-4">
+              <h4 className="font-semibold text-gray-700 mb-2">Select Special</h4>
+              <Select onValueChange={handleStackersSpecialItemChange}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a special" value={stackersSpecialItem} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Waffle on a Stick">Waffle on a Stick</SelectItem>
+                  <SelectItem value="Dubai Kunafa">Dubai Kunafa</SelectItem>
+                  <SelectItem value="Churros (5)">Churros (5)</SelectItem>
+                  <SelectItem value="Mini Pancakes (10)">Mini Pancakes (10)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          ) : null}
+        </>
+      )}
+
+      {category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta', 'Rubicon'].includes(item.name) && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Size</h4>
+          <div className="flex items-center">
+            <button
+              className={`px-4 py-2 rounded-full text-sm font-semibold ${drinkSize === '330ml' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              onClick={() => handleDrinkSizeChange('330ml')}
+            >
+              330ml
+            </button>
+            <button
+              className={`ml-2 px-4 py-2 rounded-full text-sm font-semibold ${drinkSize === '1.5L' ? 'bg-stackers-yellow text-stackers-charcoal' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              onClick={() => handleDrinkSizeChange('1.5L')}
+            >
+              1.5L
+            </button>
+          </div>
+        </div>
+      )}
+
+      {item.name === 'Rubicon' && category === 'Drinks' && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
+          <input
+            type="text"
+            placeholder="Enter Rubicon flavor"
+            className="w-full border border-gray-300 rounded-md p-2"
+            value={rubiconFlavor}
+            onChange={(e) => handleRubiconFlavorChange(e.target.value)}
+          />
+        </div>
+      )}
+
+      {item.name === 'Fanta' && category === 'Drinks' && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
+          <input
+            type="text"
+            placeholder="Enter Fanta flavor"
+            className="w-full border border-gray-300 rounded-md p-2"
+            value={fantaFlavor}
+            onChange={(e) => handleFantaFlavorChange(e.target.value)}
+          />
+        </div>
+      )}
+
+      {item.name === 'Pepsi' && category === 'Drinks' && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
+          <input
+            type="text"
+            placeholder="Enter Pepsi flavor"
+            className="w-full border border-gray-300 rounded-md p-2"
+            value={pepsiFlavor}
+            onChange={(e) => handlePepsiFlavorChange(e.target.value)}
+          />
+        </div>
+      )}
+
+      {item.name === 'Coke' && category === 'Drinks' && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Flavor</h4>
+          <input
+            type="text"
+            placeholder="Enter Coke flavor"
+            className="w-full border border-gray-300 rounded-md p-2"
+            value={cokeFlavor}
+            onChange={(e) => handleCokeFlavorChange(e.target.value)}
+          />
+        </div>
+      )}
+
+      {category === 'Sauces & Dips' && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Select Sauces & Dips</h4>
+          {['Ketchup', 'BBQ', 'Sweet Chilli', 'Mayo'].map((sauce) => (
+            <label key={sauce} className="inline-flex items-center mr-4">
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-stackers-yellow"
+                value={sauce}
+                checked={selectedSaucesAndDips.includes(sauce)}
+                onChange={() => handleSaucesAndDipsChange(sauce)}
+              />
+              <span className="ml-2 text-gray-700">{sauce}</span>
+            </label>
+          ))}
+        </div>
+      )}
+
+      {item.name === 'Chicken Breasts' && category === 'Fried Gold' && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Quantity</h4>
+          <RadioGroup defaultValue="1pc" className="flex gap-2" onValueChange={handleChickenBreastQuantityChange}>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="1pc" id="r1" />
+              <label htmlFor="r1" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">1 pc</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="2pc" id="r2" />
+              <label htmlFor="r2" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">2 pc</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="3pc" id="r3" />
+              <label htmlFor="r3" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">3 pc</label>
+            </div>
+          </RadioGroup>
+        </div>
+      )}
+
+      {showSpecialInstructions && (
+        <div className="mb-4">
+          <h4 className="font-semibold text-gray-700 mb-2">Special Instructions</h4>
+          <textarea
+            placeholder="Any special instructions for your order..."
+            className="w-full border border-gray-300 rounded-md p-2 resize-none"
+            rows={3}
+            value={comment}
+            onChange={handleCommentChange}
+          />
+        </div>
+      )}
+
+        <Button onClick={handleAddToBasket} className="w-full bg-stackers-yellow text-stackers-charcoal hover:bg-yellow-400 font-semibold">
+          Add to Basket - {displayPrice()}
+        </Button>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { X, ShoppingCart, Trash2 } from 'lucide-react';
@@ -27,6 +28,7 @@ export interface BasketItem {
   pepsiFlavor?: string;
   cokeFlavor?: string;
   saucesAndDips?: string[];
+  chickenBreastQuantity?: '1pc' | '2pc' | '3pc';
   quantity: number;
 }
 
@@ -153,6 +155,12 @@ const Basket: React.FC<BasketProps> = ({
                       {item.drinkSize && (
                         <p className="text-xs text-gray-500 mt-1">
                           Size: {item.drinkSize}
+                        </p>
+                      )}
+
+                      {item.chickenBreastQuantity && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Quantity: {item.chickenBreastQuantity}
                         </p>
                       )}
 

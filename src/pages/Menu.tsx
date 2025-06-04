@@ -159,7 +159,8 @@ const Menu = () => {
     fantaFlavor?: string,
     pepsiFlavor?: string,
     cokeFlavor?: string,
-    saucesAndDips?: string[]
+    saucesAndDips?: string[],
+    chickenBreastQuantity?: '1pc' | '2pc' | '3pc'
   ) => {
     let basePrice = parseFloat(item.price.replace('£', ''));
     let itemName = item.name;
@@ -168,6 +169,13 @@ const Menu = () => {
     if (isMeal) {
       basePrice += 2.50;
       itemName = `${item.name} (Meal)`;
+    }
+
+    // Handle Chicken Breasts pricing
+    if (item.name === 'Chicken Breasts' && chickenBreastQuantity) {
+      if (chickenBreastQuantity === '1pc') basePrice = 2.50;
+      else if (chickenBreastQuantity === '2pc') basePrice = 3.50;
+      else if (chickenBreastQuantity === '3pc') basePrice = 4.50;
     }
 
     // Handle side size pricing
@@ -284,7 +292,8 @@ const Menu = () => {
       fantaFlavor,
       pepsiFlavor,
       cokeFlavor,
-      saucesAndDips
+      saucesAndDips,
+      chickenBreastQuantity
     };
 
     const existingItemIndex = basketItems.findIndex(
@@ -308,7 +317,8 @@ const Menu = () => {
         basketItem.fantaFlavor === fantaFlavor &&
         basketItem.pepsiFlavor === pepsiFlavor &&
         basketItem.cokeFlavor === cokeFlavor &&
-        JSON.stringify(basketItem.saucesAndDips) === JSON.stringify(saucesAndDips)
+        JSON.stringify(basketItem.saucesAndDips) === JSON.stringify(saucesAndDips) &&
+        basketItem.chickenBreastQuantity === chickenBreastQuantity
     );
 
     if (existingItemIndex > -1) {
