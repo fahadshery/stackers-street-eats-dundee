@@ -545,7 +545,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               <h4 className="font-semibold text-gray-700 mb-2">Select Special</h4>
               <Select onValueChange={handleStackersSpecialItemChange}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select a special" value={stackersSpecialItem} />
+                  <SelectValue placeholder="Select a special" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Waffle on a Stick">Waffle on a Stick</SelectItem>
