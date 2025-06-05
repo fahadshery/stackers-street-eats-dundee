@@ -102,6 +102,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [pepsiFlavor, setPepsiFlavor] = useState<string>('Pepsi');
   const [cokeFlavor, setCokeFlavor] = useState<string>('Coke');
   const [selectedSaucesAndDips, setSelectedSaucesAndDips] = useState<string[]>([]);
+  const [friedGoldPieces, setFriedGoldPieces] = useState<'1' | '2' | '3'>('1');
 
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
@@ -264,6 +265,13 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const displayPrice = () => {
     let basePrice = parseFloat(item.price.replace('£', ''));
 
+    // Handle new Fried Gold items pricing
+    if (['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name)) {
+      if (friedGoldPieces === '1') basePrice = 2.50;
+      else if (friedGoldPieces === '2') basePrice = 3.50;
+      else if (friedGoldPieces === '3') basePrice = 4.50;
+    }
+
     if (isMeal) {
       basePrice += 2.50;
     }
@@ -283,7 +291,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     }
 
     // Drinks pricing based on size
-    if (category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta'].includes(item.name)) {
+    if (category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name)) {
       basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
     }
 
@@ -714,6 +722,58 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         )}
 
         {showMealOption && (
+          <div className="mb-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id={`${item.name}-meal`}
+                checked={isMeal}
+                onCheckedChange={(checked) => setIsMeal(!!checked)}
+              />
+              <Label htmlFor={`${item.name}-meal`} className="text-sm font-medium">
+                Make it a meal +£2.50 (chips and a can of juice)
+              </Label>
+            </div>
+          </div>
+        )}
+
+        {/* Fried Gold items piece selection */}
+        {['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name) && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Pieces:</p>
+            <RadioGroup value={friedGoldPieces} onValueChange={(value: string) => setFriedGoldPieces(value as '1' | '2' | '3')}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="1" id={`${item.name}-1piece`} />
+                <Label htmlFor={`${item.name}-1piece`} className="text-sm">1 piece (£2.50)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="2" id={`${item.name}-2pieces`} />
+                <Label htmlFor={`${item.name}-2pieces`} className="text-sm">2 pieces (£3.50)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="3" id={`${item.name}-3pieces`} />
+                <Label htmlFor={`${item.name}-3pieces`} className="text-sm">3 pieces (£4.50)</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        )}
+
+        {/* Meal option for new Fried Gold items */}
+        {['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name) && (
+          <div className="mb-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id={`${item.name}-meal`}
+                checked={isMeal}
+                onCheckedChange={(checked) => setIsMeal(!!checked)}
+              />
+              <Label htmlFor={`${item.name}-meal`} className="text-sm font-medium">
+                Make it a meal +£2.50 (chips and a can of juice)
+              </Label>
+            </div>
+          </div>
+        )}
+
+        {showMealOption && !['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name) && (
           <div className="mb-4">
             <div className="flex items-center space-x-2">
               <Checkbox

@@ -27,6 +27,7 @@ export interface BasketItem {
   pepsiFlavor?: string;
   cokeFlavor?: string;
   saucesAndDips?: string[];
+  friedGoldPieces?: '1' | '2' | '3';
   quantity: number;
 }
 
@@ -61,9 +62,9 @@ const Basket: React.FC<BasketProps> = ({
   };
 
   const getItemDisplayName = (item: BasketItem) => {
-    // For milkshakes, show flavor + "Milkshake"
-    if (item.category === 'Milkshakes' && item.milkshakeFlavor) {
-      return `${item.milkshakeFlavor} Milkshake`;
+    // For new Fried Gold items, show pieces in the name
+    if (['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name) && item.friedGoldPieces) {
+      return `${item.name} (${item.friedGoldPieces} ${item.friedGoldPieces === '1' ? 'piece' : 'pieces'})`;
     }
     
     if (item.category === 'Sweet Stacks') {

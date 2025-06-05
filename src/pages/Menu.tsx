@@ -159,15 +159,27 @@ const Menu = () => {
     fantaFlavor?: string,
     pepsiFlavor?: string,
     cokeFlavor?: string,
-    saucesAndDips?: string[]
+    saucesAndDips?: string[],
+    friedGoldPieces?: '1' | '2' | '3'
   ) => {
     let basePrice = parseFloat(item.price.replace('£', ''));
     let itemName = item.name;
 
+    // Handle new Fried Gold items pricing
+    if (['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name) && friedGoldPieces) {
+      if (friedGoldPieces === '1') basePrice = 2.50;
+      else if (friedGoldPieces === '2') basePrice = 3.50;
+      else if (friedGoldPieces === '3') basePrice = 4.50;
+      
+      itemName = `${item.name} (${friedGoldPieces} ${friedGoldPieces === '1' ? 'piece' : 'pieces'})`;
+    }
+
     // Handle meal pricing and naming
     if (isMeal) {
       basePrice += 2.50;
-      itemName = `${item.name} (Meal)`;
+      if (!itemName.includes('(Meal)')) {
+        itemName = `${itemName} (Meal)`;
+      }
     }
 
     // Handle side size pricing
@@ -284,7 +296,8 @@ const Menu = () => {
       fantaFlavor,
       pepsiFlavor,
       cokeFlavor,
-      saucesAndDips
+      saucesAndDips,
+      friedGoldPieces
     };
 
     const existingItemIndex = basketItems.findIndex(
@@ -308,7 +321,8 @@ const Menu = () => {
         basketItem.fantaFlavor === fantaFlavor &&
         basketItem.pepsiFlavor === pepsiFlavor &&
         basketItem.cokeFlavor === cokeFlavor &&
-        JSON.stringify(basketItem.saucesAndDips) === JSON.stringify(saucesAndDips)
+        JSON.stringify(basketItem.saucesAndDips) === JSON.stringify(saucesAndDips) &&
+        basketItem.friedGoldPieces === friedGoldPieces
     );
 
     if (existingItemIndex > -1) {
