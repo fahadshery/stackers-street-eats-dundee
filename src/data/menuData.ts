@@ -101,6 +101,7 @@ export const friedGoldItems: MenuItem[] = [
     image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   },
+
   {
     name: 'Strips (3pcs)',
     price: '£3.99',
@@ -120,34 +121,6 @@ export const friedGoldItems: MenuItem[] = [
     price: '£9.99',
     description: '12 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
     image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Chicken Breasts',
-    price: '£2.50',
-    description: 'Tender, juicy chicken breasts with crispy golden coating. Hand breaded to perfection.',
-    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Fried Gold Chicken',
-    price: '£2.50',
-    description: 'Premium golden fried chicken pieces, hand breaded in our signature recipe for the perfect crispy crunch.',
-    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Fried Gold Wings',
-    price: '£2.50',
-    description: 'Crispy golden-fried wings with our signature breading, delivering bold flavour in every bite.',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Fried Gold Strips',
-    price: '£2.50',
-    description: 'Tender chicken strips with a golden crispy coating, hand breaded to perfection for maximum flavour.',
-    image: 'https://images.unsplash.com/photo-1519915195129-7d93adf4b882?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   }
 ];
