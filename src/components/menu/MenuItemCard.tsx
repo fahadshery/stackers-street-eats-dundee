@@ -757,23 +757,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         )}
 
-        {/* Meal option for new Fried Gold items */}
-        {['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name) && (
-          <div className="mb-4">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id={`${item.name}-meal`}
-                checked={isMeal}
-                onCheckedChange={(checked) => setIsMeal(!!checked)}
-              />
-              <Label htmlFor={`${item.name}-meal`} className="text-sm font-medium">
-                Make it a meal +£2.50 (chips and a can of juice)
-              </Label>
-            </div>
-          </div>
-        )}
-
-        {showMealOption && !['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name) && (
+        {/* Meal option for Fried Gold items and other categories */}
+        {(showMealOption || ['Fried Gold Chicken', 'Fried Gold Wings', 'Fried Gold Strips'].includes(item.name)) && (
           <div className="mb-4">
             <div className="flex items-center space-x-2">
               <Checkbox
