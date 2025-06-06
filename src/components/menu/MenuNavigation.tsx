@@ -4,35 +4,51 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 interface MenuNavigationProps {
-  activeSection: string;
-  onScrollToSection: (sectionId: string) => void;
+  activeCategory: string;
+  onCategorySelect: (category: string) => void;
 }
 
-const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeSection, onScrollToSection }) => {
+const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeCategory, onCategorySelect }) => {
+  const categories = [
+    'Starters',
+    'Fried Gold',
+    'Smash Burgers',
+    'Chicken Burgers',
+    'Pizzas',
+    'Wraps',
+    'Kids',
+    'Sides',
+    'Drinks',
+    'Milkshakes',
+    'Ice Creams',
+    'Sweet Stacks',
+    'Meal Deals',
+    'Boxes',
+    'Loaded Stackers\' Fries',
+    'Sauces & Dips'
+  ];
+
   const sectionsLine1 = [
-    { id: 'starters', label: 'Starters' },
-    { id: 'fried-gold', label: 'Fried Gold' },
-    { id: 'smash-burgers', label: 'Smash Burgers' },
-    { id: 'chicken-burgers', label: 'Chicken Burgers' },
-    { id: 'wraps', label: 'Wraps' },
-    { id: 'pizzas', label: 'Pizzas' },
-    { id: 'boxes', label: 'Boxes' },
-    { id: 'meal-deals', label: 'Meal Deals' }
+    'Starters',
+    'Fried Gold',
+    'Smash Burgers',
+    'Chicken Burgers',
+    'Wraps',
+    'Pizzas',
+    'Boxes',
+    'Meal Deals'
   ];
 
   const sectionsLine2 = [
-    { id: 'loaded-fries', label: 'Loaded Fries' },
-    { id: 'kids', label: 'Kids' },
-    { id: 'sides', label: 'Sides' },
-    { id: 'sweet-stacks', label: 'Sweet Stacks' },
-    { id: 'ice-creams', label: 'Ice Creams' },
-    { id: 'milkshakes', label: 'Milkshakes' },
-    { id: 'drinks', label: 'Drinks' },
-    { id: 'sauces-and-dips', label: 'Sauces & Dips' }
+    'Loaded Stackers\' Fries',
+    'Kids',
+    'Sides',
+    'Sweet Stacks',
+    'Ice Creams',
+    'Milkshakes',
+    'Drinks',
+    'Sauces & Dips'
   ];
-
-  // Combine all sections for mobile single-line layout
-  const allSections = [...sectionsLine1, ...sectionsLine2];
 
   return (
     <div className="sticky top-16 bg-white shadow-md z-40 border-t-0">
@@ -41,18 +57,18 @@ const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeSection, onScroll
         <div className="md:hidden py-2">
           <ScrollArea className="w-full whitespace-nowrap">
             <div className="flex space-x-2 pb-2">
-              {allSections.map((section) => (
+              {categories.map((category) => (
                 <Button
-                  key={section.id}
+                  key={category}
                   variant="ghost"
-                  onClick={() => onScrollToSection(section.id)}
+                  onClick={() => onCategorySelect(category)}
                   className={`whitespace-nowrap px-3 py-1 text-sm font-medium transition-colors flex-shrink-0 ${
-                    activeSection === section.id
+                    activeCategory === category
                       ? 'bg-stackers-yellow text-stackers-charcoal'
                       : 'text-gray-700 hover:text-stackers-yellow hover:bg-gray-100'
                   }`}
                 >
-                  {section.label}
+                  {category}
                 </Button>
               ))}
             </div>
@@ -64,36 +80,36 @@ const MenuNavigation: React.FC<MenuNavigationProps> = ({ activeSection, onScroll
         <div className="hidden md:block">
           {/* First line */}
           <div className="flex flex-wrap justify-center py-2 space-x-2">
-            {sectionsLine1.map((section) => (
+            {sectionsLine1.map((category) => (
               <Button
-                key={section.id}
+                key={category}
                 variant="ghost"
-                onClick={() => onScrollToSection(section.id)}
+                onClick={() => onCategorySelect(category)}
                 className={`whitespace-nowrap px-3 py-1 text-sm font-medium transition-colors ${
-                  activeSection === section.id
+                  activeCategory === category
                     ? 'bg-stackers-yellow text-stackers-charcoal'
                     : 'text-gray-700 hover:text-stackers-yellow hover:bg-gray-100'
                 }`}
               >
-                {section.label}
+                {category}
               </Button>
             ))}
           </div>
           
           {/* Second line */}
           <div className="flex flex-wrap justify-center py-2 space-x-2">
-            {sectionsLine2.map((section) => (
+            {sectionsLine2.map((category) => (
               <Button
-                key={section.id}
+                key={category}
                 variant="ghost"
-                onClick={() => onScrollToSection(section.id)}
+                onClick={() => onCategorySelect(category)}
                 className={`whitespace-nowrap px-3 py-1 text-sm font-medium transition-colors ${
-                  activeSection === section.id
+                  activeCategory === category
                     ? 'bg-stackers-yellow text-stackers-charcoal'
                     : 'text-gray-700 hover:text-stackers-yellow hover:bg-gray-100'
                 }`}
               >
-                {section.label}
+                {category}
               </Button>
             ))}
           </div>

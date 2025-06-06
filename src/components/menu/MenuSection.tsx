@@ -1,26 +1,51 @@
 
 import React from 'react';
+import MenuItemCard from '@/components/menu/MenuItemCard';
+import { MenuItem } from '@/data/menuData';
 
 interface MenuSectionProps {
-  id: string;
-  label: string;
-  children: React.ReactNode;
-  sectionRef: React.RefObject<HTMLElement>;
-  isActive: boolean;
+  items: MenuItem[];
+  onAddToBasket: (
+    item: MenuItem,
+    isMeal?: boolean,
+    customizations?: string[],
+    comment?: string,
+    sideSize?: string,
+    milkshakeSize?: string,
+    milkshakeFlavor?: string,
+    pizzaSize?: string,
+    iceCreamScoops?: number,
+    iceCreamFlavors?: string[],
+    sweetStacksType?: string,
+    sweetStacksFlavor?: string,
+    sweetDips?: string[],
+    toppings?: string[],
+    drizzleOnTop?: boolean,
+    drinkSize?: string,
+    rubiconFlavor?: string,
+    milkshakeComment?: string,
+    fantaFlavor?: string,
+    pepsiFlavor?: string,
+    cokeFlavor?: string,
+    saucesAndDips?: string[],
+    friedGoldPieces?: number
+  ) => void;
+  customizations?: string[];
 }
 
-const MenuSection: React.FC<MenuSectionProps> = ({ id, label, children, sectionRef, isActive }) => (
-  <section ref={sectionRef} id={id} className="mb-16">
-    <div className="text-center mb-12">
-      <h2 className={`text-4xl font-bold text-stackers-charcoal mb-2 ${isActive ? 'relative inline-block' : ''}`}>
-        {label}
-        {isActive && (
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-stackers-yellow"></div>
-        )}
-      </h2>
+const MenuSection: React.FC<MenuSectionProps> = ({ items, onAddToBasket, customizations }) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {items.map((item) => (
+        <MenuItemCard
+          key={item.name}
+          item={item}
+          onAddToBasket={onAddToBasket}
+          customizations={customizations}
+        />
+      ))}
     </div>
-    {children}
-  </section>
-);
+  );
+};
 
 export default MenuSection;
