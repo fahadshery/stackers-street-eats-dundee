@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import MenuNavigation from '@/components/menu/MenuNavigation';
 import MenuSection from '@/components/menu/MenuSection';
@@ -235,13 +234,11 @@ const Menu = () => {
         </div>
 
         <MenuNavigation
-          categories={categories}
           activeCategory={activeCategory}
           onCategorySelect={setActiveCategory}
         />
 
         <MenuSection
-          category={activeCategory}
           items={getCategoryItems(activeCategory)}
           onAddToBasket={addToBasket}
           customizations={activeCategory === 'Pizzas' ? pizzaCustomisations : []}
