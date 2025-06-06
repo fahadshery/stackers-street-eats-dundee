@@ -39,7 +39,8 @@ interface MenuItemCardProps {
     fantaFlavor?: string,
     pepsiFlavor?: string,
     cokeFlavor?: string,
-    saucesAndDips?: string[]
+    saucesAndDips?: string[],
+    friedGoldPieces?: number
   ) => void;
 }
 
@@ -102,6 +103,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [pepsiFlavor, setPepsiFlavor] = useState<string>('Pepsi');
   const [cokeFlavor, setCokeFlavor] = useState<string>('Coke');
   const [selectedSaucesAndDips, setSelectedSaucesAndDips] = useState<string[]>([]);
+  const [friedGoldPieces, setFriedGoldPieces] = useState<1 | 2 | 3>(1);
 
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
@@ -233,7 +235,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       item.name === 'Fanta' ? fantaFlavor : undefined,
       item.name === 'Pepsi' ? pepsiFlavor : undefined,
       item.name === 'Coke' ? cokeFlavor : undefined,
-      category === 'Sauces & Dips' && selectedSaucesAndDips.length > 0 ? selectedSaucesAndDips : undefined
+      category === 'Sauces & Dips' && selectedSaucesAndDips.length > 0 ? selectedSaucesAndDips : undefined,
+      item.name === 'Chicken on the bone' ? friedGoldPieces : undefined
     );
 
     // Reset form
@@ -259,10 +262,18 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setPepsiFlavor('Pepsi');
     setCokeFlavor('Coke');
     setSelectedSaucesAndDips([]);
+    setFriedGoldPieces(1);
   };
 
   const displayPrice = () => {
     let basePrice = parseFloat(item.price.replace('£', ''));
+
+    // Special handling for "Chicken on the bone"
+    if (item.name === 'Chicken on the bone') {
+      if (friedGoldPieces === 1) basePrice = 2.25;
+      else if (friedGoldPieces === 2) basePrice = 4.25;
+      else if (friedGoldPieces === 3) basePrice = 5.75;
+    }
 
     if (isMeal) {
       basePrice += 2.50;
@@ -366,6 +377,27 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         {/* Only show price and Add to Order button if item has a price */}
         {item.price && (
           <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
+        )}
+
+        {/* Chicken on the bone piece selection */}
+        {item.name === 'Chicken on the bone' && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Pieces:</p>
+            <RadioGroup value={friedGoldPieces.toString()} onValueChange={(value) => setFriedGoldPieces(parseInt(value) as 1 | 2 | 3)}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="1" id={`${item.name}-1-piece`} />
+                <Label htmlFor={`${item.name}-1-piece`} className="text-sm">1 piece (£2.25)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="2" id={`${item.name}-2-pieces`} />
+                <Label htmlFor={`${item.name}-2-pieces`} className="text-sm">2 pieces (£4.25)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="3" id={`${item.name}-3-pieces`} />
+                <Label htmlFor={`${item.name}-3-pieces`} className="text-sm">3 pieces (£5.75)</Label>
+              </div>
+            </RadioGroup>
+          </div>
         )}
 
         {/* Drinks size selection for specific items - removed duplicates */}

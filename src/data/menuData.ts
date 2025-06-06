@@ -60,6 +60,13 @@ export const startersItems: MenuItem[] = [
 
 export const friedGoldItems: MenuItem[] = [
   {
+    name: 'Chicken on the bone',
+    price: '£2.25',
+    description: 'Juicy, succulent chicken on the bone. Hand breaded in our signature recipe for the perfect crispy finish.',
+    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
+  },
+  {
     name: 'Chicken (1pc)',
     price: '£2.25',
     description: 'Juicy, golden fried chicken piece. Hand breaded in a signature recipe',

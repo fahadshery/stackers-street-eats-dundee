@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { X, ShoppingCart, Trash2 } from 'lucide-react';
@@ -28,6 +29,7 @@ export interface BasketItem {
   cokeFlavor?: string;
   saucesAndDips?: string[];
   quantity: number;
+  friedGoldPieces?: number;
 }
 
 interface BasketProps {
@@ -70,6 +72,12 @@ const Basket: React.FC<BasketProps> = ({
       // For Sweet Stacks, don't include the description in the heading
       return item.name;
     }
+
+    // For "Chicken on the bone", show pieces
+    if (item.name === 'Chicken on the bone' && item.friedGoldPieces) {
+      return `${item.name} (${item.friedGoldPieces} ${item.friedGoldPieces === 1 ? 'piece' : 'pieces'})`;
+    }
+
     return item.name;
   };
 
