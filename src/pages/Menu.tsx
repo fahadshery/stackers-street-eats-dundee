@@ -198,13 +198,13 @@ const Menu = () => {
     // Handle gold fried Stips pricing and naming
     if (item.name === 'Stips' && friedGoldStrips) {
       if (friedGoldStrips === 3) {
-        basePrice = 2.25;
+        basePrice = 3.99;
         itemName = 'Strips (3 piece)';
       } else if (friedGoldStrips === 6) {
-        basePrice = 4.25;
+        basePrice = 5.99;
         itemName = 'Strips (6 pieces)';
       } else if (friedGoldStrips === 12) {
-        basePrice = 5.75;
+        basePrice = 9.99;
         itemName = 'Strips (12 pieces)';
       }
     }

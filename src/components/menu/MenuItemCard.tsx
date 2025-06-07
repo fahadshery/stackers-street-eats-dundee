@@ -107,7 +107,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [selectedSaucesAndDips, setSelectedSaucesAndDips] = useState<string[]>([]);
   const [chickenOnBonePieces, setChickenOnBonePieces] = useState<1 | 2 | 3>(1);
   const [friedGoldWings, setFriedGoldWings] = useState<1 | 2 | 3>(1);
-  const [friedGoldStrips, setFriedGoldStrips] = useState<1 | 2 | 3>(1);
+  const [friedGoldStrips, setFriedGoldStrips] = useState<3 | 6 | 12>(1);
 
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
