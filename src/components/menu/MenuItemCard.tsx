@@ -156,7 +156,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
   const renderIceCreamFlavorCheckboxes = () => {
     const checkboxes = [];
-    
+
     for (let i = 0; i < iceCreamScoops; i++) {
       checkboxes.push(
         <div key={`scoop-${i}`} className="mb-4">
@@ -190,7 +190,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         </div>
       );
     }
-    
+
     return checkboxes;
   };
 
@@ -294,7 +294,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     }
 
     // Drinks pricing based on size
-    if (category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name)) {
+    if (category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta'].includes(item.name)) {
       basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
     }
 
@@ -357,7 +357,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
   // Determine which categories should show customer instructions
   const shouldShowCustomerInstructions = ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Pizzas', 'Sweet Stacks', 'Ice Creams'].includes(category);
-  
+
   // Special logic for Sweet Stacks - don't show for Cheesecake Slices
   const shouldShowSweetStacksInstructions = category === 'Sweet Stacks' && item.name !== 'Cheesecake Slices';
 
@@ -373,7 +373,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       <div className="p-6">
         <h3 className="text-xl font-semibold text-stackers-charcoal mb-2">{item.name}</h3>
         <p className="text-gray-600 text-sm mb-4 leading-relaxed">{item.description}</p>
-        
+
         {/* Only show price and Add to Order button if item has a price */}
         {item.price && (
           <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
@@ -523,7 +523,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             </div>
             <div className="mb-4">
               <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
-              <RadioGroup value="330ml" onValueChange={() => {}}>
+              <RadioGroup value="330ml" onValueChange={() => { }}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="330ml" id={`${item.name}-330ml-only`} />
                   <Label htmlFor={`${item.name}-330ml-only`} className="text-sm">330ml Can (£1.25)</Label>
@@ -740,7 +740,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                 </div>
               </RadioGroup>
             </div>
-            
+
             {renderIceCreamFlavorCheckboxes()}
           </>
         )}
