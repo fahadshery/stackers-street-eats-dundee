@@ -129,6 +129,20 @@ export const friedGoldItems: MenuItem[] = [
     description: 'Succulent chicken on the bone, fried to golden perfection with our signature seasoning blend',
     image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
     category: 'Fried Gold'
+  },
+  {
+    name: 'Wings',
+    price: '£2.25',
+    description: 'Crispy wings, seasoned and fried to perfection — bold flavour in every bite.',
+    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
+  },
+  {
+    name: 'Strips',
+    price: '£3.99',
+    description: 'Juicy, golden fried chicken Strips / tenders with a crispy finish. Hand breaded in a signature recipe',
+    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
+    category: 'Fried Gold'
   }
 ];
 

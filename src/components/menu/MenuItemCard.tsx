@@ -40,7 +40,9 @@ interface MenuItemCardProps {
     pepsiFlavor?: string,
     cokeFlavor?: string,
     saucesAndDips?: string[],
-    chickenOnBonePieces?: number
+    chickenOnBonePieces?: number,
+    friedGoldWings?: number,
+    friedGoldStrips?: number
   ) => void;
 }
 
@@ -104,6 +106,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [cokeFlavor, setCokeFlavor] = useState<string>('Coke');
   const [selectedSaucesAndDips, setSelectedSaucesAndDips] = useState<string[]>([]);
   const [chickenOnBonePieces, setChickenOnBonePieces] = useState<1 | 2 | 3>(1);
+  const [friedGoldWings, setFriedGoldWings] = useState<1 | 2 | 3>(1);
+  const [friedGoldStrips, setFriedGoldStrips] = useState<1 | 2 | 3>(1);
 
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
@@ -236,7 +240,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       item.name === 'Pepsi' ? pepsiFlavor : undefined,
       item.name === 'Coke' ? cokeFlavor : undefined,
       category === 'Sauces & Dips' && selectedSaucesAndDips.length > 0 ? selectedSaucesAndDips : undefined,
-      item.name === 'Chicken on the bone' ? chickenOnBonePieces : undefined
+      item.name === 'Chicken on the bone' ? chickenOnBonePieces : undefined,
+      item.name === 'Wings' ? friedGoldWings : undefined,
+      item.name === 'Strips' ? friedGoldStrips : undefined
     );
 
     // Reset form
@@ -263,6 +269,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setCokeFlavor('Coke');
     setSelectedSaucesAndDips([]);
     setChickenOnBonePieces(1);
+    setFriedGoldWings(1);
+    setFriedGoldStrips(1);
   };
 
   const displayPrice = () => {
@@ -273,6 +281,20 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       if (chickenOnBonePieces === 1) basePrice = 2.25;
       else if (chickenOnBonePieces === 2) basePrice = 4.25;
       else if (chickenOnBonePieces === 3) basePrice = 5.75;
+    }
+
+    // Handle Fried Wings pricing
+    if (item.name === 'Wings') {
+      if (friedGoldWings === 1) basePrice = 2.25;
+      else if (friedGoldWings === 2) basePrice = 4.25;
+      else if (friedGoldWings === 3) basePrice = 5.75;
+    }
+
+    // Handle Fried Stips pricing
+    if (item.name === 'Strips') {
+      if (friedGoldStrips === 3) basePrice = 3.99;
+      else if (friedGoldStrips === 6) basePrice = 5.99;
+      else if (friedGoldStrips === 12) basePrice = 9.99;
     }
 
     if (isMeal) {
@@ -379,7 +401,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           <p className="text-2xl font-bold text-stackers-yellow mb-4">{displayPrice()}</p>
         )}
 
-        {/* Chicken on the bone piece selection */}
+        {/* Gold Fried Chicken on the bone piece selection */}
         {item.name === 'Chicken on the bone' && (
           <div className="mb-4">
             <p className="font-medium mb-2 text-stackers-charcoal">Number of pieces:</p>
@@ -395,6 +417,48 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="3" id={`${item.name}-3-pieces`} />
                 <Label htmlFor={`${item.name}-3-pieces`} className="text-sm">3 pieces (£5.75)</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        )}
+
+        {/* Gold Fried Chicken Wings piece selection */}
+        {item.name === 'Wings' && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Number of pieces:</p>
+            <RadioGroup value={friedGoldWings.toString()} onValueChange={(value) => setFriedGoldWings(parseInt(value) as 1 | 2 | 3)}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="1" id={`${item.name}-1-piece`} />
+                <Label htmlFor={`${item.name}-1-piece`} className="text-sm">1 piece (£2.25)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="2" id={`${item.name}-2-pieces`} />
+                <Label htmlFor={`${item.name}-2-pieces`} className="text-sm">2 pieces (£4.25)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="3" id={`${item.name}-3-pieces`} />
+                <Label htmlFor={`${item.name}-3-pieces`} className="text-sm">3 pieces (£5.75)</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        )}
+
+        {/* Gold Fried Chicken Strips piece selection */}
+        {item.name === 'Strips' && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Number of pieces:</p>
+            <RadioGroup value={friedGoldStrips.toString()} onValueChange={(value) => setFriedGoldStrips(parseInt(value) as 3 | 6 | 12)}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="1" id={`${item.name}-3-piece`} />
+                <Label htmlFor={`${item.name}-3-piece`} className="text-sm">3 pieces (£3.99)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="2" id={`${item.name}-6-pieces`} />
+                <Label htmlFor={`${item.name}-6-pieces`} className="text-sm">6 pieces (£5.99)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="3" id={`${item.name}-12-pieces`} />
+                <Label htmlFor={`${item.name}-12-pieces`} className="text-sm">12 pieces (£9.99)</Label>
               </div>
             </RadioGroup>
           </div>
