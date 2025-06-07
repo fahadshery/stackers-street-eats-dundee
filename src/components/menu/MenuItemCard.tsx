@@ -107,7 +107,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [selectedSaucesAndDips, setSelectedSaucesAndDips] = useState<string[]>([]);
   const [chickenOnBonePieces, setChickenOnBonePieces] = useState<1 | 2 | 3>(1);
   const [friedGoldWings, setFriedGoldWings] = useState<1 | 2 | 3>(1);
-  const [friedGoldStrips, setFriedGoldStrips] = useState<3 | 6 | 12>(1);
+  const [friedGoldStrips, setFriedGoldStrips] = useState<3 | 6 | 12>(3);
 
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
@@ -270,7 +270,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     setSelectedSaucesAndDips([]);
     setChickenOnBonePieces(1);
     setFriedGoldWings(1);
-    setFriedGoldStrips(1);
+    setFriedGoldStrips(3);
   };
 
   const displayPrice = () => {
@@ -290,11 +290,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       else if (friedGoldWings === 3) basePrice = 5.75;
     }
 
-    // Handle Fried Stips pricing
+    // Handle Fried Strips pricing
     if (item.name === 'Strips') {
-      if (friedGoldStrips === 1) basePrice = 3.99;
-      else if (friedGoldStrips === 2) basePrice = 5.99;
-      else if (friedGoldStrips === 3) basePrice = 9.99;
+      if (friedGoldStrips === 3) basePrice = 3.99;
+      else if (friedGoldStrips === 6) basePrice = 5.99;
+      else if (friedGoldStrips === 12) basePrice = 9.99;
     }
 
     if (isMeal) {
@@ -449,15 +449,15 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             <p className="font-medium mb-2 text-stackers-charcoal">Number of pieces:</p>
             <RadioGroup value={friedGoldStrips.toString()} onValueChange={(value) => setFriedGoldStrips(parseInt(value) as 3 | 6 | 12)}>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1" id={`${item.name}-3-pieces`} />
+                <RadioGroupItem value="3" id={`${item.name}-3-pieces`} />
                 <Label htmlFor={`${item.name}-3-pieces`} className="text-sm">3 pieces (£3.99)</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="2" id={`${item.name}-6-pieces`} />
+                <RadioGroupItem value="6" id={`${item.name}-6-pieces`} />
                 <Label htmlFor={`${item.name}-6-pieces`} className="text-sm">6 pieces (£5.99)</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="3" id={`${item.name}-12-pieces`} />
+                <RadioGroupItem value="12" id={`${item.name}-12-pieces`} />
                 <Label htmlFor={`${item.name}-12-pieces`} className="text-sm">12 pieces (£9.99)</Label>
               </div>
             </RadioGroup>
