@@ -107,7 +107,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const [selectedSaucesAndDips, setSelectedSaucesAndDips] = useState<string[]>([]);
   const [chickenOnBonePieces, setChickenOnBonePieces] = useState<1 | 2 | 3>(1);
   const [friedGoldWings, setFriedGoldWings] = useState<1 | 2 | 3>(1);
-  const [friedGoldStrips, setFriedGoldStrips] = useState<3 | 6 | 12>(3);
+  const [friedGoldStrips, setFriedGoldStrips] = useState<3 | 6 | 12>(1);
 
   // Sweet Stacks states
   const [sweetStacksFlavor, setSweetStacksFlavor] = useState<string>('');
@@ -292,9 +292,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
     // Handle Fried Stips pricing
     if (item.name === 'Strips') {
-      if (friedGoldStrips === 3) basePrice = 3.99;
-      else if (friedGoldStrips === 6) basePrice = 5.99;
-      else if (friedGoldStrips === 12) basePrice = 9.99;
+      if (friedGoldStrips === 1) basePrice = 3.99;
+      else if (friedGoldStrips === 2) basePrice = 5.99;
+      else if (friedGoldStrips === 3) basePrice = 9.99;
     }
 
     if (isMeal) {
@@ -449,8 +449,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             <p className="font-medium mb-2 text-stackers-charcoal">Number of pieces:</p>
             <RadioGroup value={friedGoldStrips.toString()} onValueChange={(value) => setFriedGoldStrips(parseInt(value) as 3 | 6 | 12)}>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1" id={`${item.name}-3-piece`} />
-                <Label htmlFor={`${item.name}-3-piece`} className="text-sm">3 pieces (£3.99)</Label>
+                <RadioGroupItem value="1" id={`${item.name}-3-pieces`} />
+                <Label htmlFor={`${item.name}-3-pieces`} className="text-sm">3 pieces (£3.99)</Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="2" id={`${item.name}-6-pieces`} />
