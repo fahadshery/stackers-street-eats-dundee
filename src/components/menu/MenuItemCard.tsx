@@ -327,7 +327,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       if (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') {
         basePrice = 6.50; // Base price for Waffles, Crepes, Cookie Dough
       } else if (item.name === 'Cheesecake Slices') {
-        basePrice = 3.99; // Fixed price for cheesecake
+        basePrice = 4.95; // Fixed price for cheesecake
       } else if (item.name === 'Stackers\' Specials') {
         const selectedItem = stackersSpecialItems.find(special => special.name === stackersSpecialItem);
         basePrice = selectedItem ? selectedItem.price : 5.95; // Default to Matilda Chocolate Cake price

@@ -261,7 +261,7 @@ const Menu = () => {
           itemName = `${sweetStacksType} - ${sweetStacksFlavor.split(':')[0]}`;
         }
       } else if (item.name === 'Cheesecake Slices') {
-        basePrice = 3.99;
+        basePrice = 4.95;
         if (sweetStacksFlavor) {
           itemName = `${sweetStacksFlavor} Cheesecake`;
         }
