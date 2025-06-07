@@ -73,7 +73,8 @@ const stackersSpecialItems = [
   { name: 'Waffle on a Stick', price: 4.99, description: 'Crispy waffle on a stick, perfect for dipping and enjoying on the go.' },
   { name: 'Dubai Kunafa', price: 6.50, description: 'Traditional Middle Eastern dessert with crispy pastry, sweet cheese filling, and fragrant syrup.' },
   { name: 'Churros (5)', price: 5.50, description: 'Five golden churros dusted with cinnamon sugar, served warm and crispy.' },
-  { name: 'Mini Pancakes (10)', price: 6.50, description: 'Ten fluffy mini pancakes, perfect for sharing and customizing with your favorite toppings.' }
+  { name: 'Mini Pancakes (10)', price: 6.50, description: 'Ten fluffy mini pancakes, perfect for sharing and customizing with your favorite toppings.' },
+  { name: 'Matilda Chocolate Cake', price: 5.95, description: 'The best Matilda chocolate cake you\'ll ever have: rich, moist and chocolatey with a silky and delectable chocolate fudge frosting.' }
 ];
 
 const MenuItemCard: React.FC<MenuItemCardProps> = ({
