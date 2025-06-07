@@ -330,7 +330,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         basePrice = 3.99; // Fixed price for cheesecake
       } else if (item.name === 'Stackers\' Specials') {
         const selectedItem = stackersSpecialItems.find(special => special.name === stackersSpecialItem);
-        basePrice = selectedItem ? selectedItem.price : 4.99;
+        basePrice = selectedItem ? selectedItem.price : 5.95; // Default to Matilda Chocolate Cake price
       }
 
       // Add sweet dips and toppings pricing only for customizable items

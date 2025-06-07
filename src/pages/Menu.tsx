@@ -271,10 +271,11 @@ const Menu = () => {
           { name: 'Waffle on a Stick', price: 4.99 },
           { name: 'Dubai Kunafa', price: 6.50 },
           { name: 'Churros (5)', price: 5.50 },
-          { name: 'Mini Pancakes (10)', price: 6.50 }
+          { name: 'Mini Pancakes (10)', price: 6.50 },
+          { name: 'Matilda Chocolate Cake', price: 5.95 }
         ];
         const selectedItem = specialItems.find(special => special.name === sweetStacksFlavor);
-        basePrice = selectedItem ? selectedItem.price : 4.99;
+        basePrice = selectedItem ? selectedItem.price : 5.95; // Default to Matilda Chocolate Cake price
         itemName = sweetStacksFlavor || item.name;
       }
     }
