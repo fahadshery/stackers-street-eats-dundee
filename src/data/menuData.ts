@@ -60,69 +60,69 @@ export const startersItems: MenuItem[] = [
 ];
 
 export const friedGoldItems: MenuItem[] = [
-  {
-    name: 'Chicken (1pc)',
-    price: '£2.25',
-    description: 'Juicy, golden fried chicken piece. Hand breaded in a signature recipe',
-    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Chicken (2pcs)',
-    price: '£4.25',
-    description: 'Two juicy, golden fried chicken pieces. Hand breaded in a signature recipe',
-    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Chicken (3pcs)',
-    price: '£5.75',
-    description: 'Three juicy, golden fried chicken pieces. Hand breaded in a signature recipe',
-    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Wings (1pc)',
-    price: '£2.25',
-    description: 'One crispy, golden-fried wing in our signature breading bursting with flavour — a tasty teaser.',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Wings (2pcs)',
-    price: '£4.25',
-    description: 'Two juicy wings, fried to a golden crunch — ideal for a light starter or a side.',
-    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Wings (3pcs)',
-    price: '£5.75',
-    description: 'Three crispy wings, seasoned and fried to perfection — bold flavour in every bite.',
-    image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Strips (3pcs)',
-    price: '£3.99',
-    description: '3 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
-    image: 'https://images.unsplash.com/photo-1519915195129-7d93adf4b882?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Strips (6pcs)',
-    price: '£5.99',
-    description: '6 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
-    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
-  {
-    name: 'Strips (12pcs)',
-    price: '£9.99',
-    description: '12 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
-    image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
-    category: 'Fried Gold'
-  },
+  // {
+  //   name: 'Chicken (1pc)',
+  //   price: '£2.25',
+  //   description: 'Juicy, golden fried chicken piece. Hand breaded in a signature recipe',
+  //   image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
+  // {
+  //   name: 'Chicken (2pcs)',
+  //   price: '£4.25',
+  //   description: 'Two juicy, golden fried chicken pieces. Hand breaded in a signature recipe',
+  //   image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
+  // {
+  //   name: 'Chicken (3pcs)',
+  //   price: '£5.75',
+  //   description: 'Three juicy, golden fried chicken pieces. Hand breaded in a signature recipe',
+  //   image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
+  // {
+  //   name: 'Wings (1pc)',
+  //   price: '£2.25',
+  //   description: 'One crispy, golden-fried wing in our signature breading bursting with flavour — a tasty teaser.',
+  //   image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
+  // {
+  //   name: 'Wings (2pcs)',
+  //   price: '£4.25',
+  //   description: 'Two juicy wings, fried to a golden crunch — ideal for a light starter or a side.',
+  //   image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
+  // {
+  //   name: 'Wings (3pcs)',
+  //   price: '£5.75',
+  //   description: 'Three crispy wings, seasoned and fried to perfection — bold flavour in every bite.',
+  //   image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
+  // {
+  //   name: 'Strips (3pcs)',
+  //   price: '£3.99',
+  //   description: '3 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
+  //   image: 'https://images.unsplash.com/photo-1519915195129-7d93adf4b882?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
+  // {
+  //   name: 'Strips (6pcs)',
+  //   price: '£5.99',
+  //   description: '6 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
+  //   image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
+  // {
+  //   name: 'Strips (12pcs)',
+  //   price: '£9.99',
+  //   description: '12 pieces of juicy, golden fried chicken Strips with a crispy finish. Hand breaded in a signature recipe',
+  //   image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
+  //   category: 'Fried Gold'
+  // },
   {
     name: 'Chicken on the bone',
     price: '£2.25',
@@ -140,7 +140,7 @@ export const friedGoldItems: MenuItem[] = [
   {
     name: 'Strips',
     price: '£3.99',
-    description: 'Juicy, golden fried chicken Strips / tenders with a crispy finish. Hand breaded in a signature recipe',
+    description: 'Juicy, golden fried chicken Strips / tenders with a crispy finish. Hand breaded in our signature recipe',
     image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
     category: 'Fried Gold'
   }
