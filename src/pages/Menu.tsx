@@ -159,15 +159,30 @@ const Menu = () => {
     fantaFlavor?: string,
     pepsiFlavor?: string,
     cokeFlavor?: string,
-    saucesAndDips?: string[]
+    saucesAndDips?: string[],
+    chickenOnBonePieces?: number
   ) => {
     let basePrice = parseFloat(item.price.replace('£', ''));
     let itemName = item.name;
 
+    // Handle Chicken on the bone pricing and naming
+    if (item.name === 'Chicken on the bone' && chickenOnBonePieces) {
+      if (chickenOnBonePieces === 1) {
+        basePrice = 2.25;
+        itemName = 'Chicken on the bone (1 piece)';
+      } else if (chickenOnBonePieces === 2) {
+        basePrice = 4.25;
+        itemName = 'Chicken on the bone (2 pieces)';
+      } else if (chickenOnBonePieces === 3) {
+        basePrice = 5.75;
+        itemName = 'Chicken on the bone (3 pieces)';
+      }
+    }
+
     // Handle meal pricing and naming
     if (isMeal) {
       basePrice += 2.50;
-      itemName = `${item.name} (Meal)`;
+      itemName = `${itemName} (Meal)`;
     }
 
     // Handle side size pricing
