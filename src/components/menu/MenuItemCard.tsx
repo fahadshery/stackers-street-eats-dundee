@@ -93,6 +93,24 @@ const cheesecakeFlavors = [
   }
 ];
 
+const indulgentCakeFlavors = [
+  {
+    value: 'Chocolate Fudge Pot',
+    label: '🍫 Chocolate Fudge Pot',
+    description: 'Layers of moist chocolate cake, silky fudge, and creamy taste — a rich chocolate lover's dream in a pot.'
+  },
+  {
+    value: 'Vanilla Raspberry Cream',
+    label: '🍓 Vanilla Raspberry Cream',
+    description: 'Soft vanilla sponge layered with raspberry compote and fresh cream — light, fruity, and perfectly balanced.'
+  },
+  {
+    value: 'Bueno Brownie',
+    label: '🍫 Bueno Brownie',
+    description: 'Fudgy brownie chunks with creamy hazelnut layers and crushed Kinder Bueno — indulgent, nutty, and ridiculously good.'
+  }
+];
+
 const stackersSpecialItems = [
   { name: 'Waffle on a Stick', price: 4.99, description: 'Crispy waffle on a stick, perfect for dipping and enjoying on the go.' },
   { name: 'Dubai Kunafa', price: 6.50, description: 'Traditional Middle Eastern dessert with crispy pastry, sweet cheese filling, and fragrant syrup.' },
@@ -142,6 +160,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   // Cheesecake and Stackers' Specials states
   const [cheesecakeFlavor, setCheesecakeFlavor] = useState<string>('Strawberry');
   const [stackersSpecialItem, setStackersSpecialItem] = useState<string>('Waffle on a Stick');
+
+  // Indulgent Cake Pots states
+  const [indulgentCakeFlavor, setIndulgentCakeFlavor] = useState<string>('Chocolate Fudge Pot');
 
   const handleCustomizationChange = (customization: string, checked: boolean) => {
     if (checked) {
@@ -237,6 +258,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     } else if (item.name === 'Cheesecake Pots') {
       finalSweetStacksType = 'Cheesecake';
       finalSweetStacksFlavor = cheesecakeFlavor;
+    } else if (item.name === 'Indulgent Cake Pots') {
+      finalSweetStacksType = 'Indulgent Cake';
+      finalSweetStacksFlavor = indulgentCakeFlavor;
     } else if (item.name === 'Stackers\' Specials') {
       finalSweetStacksType = 'Stackers\' Specials';
       finalSweetStacksFlavor = stackersSpecialItem;
@@ -352,13 +376,15 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         basePrice = 6.50; // Base price for Waffles, Crepes, Cookie Dough
       } else if (item.name === 'Cheesecake Pots') {
         basePrice = 4.95; // Fixed price for cheesecake
+      } else if (item.name === 'Indulgent Cake Pots') {
+        basePrice = 5.50; // Fixed price for indulgent cake pots
       } else if (item.name === 'Stackers\' Specials') {
         const selectedItem = stackersSpecialItems.find(special => special.name === stackersSpecialItem);
         basePrice = selectedItem ? selectedItem.price : 5.95; // Default to Matilda Chocolate Cake price
       }
 
       // Add sweet dips and toppings pricing only for customizable items
-      if (item.name !== 'Cheesecake Pots' && item.name !== 'Stackers\' Specials') {
+      if (item.name !== 'Cheesecake Pots' && item.name !== 'Indulgent Cake Pots' && item.name !== 'Stackers\' Specials') {
         basePrice += selectedSweetDips.length * 1.00; // £1 per sweet dip
         basePrice += selectedToppings.length * 0.50; // £0.50 per topping
       }
@@ -692,6 +718,25 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
             <RadioGroup value={cheesecakeFlavor} onValueChange={setCheesecakeFlavor}>
               {cheesecakeFlavors.map((flavor) => (
+                <div key={flavor.value} className="flex items-start space-x-2 mb-3">
+                  <RadioGroupItem value={flavor.value} id={`${item.name}-${flavor.value}`} className="mt-1" />
+                  <div className="flex-1">
+                    <Label htmlFor={`${item.name}-${flavor.value}`} className="text-sm font-medium">
+                      {flavor.label}
+                    </Label>
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{flavor.description}</p>
+                  </div>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+        )}
+
+        {showSweetStacks && item.name === 'Indulgent Cake Pots' && (
+          <div className="mb-4">
+            <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
+            <RadioGroup value={indulgentCakeFlavor} onValueChange={setIndulgentCakeFlavor}>
+              {indulgentCakeFlavors.map((flavor) => (
                 <div key={flavor.value} className="flex items-start space-x-2 mb-3">
                   <RadioGroupItem value={flavor.value} id={`${item.name}-${flavor.value}`} className="mt-1" />
                   <div className="flex-1">
