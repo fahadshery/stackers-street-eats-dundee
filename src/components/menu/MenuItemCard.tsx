@@ -432,7 +432,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const shouldShowCustomerInstructions = ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Pizzas', 'Sweet Stacks', 'Ice Creams'].includes(category);
 
   // Special logic for Sweet Stacks - don't show for Cheesecake Slices
-  const shouldShowSweetStacksInstructions = category === 'Sweet Stacks' && item.name !== 'Cheesecake Slices' && item.name !== 'Indulgent Cake Pots';
+  const shouldShowSweetStacksInstructions = category === 'Sweet Stacks' && item.name !== 'Cheesecake Slices' && item.name !== 'Indulgent Cake Pots' && item.name !== 'Cheesecake Pots';
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -516,7 +516,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         )}
 
         {/* Drinks size selection for specific items - removed duplicates */}
-        {category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name) && (
+        {category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Fanta', 'Sprite'].includes(item.name) && (
           <div className="mb-4">
             <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
             <RadioGroup value={drinkSize} onValueChange={(value: string) => setDrinkSize(value as '330ml' | '1.5L')}>
