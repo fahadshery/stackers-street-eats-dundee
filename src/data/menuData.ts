@@ -158,7 +158,7 @@ export const chickenBurgerItems: MenuItem[] = [
     name: 'Zing Stack',
     price: '£7.45',
     description: 'Our signature zinger burger with a bold spicy kick, layered in a soft bun, mayo, fresh onions, and crunchy lettuce. Because bland just isn’t your thing!',
-    image: 'https://images.unsplash.com/photo-1612197529270-0a3a3a1a3a3a?w=400&h=300&fit=crop',
+    image: 'public/lovable-uploads/zing stack burger.png',
     category: 'Chicken Burgers'
   },
   {
