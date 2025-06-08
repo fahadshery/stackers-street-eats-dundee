@@ -432,7 +432,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const shouldShowCustomerInstructions = ['Smash Burgers', 'Chicken Burgers', 'Wraps', 'Pizzas', 'Sweet Stacks', 'Ice Creams'].includes(category);
 
   // Special logic for Sweet Stacks - don't show for Cheesecake Slices
-  const shouldShowSweetStacksInstructions = category === 'Sweet Stacks' && item.name !== 'Cheesecake Slices';
+  const shouldShowSweetStacksInstructions = category === 'Sweet Stacks' && item.name !== 'Cheesecake Slices' && item.name !== 'Indulgent Cake Pots';
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
