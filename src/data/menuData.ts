@@ -532,13 +532,6 @@ export const sweetStacksItems: MenuItem[] = [
     category: 'Sweet Stacks'
   },
   {
-    name: 'Indulgent Cake Pots',
-    price: '£5.50',
-    description: 'Decadent cake layers in perfectly portioned pots — rich, creamy, and irresistibly indulgent.',
-    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop',
-    category: 'Sweet Stacks'
-  },
-  {
     name: 'Stackers\' Specials',
     price: '£4.99',
     description: 'Our signature dessert creations that change regularly — ask about today\'s special sweet treats.',
