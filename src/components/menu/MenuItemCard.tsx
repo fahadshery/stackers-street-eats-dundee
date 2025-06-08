@@ -365,7 +365,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     }
 
     // Drinks pricing based on size
-    if (category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name)) {
+    if (category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta'].includes(item.name)) {
       basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
     }
 
@@ -516,7 +516,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
         )}
 
         {/* Drinks size selection for specific items - removed duplicates */}
-        {category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Fanta', 'Sprite'].includes(item.name) && (
+        {category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name) && (
           <div className="mb-4">
             <p className="font-medium mb-2 text-stackers-charcoal">Size:</p>
             <RadioGroup value={drinkSize} onValueChange={(value: string) => setDrinkSize(value as '330ml' | '1.5L')}>
