@@ -525,7 +525,7 @@ export const sweetStacksItems: MenuItem[] = [
     category: 'Sweet Stacks'
   },
   {
-    name: 'Cheesecakes',
+    name: 'Cheesecake Pots',
     price: '£4.95',
     description: 'Rich, creamy cheesecake available in multiple flavours — the perfect ending to any meal.',
     image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop',

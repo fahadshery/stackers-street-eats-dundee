@@ -66,7 +66,31 @@ const toppingOptions = [
 ];
 
 const cheesecakeFlavors = [
-  'Strawberry', 'Biscoff', 'Oreo', 'Kinder', 'Chocolate', 'Banoffee pie'
+  {
+    value: 'Strawberry',
+    label: '🍓 Strawberry',
+    description: 'A creamy cheesecake layered with sweet strawberry sauce — classic flavour in a perfectly portioned pot.'
+  },
+  {
+    value: 'Dubai Chocolate Sensation',
+    label: '🍫 Dubai Chocolate Sensation',
+    description: 'Luxe layers of rich chocolate cheesecake and Kunafa mix, inspired by the bold indulgence of Dubai — all in one decadent pot.'
+  },
+  {
+    value: 'Lemon',
+    label: '🍋 Lemon',
+    description: 'Zingy lemon topping over smooth cheesecake and biscuit crumb — fresh, tangy, and refreshingly light.'
+  },
+  {
+    value: 'Biscoff',
+    label: '🍯 Biscoff',
+    description: 'Velvety cheesecake swirled with caramelised Biscoff spread and biscuit crumb — spoon-ready and dangerously good.'
+  },
+  {
+    value: 'Oreo',
+    label: '🍪 Oreo',
+    description: 'Cookies and cream cheesecake with an Oreo crumble base and topping — rich, crunchy, and addictive in every scoop.'
+  }
 ];
 
 const stackersSpecialItems = [
@@ -210,7 +234,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       finalSweetStacksType = 'Crepes';
     } else if (item.name === 'Cookie Dough Delight') {
       finalSweetStacksType = 'Cookie Dough';
-    } else if (item.name === 'Cheesecake Slices') {
+    } else if (item.name === 'Cheesecake Pots') {
       finalSweetStacksType = 'Cheesecake';
       finalSweetStacksFlavor = cheesecakeFlavor;
     } else if (item.name === 'Stackers\' Specials') {
@@ -317,7 +341,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
     }
 
     // Drinks pricing based on size
-    if (category === 'Drinks' && ['Irn Bru', 'Pepsi', 'Coke', 'Sprite', 'Fanta'].includes(item.name)) {
+    if (category === 'Drinks' && ['Irn Bru', 'Sprite'].includes(item.name)) {
       basePrice = drinkSize === '330ml' ? 1.25 : 2.99;
     }
 
@@ -326,7 +350,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       // Handle different Sweet Stacks items
       if (item.name === 'Waffle' || item.name === 'Crepe' || item.name === 'Cookie Dough Delight') {
         basePrice = 6.50; // Base price for Waffles, Crepes, Cookie Dough
-      } else if (item.name === 'Cheesecake Slices') {
+      } else if (item.name === 'Cheesecake Pots') {
         basePrice = 4.95; // Fixed price for cheesecake
       } else if (item.name === 'Stackers\' Specials') {
         const selectedItem = stackersSpecialItems.find(special => special.name === stackersSpecialItem);
@@ -334,7 +358,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
       }
 
       // Add sweet dips and toppings pricing only for customizable items
-      if (item.name !== 'Cheesecake Slices' && item.name !== 'Stackers\' Specials') {
+      if (item.name !== 'Cheesecake Pots' && item.name !== 'Stackers\' Specials') {
         basePrice += selectedSweetDips.length * 1.00; // £1 per sweet dip
         basePrice += selectedToppings.length * 0.50; // £0.50 per topping
       }
@@ -663,14 +687,19 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </>
         )}
 
-        {showSweetStacks && item.name === 'Cheesecake Slices' && (
+        {showSweetStacks && item.name === 'Cheesecake Pots' && (
           <div className="mb-4">
             <p className="font-medium mb-2 text-stackers-charcoal">Flavour:</p>
             <RadioGroup value={cheesecakeFlavor} onValueChange={setCheesecakeFlavor}>
               {cheesecakeFlavors.map((flavor) => (
-                <div key={flavor} className="flex items-center space-x-2">
-                  <RadioGroupItem value={flavor} id={`${item.name}-${flavor}`} />
-                  <Label htmlFor={`${item.name}-${flavor}`} className="text-sm">{flavor}</Label>
+                <div key={flavor.value} className="flex items-start space-x-2 mb-3">
+                  <RadioGroupItem value={flavor.value} id={`${item.name}-${flavor.value}`} className="mt-1" />
+                  <div className="flex-1">
+                    <Label htmlFor={`${item.name}-${flavor.value}`} className="text-sm font-medium">
+                      {flavor.label}
+                    </Label>
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{flavor.description}</p>
+                  </div>
                 </div>
               ))}
             </RadioGroup>
