@@ -97,7 +97,7 @@ const indulgentCakeFlavors = [
   {
     value: 'Chocolate Fudge Pot',
     label: '🍫 Chocolate Fudge Pot',
-    description: 'Layers of moist chocolate cake, silky fudge, and creamy taste — a rich chocolate lover's dream in a pot.'
+    description: 'Layers of moist chocolate cake, silky fudge, and creamy taste — a rich chocolate lover\'s dream in a pot.'
   },
   {
     value: 'Vanilla Raspberry Cream',
